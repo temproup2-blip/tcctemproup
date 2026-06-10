@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Temp.Roup</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div class="container">
+
+<div class="box">
+
+<div id="login">
+
+<h2>Entrar</h2>
+
+<div class="input-box">
+<label>Email</label>
+<input type="email" id="loginEmail">
+</div>
+
+<div class="input-box">
+<label>Senha</label>
+<input type="password" id="loginSenha">
+</div>
+
+<button class="btn" onclick="fazerLogin()">
+Entrar
+</button>
+
+<div class="trocar">
+Não possui conta?
+<span onclick="mostrarCadastro()">
+Cadastrar
+</span>
+</div>
+
+</div>
+
+<!-- CADASTRO -->
+
+<div id="cadastro" style="display:none;">
+
+<h2>Cadastro</h2>
+
+<div class="input-box">
+<label>Nome</label>
+<input type="text" id="cadNome">
+</div>
+
+<div class="input-box">
+<label>Email</label>
+<input type="email" id="cadEmail">
+</div>
+
+<div class="input-box">
+<label>Senha</label>
+<input type="password" id="cadSenha">
+</div>
+
+<button class="btn" onclick="cadastrar()">
+Cadastrar
+</button>
+
+<div class="trocar">
+Já possui conta?
+<span onclick="mostrarLogin()">
+Entrar
+</span>
+</div>
+
+</div>
+
+<div class="mensagem" id="mensagem"></div>
+
+</div>
+
+</div>
+
+<!-- SITE -->
+
+<div class="site" id="site">
+
+<header>
+
+<nav>
+
+<div class="logo">
+Temp.Roup
+</div>
+
+<div class="menu">
+<a href="#">Início</a>
+<a href="#">Produtos</a>
+<a href="#">Contato</a>
+</div>
+
+</nav>
+
+</header>
+
+<!-- CARRINHO -->
+
+<button class="abrir-carrinho" onclick="abrirCarrinho()">
+🛒 Carrinho (<span id="contador">0</span>)
+</button>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="banner">
+
+<img src="64661.jpg" alt="Temp.Roup">
+
+</div>
+
+<h1>
+A primeira blusa inteligente do Brasil
+</h1>
+
+<p>
+Roupa inteligente que se adapta ao clima e ao corpo.
+</p>
+
+<div class="buttons">
+
+<button class="azul">
+Linha Performance
+</button>
+
+<button class="laranja">
+Linha Cuidado & Conforto
+</button>
+
+</div>
+
+</section>
+
+<!-- PRODUTO -->
+
+<section class="produto">
+
+<h2>
+Blusa Inteligente Temp.Roup
+</h2>
+
+<p>
+Tecnologia que aquece ou resfria automaticamente.
+</p>
+
+<h3>Escolha o tamanho</h3>
+
+<div class="opcoes">
+
+<button onclick="selecionarTamanho('P')">
+P
+</button>
+
+<button onclick="selecionarTamanho('M')">
+M
+</button>
+
+<button onclick="selecionarTamanho('G')">
+G
+</button>
+
+<button onclick="selecionarTamanho('GG')">
+GG
+</button>
+
+</div>
+
+<h3>Escolha a cor</h3>
+
+<div class="opcoes">
+
+<button onclick="selecionarCor('Azul Claro')">
+Azul Claro
+</button>
+
+<button onclick="selecionarCor('Laranja')">
+Laranja
+</button>
+
+</div>
+
+<div class="preco">
+R$ 299,90
+</div>
+
+<button class="carrinho-btn" onclick="adicionarCarrinho()">
+Adicionar ao Carrinho
+</button>
+
+</section>
+
+<!-- CARRINHO LATERAL -->
+
+<div id="carrinho-box" class="carrinho-box">
+
+<div class="topo-carrinho">
+
+<h2>Seu Carrinho</h2>
+
+<button onclick="fecharCarrinho()">
+X
+</button>
+
+</div>
+
+<div id="itens-carrinho"></div>
+
+<h3 id="total">
+Total: R$ 0,00
+</h3>
+
+<button class="finalizar" onclick="finalizarCompra()">
+Finalizar Compra
+</button>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
