@@ -1,0 +1,280 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#081b33;
+}
+
+/* LOGIN */
+
+.container{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+.box{
+    background:white;
+    width:400px;
+    padding:40px;
+    border-radius:20px;
+}
+
+.box h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#4fc3f7;
+}
+
+.input-box{
+    margin-bottom:20px;
+}
+
+.input-box label{
+    display:block;
+    margin-bottom:8px;
+}
+
+.input-box input{
+    width:100%;
+    padding:14px;
+    border:2px solid #ddd;
+    border-radius:10px;
+}
+
+.btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#4fc3f7;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:#ff9800;
+}
+
+.trocar{
+    text-align:center;
+    margin-top:20px;
+}
+
+.trocar span{
+    color:#4fc3f7;
+    cursor:pointer;
+}
+
+.mensagem{
+    margin-top:20px;
+    text-align:center;
+    font-weight:bold;
+}
+
+/* SITE */
+
+.site{
+    display:none;
+}
+
+/* HEADER */
+
+header{
+    background:#4fc3f7;
+    padding:20px;
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:white;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.menu{
+    display:flex;
+    gap:20px;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+    padding:40px 20px;
+    text-align:center;
+}
+
+.banner{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    margin-bottom:40px;
+}
+
+.banner img{
+    width:90%;
+    max-width:1200px;
+    border-radius:20px;
+}
+
+/* BOTÕES */
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.buttons button{
+    padding:15px 25px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.azul{
+    background:#4fc3f7;
+    color:white;
+}
+
+.laranja{
+    background:#ff9800;
+    color:white;
+}
+
+/* PRODUTO */
+
+.produto{
+    background:white;
+    max-width:900px;
+    margin:40px auto;
+    padding:40px;
+    border-radius:20px;
+}
+
+.produto h2{
+    margin-bottom:20px;
+}
+
+.produto p{
+    margin-bottom:20px;
+}
+
+.opcoes button{
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    margin:5px;
+    cursor:pointer;
+}
+
+.preco{
+    font-size:35px;
+    color:#ff9800;
+    margin:20px 0;
+    font-weight:bold;
+}
+
+.carrinho-btn{
+    background:#4fc3f7;
+    color:white;
+    border:none;
+    padding:15px 25px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* CARRINHO */
+
+.abrir-carrinho{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#ff9800;
+    color:white;
+    border:none;
+    padding:15px 20px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.carrinho-box{
+    position:fixed;
+    top:0;
+    right:-400px;
+    width:350px;
+    height:100vh;
+    background:white;
+    transition:0.4s;
+    padding:20px;
+    overflow-y:auto;
+}
+
+.carrinho-box.ativo{
+    right:0;
+}
+
+.topo-carrinho{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.topo-carrinho button{
+    background:red;
+    color:white;
+    border:none;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.item{
+    background:#f5f5f5;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.item button{
+    background:#4fc3f7;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.finalizar{
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#4fc3f7;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+    margin-top:20px;
+}
