@@ -1,2 +1,2 @@
 # tcctemproup
-projeto tcc vs1
+projeto tcc v1
