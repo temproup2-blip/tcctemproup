@@ -1,280 +1,906 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-    background:#081b33;
+body {
+    min-height: 100vh;
+    background: #f5f7fb;
 }
 
-/* LOGIN */
 
-.container{
-    width:100%;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:30px;
+/* =========================
+   TELA INICIAL
+========================= */
+
+.tela-inicial {
+    width: 100%;
+    min-height: 100vh;
+
+    background: #071b72;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
 }
 
-.box{
-    background:white;
-    width:400px;
-    padding:40px;
-    border-radius:20px;
+
+/* LOGO */
+
+.logo-inicial {
+    text-align: center;
+
+    color: white;
+
+    font-size: 62px;
+
+    font-weight: 800;
+
+    line-height: 0.85;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 80px;
 }
 
-.box h2{
-    text-align:center;
-    margin-bottom:20px;
-    color:#4fc3f7;
+.logo-inicial span {
+    display: block;
 }
 
-.input-box{
-    margin-bottom:20px;
+.logo-inicial strong {
+    display: block;
+    color: #ff7900;
 }
 
-.input-box label{
-    display:block;
-    margin-bottom:8px;
+
+/* BOTÕES DA TELA INICIAL */
+
+.botoes-inicial {
+    width: 100%;
+    max-width: 360px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
 }
 
-.input-box input{
-    width:100%;
-    padding:14px;
-    border:2px solid #ddd;
-    border-radius:10px;
+.botoes-inicial button {
+    width: 100%;
+    height: 58px;
+
+    border-radius: 30px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
 }
 
-.btn{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    background:#4fc3f7;
-    color:white;
-    cursor:pointer;
-    font-weight:bold;
+.btn-cadastrar {
+    border: none;
+
+    background: white;
+
+    color: #071b72;
 }
 
-.btn:hover{
-    background:#ff9800;
+.btn-entrar {
+    border: 2px solid white;
+
+    background: transparent;
+
+    color: white;
 }
 
-.trocar{
-    text-align:center;
-    margin-top:20px;
+.btn-cadastrar:hover {
+    transform: scale(1.03);
 }
 
-.trocar span{
-    color:#4fc3f7;
-    cursor:pointer;
+.btn-entrar:hover {
+    background: white;
+    color: #071b72;
 }
 
-.mensagem{
-    margin-top:20px;
-    text-align:center;
-    font-weight:bold;
+
+/* =========================
+   FORMULÁRIOS
+========================= */
+
+.tela-formulario {
+    display: none;
+
+    width: 100%;
+    min-height: 100vh;
+
+    background: #f5f7fb;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
 }
 
-/* SITE */
+.formulario {
+    width: 100%;
+    max-width: 420px;
 
-.site{
-    display:none;
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.12);
 }
 
-/* HEADER */
 
-header{
-    background:#4fc3f7;
-    padding:20px;
+/* LOGO DOS FORMULÁRIOS */
+
+.logo-form {
+    text-align: center;
+
+    font-size: 35px;
+
+    font-weight: bold;
+
+    color: #071b72;
+
+    margin-bottom: 25px;
 }
 
-nav{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.logo-form span {
+    color: #071b72;
 }
 
-.logo{
-    color:white;
-    font-size:28px;
-    font-weight:bold;
+.logo-form strong {
+    color: #ff7900;
 }
 
-.menu{
-    display:flex;
-    gap:20px;
+
+/* TÍTULOS */
+
+.formulario h1 {
+    text-align: center;
+
+    color: #071b72;
+
+    margin-bottom: 8px;
 }
 
-.menu a{
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
+.subtitulo {
+    text-align: center;
+
+    color: #777;
+
+    margin-bottom: 30px;
 }
 
-/* HERO */
 
-.hero{
-    padding:40px 20px;
-    text-align:center;
+/* =========================
+   CAMPOS
+========================= */
+
+.campo {
+    margin-bottom: 18px;
 }
 
-.banner{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    margin-bottom:40px;
+.campo label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-weight: bold;
+
+    color: #333;
 }
 
-.banner img{
-    width:90%;
-    max-width:1200px;
-    border-radius:20px;
+.campo input {
+    width: 100%;
+
+    height: 50px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    padding: 0 15px;
+
+    font-size: 15px;
+
+    outline: none;
 }
 
-/* BOTÕES */
-
-.buttons{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-    margin-top:20px;
+.campo input:focus {
+    border-color: #071b72;
 }
 
-.buttons button{
-    padding:15px 25px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:bold;
+
+/* SENHA */
+
+.senha {
+    position: relative;
+
+    display: flex;
 }
 
-.azul{
-    background:#4fc3f7;
-    color:white;
+.senha input {
+    padding-right: 50px;
 }
 
-.laranja{
-    background:#ff9800;
-    color:white;
+.senha button {
+    position: absolute;
+
+    right: 5px;
+    top: 5px;
+
+    width: 40px;
+    height: 40px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 17px;
 }
 
-/* PRODUTO */
 
-.produto{
-    background:white;
-    max-width:900px;
-    margin:40px auto;
-    padding:40px;
-    border-radius:20px;
+/* =========================
+   BOTÃO PRINCIPAL
+========================= */
+
+.btn-principal {
+    width: 100%;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 25px;
+
+    background: #071b72;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 10px;
+
+    transition: 0.2s;
 }
 
-.produto h2{
-    margin-bottom:20px;
+.btn-principal:hover {
+    background: #ff7900;
 }
 
-.produto p{
-    margin-bottom:20px;
+
+/* TROCA LOGIN / CADASTRO */
+
+.troca {
+    text-align: center;
+
+    margin-top: 22px;
+
+    color: #666;
 }
 
-.opcoes button{
-    padding:10px 15px;
-    border:none;
-    border-radius:10px;
-    margin:5px;
-    cursor:pointer;
+.troca span {
+    color: #071b72;
+
+    font-weight: bold;
+
+    cursor: pointer;
 }
 
-.preco{
-    font-size:35px;
-    color:#ff9800;
-    margin:20px 0;
-    font-weight:bold;
+.voltar {
+    display: block;
+
+    margin: 20px auto 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #777;
+
+    cursor: pointer;
+
+    font-size: 14px;
 }
 
-.carrinho-btn{
-    background:#4fc3f7;
-    color:white;
-    border:none;
-    padding:15px 25px;
-    border-radius:10px;
-    cursor:pointer;
+
+/* =========================
+   SITE PRINCIPAL
+========================= */
+
+.site {
+    display: none;
+
+    min-height: 100vh;
+
+    background: #f5f7fb;
 }
 
-/* CARRINHO */
 
-.abrir-carrinho{
-    position:fixed;
-    top:20px;
-    right:20px;
-    background:#ff9800;
-    color:white;
-    border:none;
-    padding:15px 20px;
-    border-radius:10px;
-    cursor:pointer;
+/* =========================
+   HEADER
+========================= */
+
+.site header {
+    background: #071b72;
+
+    padding: 20px 6%;
+
+    color: white;
 }
 
-.carrinho-box{
-    position:fixed;
-    top:0;
-    right:-400px;
-    width:350px;
-    height:100vh;
-    background:white;
-    transition:0.4s;
-    padding:20px;
-    overflow-y:auto;
+.site nav {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
 }
 
-.carrinho-box.ativo{
-    right:0;
+.logo {
+    color: white;
+
+    font-size: 28px;
+
+    font-weight: bold;
 }
 
-.topo-carrinho{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:20px;
+.logo span {
+    color: #ff7900;
 }
 
-.topo-carrinho button{
-    background:red;
-    color:white;
-    border:none;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    cursor:pointer;
+.menu {
+    display: flex;
+
+    gap: 25px;
 }
 
-.item{
-    background:#f5f5f5;
-    padding:15px;
-    border-radius:10px;
-    margin-bottom:15px;
+.menu a {
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition: 0.2s;
 }
 
-.item button{
-    background:#4fc3f7;
-    color:white;
-    border:none;
-    padding:8px 12px;
-    border-radius:8px;
-    cursor:pointer;
+.menu a:hover {
+    color: #ff7900;
 }
 
-.finalizar{
-    width:100%;
-    padding:15px;
-    border:none;
-    background:#4fc3f7;
-    color:white;
-    border-radius:10px;
-    cursor:pointer;
-    margin-top:20px;
+
+/* =========================
+   BOTÃO CARRINHO
+========================= */
+
+.abrir-carrinho {
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    z-index: 10;
+
+    background: #ff7900;
+
+    color: white;
+
+    border: none;
+
+    padding: 13px 20px;
+
+    border-radius: 25px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    padding: 40px 20px;
+
+    text-align: center;
+}
+
+.banner {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-bottom: 40px;
+}
+
+.banner img {
+    width: 90%;
+
+    max-width: 1200px;
+
+    border-radius: 20px;
+
+    display: block;
+}
+
+.hero h1 {
+    color: #071b72;
+
+    font-size: 36px;
+
+    margin-bottom: 15px;
+}
+
+.hero p {
+    color: #555;
+
+    font-size: 18px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   BOTÕES HERO
+========================= */
+
+.buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+}
+
+.buttons button {
+    padding: 15px 25px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    color: white;
+}
+
+.azul {
+    background: #071b72;
+}
+
+.laranja {
+    background: #ff7900;
+}
+
+
+/* =========================
+   PRODUTO
+========================= */
+
+.produto {
+    background: white;
+
+    max-width: 900px;
+
+    margin: 40px auto;
+
+    padding: 40px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.produto h2 {
+    color: #071b72;
+
+    margin-bottom: 15px;
+}
+
+.produto p {
+    color: #555;
+
+    margin-bottom: 20px;
+}
+
+.produto h3 {
+    margin-top: 20px;
+
+    margin-bottom: 10px;
+
+    color: #333;
+}
+
+
+/* OPÇÕES */
+
+.opcoes {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.opcoes button {
+    padding: 10px 18px;
+
+    border: 2px solid #ddd;
+
+    background: white;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.opcoes button:hover {
+    border-color: #071b72;
+
+    color: #071b72;
+}
+
+
+/* PREÇO */
+
+.preco {
+    font-size: 35px;
+
+    color: #ff7900;
+
+    margin: 25px 0;
+
+    font-weight: bold;
+}
+
+
+/* BOTÃO ADICIONAR */
+
+.carrinho-btn {
+    background: #071b72;
+
+    color: white;
+
+    border: none;
+
+    padding: 15px 25px;
+
+    border-radius: 25px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.carrinho-btn:hover {
+    background: #ff7900;
+}
+
+
+/* =========================
+   CONTATO
+========================= */
+
+.contato {
+    background: #071b72;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 50px 20px;
+
+    margin-top: 50px;
+}
+
+.contato h2 {
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   CARRINHO LATERAL
+========================= */
+
+.carrinho-box {
+    position: fixed;
+
+    top: 0;
+    right: -400px;
+
+    width: 350px;
+
+    height: 100vh;
+
+    background: white;
+
+    z-index: 100;
+
+    transition: 0.4s;
+
+    padding: 20px;
+
+    overflow-y: auto;
+
+    box-shadow:
+        -5px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.carrinho-box.ativo {
+    right: 0;
+}
+
+.topo-carrinho {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.topo-carrinho h2 {
+    color: #071b72;
+}
+
+.topo-carrinho button {
+    background: #ff7900;
+
+    color: white;
+
+    border: none;
+
+    width: 30px;
+
+    height: 30px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+
+/* ITEM DO CARRINHO */
+
+.item {
+    background: #f5f5f5;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    margin-bottom: 15px;
+}
+
+.item h4 {
+    color: #071b72;
+
+    margin-bottom: 8px;
+}
+
+.item p {
+    margin-bottom: 5px;
+
+    color: #555;
+}
+
+.item button {
+    background: #ff7900;
+
+    color: white;
+
+    border: none;
+
+    padding: 8px 12px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    margin-top: 8px;
+}
+
+
+/* FINALIZAR */
+
+.finalizar {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    background: #071b72;
+
+    color: white;
+
+    border-radius: 25px;
+
+    cursor: pointer;
+
+    margin-top: 20px;
+
+    font-weight: bold;
+}
+
+.finalizar:hover {
+    background: #ff7900;
+}
+
+
+/* =========================
+   MENSAGEM
+========================= */
+
+.mensagem {
+    position: fixed;
+
+    bottom: 25px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    padding: 14px 25px;
+
+    border-radius: 10px;
+
+    color: white;
+
+    display: none;
+
+    z-index: 200;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 700px) {
+
+    .logo-inicial {
+        font-size: 52px;
+
+        margin-bottom: 60px;
+    }
+
+
+    .formulario {
+        padding: 30px 22px;
+    }
+
+
+    .site header {
+        padding: 20px;
+    }
+
+
+    .site nav {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+
+    .menu {
+        gap: 15px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+
+    .abrir-carrinho {
+        position: absolute;
+
+        top: 115px;
+    }
+
+
+    .hero {
+        padding-top: 80px;
+    }
+
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+
+    .hero p {
+        font-size: 16px;
+    }
+
+
+    .produto {
+        margin: 25px 15px;
+
+        padding: 25px;
+    }
+
+
+    .preco {
+        font-size: 30px;
+    }
+
+
+    .carrinho-box {
+        width: 90%;
+
+        right: -100%;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .logo-inicial {
+        font-size: 45px;
+    }
+
+
+    .botoes-inicial {
+        max-width: 320px;
+    }
+
+
+    .hero h1 {
+        font-size: 25px;
+    }
+
+
+    .produto h2 {
+        font-size: 22px;
+    }
+
 }
