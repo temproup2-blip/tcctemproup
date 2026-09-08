@@ -1,74 +1,151 @@
-/* LOGIN */
+```javascript
+/* =========================
+   TROCA DE TELAS
+========================= */
 
-function mostrarCadastro(){
+function mostrarCadastro() {
 
+    document.getElementById("inicio").style.display = "none";
     document.getElementById("login").style.display = "none";
-
-    document.getElementById("cadastro").style.display = "block";
+    document.getElementById("site").style.display = "none";
+    document.getElementById("cadastro").style.display = "flex";
 
 }
 
-function mostrarLogin(){
+
+function mostrarLogin() {
+
+    document.getElementById("inicio").style.display = "none";
+    document.getElementById("cadastro").style.display = "none";
+    document.getElementById("site").style.display = "none";
+    document.getElementById("login").style.display = "flex";
+
+}
+
+
+function mostrarInicio() {
 
     document.getElementById("cadastro").style.display = "none";
-
-    document.getElementById("login").style.display = "block";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("site").style.display = "none";
+    document.getElementById("inicio").style.display = "flex";
 
 }
 
-function cadastrar(){
 
-    let nome =
-    document.getElementById("cadNome").value;
+/* =========================
+   CADASTRO
+========================= */
 
-    let email =
-    document.getElementById("cadEmail").value;
+function cadastrar() {
 
-    let senha =
-    document.getElementById("cadSenha").value;
+    const nome =
+        document.getElementById("nome").value.trim();
+
+    const email =
+        document.getElementById("emailCadastro").value.trim();
+
+    const senha =
+        document.getElementById("senhaCadastro").value;
+
+    const confirmar =
+        document.getElementById("confirmarSenha").value;
+
+
+    if (!nome || !email || !senha || !confirmar) {
+
+        mostrarMensagem(
+            "Preencha todos os campos.",
+            "red"
+        );
+
+        return;
+    }
+
+
+    if (senha !== confirmar) {
+
+        mostrarMensagem(
+            "As senhas não são iguais.",
+            "red"
+        );
+
+        return;
+    }
+
 
     localStorage.setItem("nome", nome);
-
     localStorage.setItem("email", email);
-
     localStorage.setItem("senha", senha);
 
+
     mostrarMensagem(
-        "Cadastro realizado!",
+        "Cadastro realizado com sucesso!",
         "green"
     );
 
+
+    setTimeout(function () {
+
+        mostrarLogin();
+
+    }, 1200);
+
 }
 
-function fazerLogin(){
 
-    let email =
-    document.getElementById("loginEmail").value;
+/* =========================
+   LOGIN
+========================= */
 
-    let senha =
-    document.getElementById("loginSenha").value;
+function fazerLogin() {
 
-    let emailSalvo =
-    localStorage.getItem("email");
+    const email =
+        document.getElementById("emailLogin").value.trim();
 
-    let senhaSalva =
-    localStorage.getItem("senha");
+    const senha =
+        document.getElementById("senhaLogin").value;
 
-    if(
-        email === emailSalvo &&
-        senha === senhaSalva
-    ){
 
-        document.querySelector(".container")
-        .style.display = "none";
+    const emailSalvo =
+        localStorage.getItem("email");
 
-        document.getElementById("site")
-        .style.display = "block";
+    const senhaSalva =
+        localStorage.getItem("senha");
 
-    }else{
+
+    if (!email || !senha) {
 
         mostrarMensagem(
-            "Email ou senha incorretos",
+            "Digite seu e-mail e senha.",
+            "red"
+        );
+
+        return;
+    }
+
+
+    if (
+        email === emailSalvo &&
+        senha === senhaSalva
+    ) {
+
+        document.getElementById("login").style.display = "none";
+        document.getElementById("inicio").style.display = "none";
+        document.getElementById("cadastro").style.display = "none";
+
+        document.getElementById("site").style.display = "block";
+
+
+        mostrarMensagem(
+            "Login realizado!",
+            "green"
+        );
+
+    } else {
+
+        mostrarMensagem(
+            "E-mail ou senha incorretos.",
             "red"
         );
 
@@ -76,57 +153,118 @@ function fazerLogin(){
 
 }
 
-function mostrarMensagem(texto, cor){
 
-    let msg =
-    document.getElementById("mensagem");
+/* =========================
+   MOSTRAR / OCULTAR SENHA
+========================= */
 
-    msg.innerHTML = texto;
+function mostrarSenha(id) {
 
-    msg.style.color = cor;
+    const campo =
+        document.getElementById(id);
+
+
+    if (campo.type === "password") {
+
+        campo.type = "text";
+
+    } else {
+
+        campo.type = "password";
+
+    }
 
 }
 
-/* CARRINHO */
+
+/* =========================
+   MENSAGEM
+========================= */
+
+function mostrarMensagem(texto, cor) {
+
+    const mensagem =
+        document.getElementById("mensagem");
+
+
+    mensagem.innerText = texto;
+
+    mensagem.style.backgroundColor = cor;
+
+    mensagem.style.display = "block";
+
+
+    setTimeout(function () {
+
+        mensagem.style.display = "none";
+
+    }, 2500);
+
+}
+
+
+/* =========================
+   CARRINHO
+========================= */
 
 let carrinho = JSON.parse(
     localStorage.getItem("carrinho")
 ) || [];
 
+
 let tamanhoSelecionado = "";
 let corSelecionada = "";
 
-function abrirCarrinho(){
 
-    document.getElementById("carrinho-box")
-    .classList.add("ativo");
+/* ABRIR CARRINHO */
+
+function abrirCarrinho() {
+
+    const carrinhoBox =
+        document.getElementById("carrinho-box");
+
+    if (carrinhoBox) {
+        carrinhoBox.classList.add("ativo");
+    }
 
 }
 
-function fecharCarrinho(){
 
-    document.getElementById("carrinho-box")
-    .classList.remove("ativo");
+/* FECHAR CARRINHO */
+
+function fecharCarrinho() {
+
+    const carrinhoBox =
+        document.getElementById("carrinho-box");
+
+    if (carrinhoBox) {
+        carrinhoBox.classList.remove("ativo");
+    }
 
 }
 
-function selecionarTamanho(tamanho){
+
+/* SELECIONAR TAMANHO */
+
+function selecionarTamanho(tamanho) {
 
     tamanhoSelecionado = tamanho;
 
-    alert("Tamanho: " + tamanho);
-
 }
 
-function selecionarCor(cor){
+
+/* SELECIONAR COR */
+
+function selecionarCor(cor) {
 
     corSelecionada = cor;
 
-    alert("Cor: " + cor);
-
 }
 
-function salvarCarrinho(){
+
+/* SALVAR CARRINHO */
+
+function salvarCarrinho() {
 
     localStorage.setItem(
         "carrinho",
@@ -135,95 +273,134 @@ function salvarCarrinho(){
 
 }
 
-function adicionarCarrinho(){
 
-    if(tamanhoSelecionado === ""){
-        alert("Escolha um tamanho");
+/* ADICIONAR PRODUTO */
+
+function adicionarCarrinho() {
+
+    if (tamanhoSelecionado === "") {
+
+        alert("Escolha um tamanho.");
+
         return;
     }
 
-    if(corSelecionada === ""){
-        alert("Escolha uma cor");
+
+    if (corSelecionada === "") {
+
+        alert("Escolha uma cor.");
+
         return;
     }
+
 
     const produto = {
 
-        id:Date.now(),
+        id: Date.now(),
 
-        nome:"Blusa Inteligente Temp.Roup",
+        nome: "Blusa Inteligente Temp.Roup",
 
-        tamanho:tamanhoSelecionado,
+        tamanho: tamanhoSelecionado,
 
-        cor:corSelecionada,
+        cor: corSelecionada,
 
-        preco:299.90
+        preco: 299.90
 
     };
 
+
     carrinho.push(produto);
+
 
     salvarCarrinho();
 
     atualizarCarrinho();
 
-    alert("Produto adicionado!");
+
+    alert("Produto adicionado ao carrinho!");
 
 }
 
-function atualizarCarrinho(){
+
+/* ATUALIZAR CARRINHO */
+
+function atualizarCarrinho() {
 
     const area =
-    document.getElementById("itens-carrinho");
+        document.getElementById("itens-carrinho");
 
     const contador =
-    document.getElementById("contador");
+        document.getElementById("contador");
+
+    const totalElemento =
+        document.getElementById("total");
+
+
+    if (!area || !contador || !totalElemento) {
+        return;
+    }
+
 
     area.innerHTML = "";
 
+
     let total = 0;
 
-    carrinho.forEach((produto,index)=>{
+
+    carrinho.forEach(function (produto, index) {
 
         total += produto.preco;
 
+
         area.innerHTML += `
 
-        <div class="item">
+            <div class="item">
 
-        <h4>${produto.nome}</h4>
+                <h4>
+                    ${produto.nome}
+                </h4>
 
-        <p>Tamanho:
-        ${produto.tamanho}</p>
+                <p>
+                    Tamanho: ${produto.tamanho}
+                </p>
 
-        <p>Cor:
-        ${produto.cor}</p>
+                <p>
+                    Cor: ${produto.cor}
+                </p>
 
-        <p>R$
-        ${produto.preco.toFixed(2)}</p>
+                <p>
+                    R$ ${produto.preco.toFixed(2)}
+                </p>
 
-        <button onclick="removerItem(${index})">
-        Remover
-        </button>
+                <button
+                    onclick="removerItem(${index})">
 
-        </div>
+                    Remover
+
+                </button>
+
+            </div>
 
         `;
 
     });
 
-    contador.innerText =
-    carrinho.length;
 
-    document.getElementById("total")
-    .innerText =
-    "Total: R$ " + total.toFixed(2);
+    contador.innerText =
+        carrinho.length;
+
+
+    totalElemento.innerText =
+        "Total: R$ " + total.toFixed(2);
 
 }
 
-function removerItem(index){
 
-    carrinho.splice(index,1);
+/* REMOVER ITEM */
+
+function removerItem(index) {
+
+    carrinho.splice(index, 1);
 
     salvarCarrinho();
 
@@ -231,18 +408,24 @@ function removerItem(index){
 
 }
 
-function finalizarCompra(){
 
-    if(carrinho.length === 0){
+/* FINALIZAR COMPRA */
 
-        alert("Carrinho vazio");
+function finalizarCompra() {
+
+    if (carrinho.length === 0) {
+
+        alert("Carrinho vazio.");
+
         return;
-
     }
+
 
     alert("Compra finalizada!");
 
+
     carrinho = [];
+
 
     salvarCarrinho();
 
@@ -250,8 +433,31 @@ function finalizarCompra(){
 
 }
 
-window.onload = function(){
+
+/* =========================
+   SAIR DA CONTA
+========================= */
+
+function sair() {
+
+    document.getElementById("site").style.display = "none";
+
+    document.getElementById("inicio").style.display = "flex";
+
+}
+
+
+/* =========================
+   INICIALIZAÇÃO
+========================= */
+
+window.onload = function () {
 
     atualizarCarrinho();
 
-}
+};
+```
+
+**Esse código mantém o carrinho que já existe no seu projeto**, mas muda o sistema de login para funcionar com a nova estrutura da tela inicial, cadastro e login.
+
+Agora me manda o link do **`index.html`** e depois o **`style.css`**. Aí eu atualizo os dois para ficarem **com a tela azul inicial do modelo + cadastro/login + sua loja e carrinho**, sem perder o que você já tem.
