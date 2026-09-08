@@ -1,239 +1,530 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp.Roup</title>
 
-<title>Temp.Roup</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- LOGIN -->
+    <!-- =========================
+         TELA INICIAL
+    ========================== -->
 
-<div class="container">
+    <section id="inicio" class="tela-inicial">
 
-<div class="box">
+        <div class="logo-inicial">
+            <span>TEMP</span>
+            <strong>ROUP</strong>
+        </div>
 
-<div id="login">
+        <div class="botoes-inicial">
 
-<h2>Entrar</h2>
+            <button
+                class="btn-cadastrar"
+                onclick="mostrarCadastro()">
 
-<div class="input-box">
-<label>Email</label>
-<input type="email" id="loginEmail">
-</div>
+                CADASTRAR-SE
 
-<div class="input-box">
-<label>Senha</label>
-<input type="password" id="loginSenha">
-</div>
+            </button>
 
-<button class="btn" onclick="fazerLogin()">
-Entrar
-</button>
+            <button
+                class="btn-entrar"
+                onclick="mostrarLogin()">
 
-<div class="trocar">
-Não possui conta?
-<span onclick="mostrarCadastro()">
-Cadastrar
-</span>
-</div>
+                ENTRAR
 
-</div>
+            </button>
 
-<!-- CADASTRO -->
+        </div>
 
-<div id="cadastro" style="display:none;">
+    </section>
 
-<h2>Cadastro</h2>
 
-<div class="input-box">
-<label>Nome</label>
-<input type="text" id="cadNome">
-</div>
+    <!-- =========================
+         TELA DE CADASTRO
+    ========================== -->
 
-<div class="input-box">
-<label>Email</label>
-<input type="email" id="cadEmail">
-</div>
+    <section id="cadastro" class="tela-formulario">
 
-<div class="input-box">
-<label>Senha</label>
-<input type="password" id="cadSenha">
-</div>
+        <div class="formulario">
 
-<button class="btn" onclick="cadastrar()">
-Cadastrar
-</button>
+            <div class="logo-form">
+                <span>TEMP</span><strong>ROUP</strong>
+            </div>
 
-<div class="trocar">
-Já possui conta?
-<span onclick="mostrarLogin()">
-Entrar
-</span>
-</div>
+            <h1>Criar sua conta</h1>
 
-</div>
+            <p class="subtitulo">
+                Cadastre-se para começar
+            </p>
 
-<div class="mensagem" id="mensagem"></div>
 
-</div>
+            <div class="campo">
 
-</div>
+                <label for="cadNome">
+                    Nome completo
+                </label>
 
-<!-- SITE -->
+                <input
+                    type="text"
+                    id="cadNome"
+                    placeholder="Digite seu nome">
 
-<div class="site" id="site">
+            </div>
 
-<header>
 
-<nav>
+            <div class="campo">
 
-<div class="logo">
-Temp.Roup
-</div>
+                <label for="cadEmail">
+                    E-mail
+                </label>
 
-<div class="menu">
-<a href="#">Início</a>
-<a href="#">Produtos</a>
-<a href="#">Contato</a>
-</div>
+                <input
+                    type="email"
+                    id="cadEmail"
+                    placeholder="Digite seu e-mail">
 
-</nav>
+            </div>
 
-</header>
 
-<!-- CARRINHO -->
+            <div class="campo">
 
-<button class="abrir-carrinho" onclick="abrirCarrinho()">
-🛒 Carrinho (<span id="contador">0</span>)
-</button>
+                <label for="cadSenha">
+                    Senha
+                </label>
 
-<!-- HERO -->
+                <div class="senha">
 
-<section class="hero">
+                    <input
+                        type="password"
+                        id="cadSenha"
+                        placeholder="Digite sua senha">
 
-<div class="banner">
+                    <button
+                        type="button"
+                        onclick="mostrarSenha('cadSenha')">
 
-<img src="64661.jpg" alt="Temp.Roup">
+                        👁
 
-</div>
+                    </button>
 
-<h1>
-A primeira blusa inteligente do Brasil
-</h1>
+                </div>
 
-<p>
-Roupa inteligente que se adapta ao clima e ao corpo.
-</p>
+            </div>
 
-<div class="buttons">
 
-<button class="azul">
-Linha Performance
-</button>
+            <div class="campo">
 
-<button class="laranja">
-Linha Cuidado & Conforto
-</button>
+                <label for="confirmarSenha">
+                    Confirmar senha
+                </label>
 
-</div>
+                <input
+                    type="password"
+                    id="confirmarSenha"
+                    placeholder="Confirme sua senha">
 
-</section>
+            </div>
 
-<!-- PRODUTO -->
 
-<section class="produto">
+            <button
+                class="btn-principal"
+                onclick="cadastrar()">
 
-<h2>
-Blusa Inteligente Temp.Roup
-</h2>
+                CADASTRAR-SE
 
-<p>
-Tecnologia que aquece ou resfria automaticamente.
-</p>
+            </button>
 
-<h3>Escolha o tamanho</h3>
 
-<div class="opcoes">
+            <p class="troca">
 
-<button onclick="selecionarTamanho('P')">
-P
-</button>
+                Já possui uma conta?
 
-<button onclick="selecionarTamanho('M')">
-M
-</button>
+                <span onclick="mostrarLogin()">
+                    Entrar
+                </span>
 
-<button onclick="selecionarTamanho('G')">
-G
-</button>
+            </p>
 
-<button onclick="selecionarTamanho('GG')">
-GG
-</button>
 
-</div>
+            <button
+                class="voltar"
+                onclick="mostrarInicio()">
 
-<h3>Escolha a cor</h3>
+                ← Voltar
 
-<div class="opcoes">
+            </button>
 
-<button onclick="selecionarCor('Azul Claro')">
-Azul Claro
-</button>
+        </div>
 
-<button onclick="selecionarCor('Laranja')">
-Laranja
-</button>
+    </section>
 
-</div>
 
-<div class="preco">
-R$ 299,90
-</div>
+    <!-- =========================
+         TELA DE LOGIN
+    ========================== -->
 
-<button class="carrinho-btn" onclick="adicionarCarrinho()">
-Adicionar ao Carrinho
-</button>
+    <section id="login" class="tela-formulario">
 
-</section>
+        <div class="formulario">
 
-<!-- CARRINHO LATERAL -->
+            <div class="logo-form">
+                <span>TEMP</span><strong>ROUP</strong>
+            </div>
 
-<div id="carrinho-box" class="carrinho-box">
+            <h1>Bem-vindo!</h1>
 
-<div class="topo-carrinho">
+            <p class="subtitulo">
+                Entre na sua conta
+            </p>
 
-<h2>Seu Carrinho</h2>
 
-<button onclick="fecharCarrinho()">
-X
-</button>
+            <div class="campo">
 
-</div>
+                <label for="loginEmail">
+                    E-mail
+                </label>
 
-<div id="itens-carrinho"></div>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Digite seu e-mail">
 
-<h3 id="total">
-Total: R$ 0,00
-</h3>
+            </div>
 
-<button class="finalizar" onclick="finalizarCompra()">
-Finalizar Compra
-</button>
 
-</div>
+            <div class="campo">
 
-</div>
+                <label for="loginSenha">
+                    Senha
+                </label>
 
-<script src="script.js"></script>
+                <div class="senha">
+
+                    <input
+                        type="password"
+                        id="loginSenha"
+                        placeholder="Digite sua senha">
+
+                    <button
+                        type="button"
+                        onclick="mostrarSenha('loginSenha')">
+
+                        👁
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="btn-principal"
+                onclick="fazerLogin()">
+
+                ENTRAR
+
+            </button>
+
+
+            <p class="troca">
+
+                Ainda não possui uma conta?
+
+                <span onclick="mostrarCadastro()">
+                    Cadastre-se
+                </span>
+
+            </p>
+
+
+            <button
+                class="voltar"
+                onclick="mostrarInicio()">
+
+                ← Voltar
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SITE PRINCIPAL
+    ========================== -->
+
+    <section id="site" class="site">
+
+        <header>
+
+            <nav>
+
+                <div class="logo">
+                    TEMP<span>ROUP</span>
+                </div>
+
+                <div class="menu">
+
+                    <a href="#">
+                        Início
+                    </a>
+
+                    <a href="#produto">
+                        Produtos
+                    </a>
+
+                    <a href="#contato">
+                        Contato
+                    </a>
+
+                </div>
+
+            </nav>
+
+        </header>
+
+
+        <!-- =========================
+             CARRINHO
+        ========================== -->
+
+        <button
+            class="abrir-carrinho"
+            onclick="abrirCarrinho()">
+
+            🛒 Carrinho
+            (<span id="contador">0</span>)
+
+        </button>
+
+
+        <!-- =========================
+             HERO
+        ========================== -->
+
+        <section class="hero">
+
+            <div class="banner">
+
+                <img
+                    src="64661.jpg"
+                    alt="Temp.Roup">
+
+            </div>
+
+
+            <h1>
+                A primeira blusa inteligente do Brasil
+            </h1>
+
+
+            <p>
+                Roupa inteligente que se adapta ao clima e ao corpo.
+            </p>
+
+
+            <div class="buttons">
+
+                <button class="azul">
+                    Linha Performance
+                </button>
+
+                <button class="laranja">
+                    Linha Cuidado & Conforto
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PRODUTO
+        ========================== -->
+
+        <section
+            class="produto"
+            id="produto">
+
+            <h2>
+                Blusa Inteligente Temp.Roup
+            </h2>
+
+
+            <p>
+                Tecnologia que aquece ou resfria automaticamente.
+            </p>
+
+
+            <h3>
+                Escolha o tamanho
+            </h3>
+
+
+            <div class="opcoes">
+
+                <button
+                    onclick="selecionarTamanho('P')">
+
+                    P
+
+                </button>
+
+                <button
+                    onclick="selecionarTamanho('M')">
+
+                    M
+
+                </button>
+
+                <button
+                    onclick="selecionarTamanho('G')">
+
+                    G
+
+                </button>
+
+                <button
+                    onclick="selecionarTamanho('GG')">
+
+                    GG
+
+                </button>
+
+            </div>
+
+
+            <h3>
+                Escolha a cor
+            </h3>
+
+
+            <div class="opcoes">
+
+                <button
+                    onclick="selecionarCor('Azul Claro')">
+
+                    Azul Claro
+
+                </button>
+
+                <button
+                    onclick="selecionarCor('Laranja')">
+
+                    Laranja
+
+                </button>
+
+            </div>
+
+
+            <div class="preco">
+                R$ 299,90
+            </div>
+
+
+            <button
+                class="carrinho-btn"
+                onclick="adicionarCarrinho()">
+
+                Adicionar ao Carrinho
+
+            </button>
+
+        </section>
+
+
+        <!-- =========================
+             CONTATO
+        ========================== -->
+
+        <section
+            id="contato"
+            class="contato">
+
+            <h2>
+                Contato
+            </h2>
+
+            <p>
+                Entre em contato com a Temp.Roup.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             CARRINHO LATERAL
+        ========================== -->
+
+        <div
+            id="carrinho-box"
+            class="carrinho-box">
+
+            <div class="topo-carrinho">
+
+                <h2>
+                    Seu Carrinho
+                </h2>
+
+                <button
+                    onclick="fecharCarrinho()">
+
+                    X
+
+                </button>
+
+            </div>
+
+
+            <div id="itens-carrinho"></div>
+
+
+            <h3 id="total">
+                Total: R$ 0,00
+            </h3>
+
+
+            <button
+                class="finalizar"
+                onclick="finalizarCompra()">
+
+                Finalizar Compra
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MENSAGEM
+    ========================== -->
+
+    <div
+        id="mensagem"
+        class="mensagem">
+    </div>
+
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>
+```
+
+**Importante:** esse `index.html` já está preparado para o `script.js` que te passei anteriormente, usando os mesmos IDs (`cadNome`, `cadEmail`, `loginEmail`, `loginSenha`, carrinho etc.).
+
+Agora falta só o **`style.css`**. Me manda o link dele que eu faço a atualização para deixar a aparência **igual à nova tela azul**, sem destruir o visual da loja.
