@@ -2,152 +2,228 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Temp.Roup</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="style.css">
+
 </head>
 
 <body>
+
 
     <!-- =========================
          TELA INICIAL
     ========================== -->
 
-    <section id="inicio" class="tela-inicial">
+    <section id="inicio"
+             class="tela-inicial">
 
-        <div class="logo-inicial">
-            <span>TEMP</span>
-            <strong>ROUP</strong>
+        <div class="inicio-conteudo">
+
+            <!-- IMAGEM DO MODELO -->
+
+            <img
+                src="tela-inicial.png"
+                alt="Modelo do aplicativo Temp.Roup"
+                class="imagem-inicial"
+            >
+
+
+            <!-- BOTÕES -->
+
+            <div class="botoes-inicial">
+
+                <button
+                    class="btn-cadastrar"
+                    onclick="mostrarCadastro()">
+
+                    CADASTRAR-SE
+
+                </button>
+
+
+                <button
+                    class="btn-entrar"
+                    onclick="mostrarLogin()">
+
+                    ENTRAR
+
+                </button>
+
+            </div>
+
         </div>
-
-        <p class="descricao-inicial">
-            A primeira blusa inteligente do Brasil
-        </p>
-
-        <div class="botoes-inicial">
-
-            <button
-                class="btn-cadastrar"
-                onclick="mostrarCadastro()">
-                CADASTRAR-SE
-            </button>
-
-            <button
-                class="btn-entrar"
-                onclick="mostrarLogin()">
-                ENTRAR
-            </button>
-
-        </div>
-
-        <!-- LINK DO SITE -->
-
-        <a
-            class="link-site"
-            href="https://temproup2-blip.github.io/tcctemproup/"
-            target="_blank">
-
-            ACESSAR PELO LINK
-
-        </a>
 
     </section>
 
 
+
     <!-- =========================
-         CADASTRO
+         TELA DE CADASTRO
     ========================== -->
 
-    <section id="cadastro" class="tela-formulario">
+    <section id="cadastro"
+             class="tela-formulario">
 
         <div class="formulario">
 
+
             <div class="logo-form">
-                <span>TEMP</span><strong>ROUP</strong>
+
+                <span>TEMP</span>
+                <strong>ROUP</strong>
+
             </div>
 
-            <h1>Criar sua conta</h1>
+
+            <h1>
+                Criar conta
+            </h1>
+
 
             <p class="subtitulo">
-                Cadastre-se para começar
+                Preencha seus dados para criar sua conta
             </p>
+
+
+            <!-- NOME -->
 
             <div class="campo">
 
                 <label for="cadNome">
-                    Nome completo
+                    Nome completo:
                 </label>
 
                 <input
                     type="text"
                     id="cadNome"
-                    placeholder="Digite seu nome">
+                    placeholder="Digite seu nome completo"
+                >
 
             </div>
+
+
+            <!-- EMAIL -->
 
             <div class="campo">
 
                 <label for="cadEmail">
-                    E-mail
+                    E-mail:
                 </label>
 
                 <input
                     type="email"
                     id="cadEmail"
-                    placeholder="Digite seu e-mail">
+                    placeholder="Digite seu e-mail"
+                >
 
             </div>
+
+
+            <!-- SENHA -->
 
             <div class="campo">
 
                 <label for="cadSenha">
-                    Senha
+                    Senha:
                 </label>
+
 
                 <div class="senha">
 
                     <input
                         type="password"
                         id="cadSenha"
-                        placeholder="Digite sua senha">
+                        placeholder="Digite sua senha"
+                    >
+
 
                     <button
                         type="button"
                         onclick="mostrarSenha('cadSenha')">
+
                         👁
+
                     </button>
 
                 </div>
 
             </div>
 
+
+            <!-- CONFIRMAR SENHA -->
+
             <div class="campo">
 
                 <label for="confirmarSenha">
-                    Confirmar senha
+                    Confirmar senha:
                 </label>
 
-                <input
-                    type="password"
-                    id="confirmarSenha"
-                    placeholder="Confirme sua senha">
+
+                <div class="senha">
+
+                    <input
+                        type="password"
+                        id="confirmarSenha"
+                        placeholder="Confirme sua senha"
+                    >
+
+
+                    <button
+                        type="button"
+                        onclick="mostrarSenha('confirmarSenha')">
+
+                        👁
+
+                    </button>
+
+                </div>
 
             </div>
+
+
+            <!-- TERMOS -->
+
+            <div class="termos">
+
+                <input
+                    type="checkbox"
+                    id="aceitarTermos"
+                >
+
+                <label for="aceitarTermos">
+
+                    Eu aceito os
+                    <span>Termos de Uso</span>
+                    e a
+                    <span>Política de Privacidade</span>
+
+                </label>
+
+            </div>
+
+
+            <!-- CADASTRAR -->
 
             <button
                 class="btn-principal"
                 onclick="cadastrar()">
 
-                CADASTRAR-SE
+                Cadastrar
 
             </button>
 
+
             <p class="troca">
 
-                Já possui uma conta?
+                Já tem uma conta?
 
                 <span onclick="mostrarLogin()">
                     Entrar
@@ -155,6 +231,7 @@
 
             </p>
 
+
             <button
                 class="voltar"
                 onclick="mostrarInicio()">
@@ -168,77 +245,165 @@
     </section>
 
 
+
     <!-- =========================
-         LOGIN
+         TELA DE LOGIN
     ========================== -->
 
-    <section id="login" class="tela-formulario">
+    <section id="login"
+             class="tela-formulario">
 
         <div class="formulario">
 
+
             <div class="logo-form">
-                <span>TEMP</span><strong>ROUP</strong>
+
+                <span>TEMP</span>
+                <strong>ROUP</strong>
+
             </div>
 
-            <h1>Bem-vindo!</h1>
+
+            <h1>
+                Entrar na sua conta
+            </h1>
+
 
             <p class="subtitulo">
-                Entre na sua conta
+
+                Que bom te ver de novo!
+                <br>
+                Faça login para continuar.
+
             </p>
+
+
+            <!-- EMAIL -->
 
             <div class="campo">
 
                 <label for="loginEmail">
-                    E-mail
+
+                    E-mail ou telefone:
+
                 </label>
 
+
                 <input
-                    type="email"
+                    type="text"
                     id="loginEmail"
-                    placeholder="Digite seu e-mail">
+                    placeholder="Digite seu e-mail ou telefone"
+                >
 
             </div>
+
+
+            <!-- SENHA -->
 
             <div class="campo">
 
                 <label for="loginSenha">
-                    Senha
+
+                    Senha:
+
                 </label>
+
 
                 <div class="senha">
 
                     <input
                         type="password"
                         id="loginSenha"
-                        placeholder="Digite sua senha">
+                        placeholder="Digite sua senha"
+                    >
+
 
                     <button
                         type="button"
                         onclick="mostrarSenha('loginSenha')">
+
                         👁
+
                     </button>
 
                 </div>
 
             </div>
 
+
+            <!-- ESQUECEU SENHA -->
+
+            <p class="esqueceu">
+
+                Esqueceu a senha?
+
+            </p>
+
+
+            <!-- ENTRAR -->
+
             <button
                 class="btn-principal"
                 onclick="fazerLogin()">
 
-                ENTRAR
+                Entrar
 
             </button>
 
+
+            <div class="ou">
+
+                <span></span>
+
+                <p>Ou entre com</p>
+
+                <span></span>
+
+            </div>
+
+
+            <!-- LOGIN SOCIAL -->
+
+            <div class="sociais">
+
+                <button
+                    onclick="loginGoogle()">
+
+                    G
+
+                </button>
+
+
+                <button
+                    onclick="loginFacebook()">
+
+                    f
+
+                </button>
+
+
+                <button
+                    onclick="loginApple()">
+
+                    
+
+                </button>
+
+            </div>
+
+
             <p class="troca">
 
-                Ainda não possui uma conta?
+                Ainda não tem uma conta?
 
                 <span onclick="mostrarCadastro()">
-                    Cadastre-se
+
+                    Cadastrar
+
                 </span>
 
             </p>
+
 
             <button
                 class="voltar"
@@ -253,19 +418,28 @@
     </section>
 
 
+
     <!-- =========================
          SITE PRINCIPAL
     ========================== -->
 
-    <section id="site" class="site">
+    <section id="site"
+             class="site">
+
+
+        <!-- HEADER -->
 
         <header>
 
             <nav>
 
+
                 <div class="logo">
+
                     TEMP<span>ROUP</span>
+
                 </div>
+
 
                 <div class="menu">
 
@@ -273,9 +447,11 @@
                         Início
                     </a>
 
+
                     <a href="#produto">
                         Produtos
                     </a>
+
 
                     <a href="#contato">
                         Contato
@@ -288,16 +464,21 @@
         </header>
 
 
-        <!-- CARRINHO -->
+
+        <!-- =========================
+             BOTÃO CARRINHO
+        ========================== -->
 
         <button
             class="abrir-carrinho"
             onclick="abrirCarrinho()">
 
             🛒 Carrinho
+
             (<span id="contador">0</span>)
 
         </button>
+
 
 
         <!-- =========================
@@ -308,23 +489,35 @@
             class="hero"
             id="inicio-site">
 
+
             <div class="banner">
 
                 <img
                     src="64661.jpg"
-                    alt="Blusa inteligente Temp.Roup">
+                    alt="Blusa inteligente Temp.Roup"
+                >
 
             </div>
 
+
             <h1>
-                A primeira blusa inteligente do Brasil
+
+                A primeira blusa
+                inteligente do Brasil
+
             </h1>
 
+
             <p>
-                Tecnologia, conforto e inovação em uma única roupa.
+
+                Tecnologia, conforto e inovação
+                em uma única roupa.
+
             </p>
 
+
             <div class="buttons">
+
 
                 <button
                     class="azul"
@@ -334,6 +527,7 @@
 
                 </button>
 
+
                 <button
                     class="laranja"
                     onclick="irParaProduto()">
@@ -342,9 +536,11 @@
 
                 </button>
 
+
             </div>
 
         </section>
+
 
 
         <!-- =========================
@@ -355,82 +551,149 @@
             class="produto"
             id="produto">
 
+
             <h2>
+
                 Blusa Inteligente Temp.Roup
+
             </h2>
 
+
             <p>
-                Uma blusa desenvolvida para proporcionar
-                tecnologia, conforto e praticidade.
+
+                Uma blusa desenvolvida para
+                proporcionar tecnologia,
+                conforto e praticidade.
+
             </p>
 
+
+            <!-- TAMANHO -->
+
             <h3>
+
                 Escolha o tamanho
+
             </h3>
 
+
             <div class="opcoes">
+
 
                 <button
                     onclick="selecionarTamanho('P')">
+
                     P
+
                 </button>
+
 
                 <button
                     onclick="selecionarTamanho('M')">
+
                     M
+
                 </button>
+
 
                 <button
                     onclick="selecionarTamanho('G')">
+
                     G
+
                 </button>
+
 
                 <button
                     onclick="selecionarTamanho('GG')">
+
                     GG
+
                 </button>
+
 
             </div>
 
+
+
+            <!-- COR -->
+
             <h3>
+
                 Escolha a cor
+
             </h3>
+
 
             <div class="opcoes">
 
+
                 <button
                     onclick="selecionarCor('Azul Claro')">
+
                     Azul Claro
+
                 </button>
+
 
                 <button
                     onclick="selecionarCor('Laranja')">
+
                     Laranja
+
                 </button>
 
+
             </div>
+
+
+
+            <!-- ESCOLHAS -->
 
             <div class="selecionado">
 
-                <p>
-                    Tamanho:
-                    <strong id="tamanhoEscolhido">
-                        Nenhum
-                    </strong>
-                </p>
 
                 <p>
-                    Cor:
-                    <strong id="corEscolhida">
-                        Nenhuma
+
+                    Tamanho:
+
+                    <strong id="tamanhoEscolhido">
+
+                        Nenhum
+
                     </strong>
+
                 </p>
+
+
+                <p>
+
+                    Cor:
+
+                    <strong id="corEscolhida">
+
+                        Nenhuma
+
+                    </strong>
+
+                </p>
+
 
             </div>
+
+
+
+            <!-- PREÇO -->
 
             <div class="preco">
+
                 R$ 299,90
+
             </div>
+
+
+
+            <!-- CARRINHO -->
 
             <button
                 class="carrinho-btn"
@@ -443,6 +706,7 @@
         </section>
 
 
+
         <!-- =========================
              CONTATO
         ========================== -->
@@ -451,19 +715,31 @@
             class="contato"
             id="contato">
 
+
             <h2>
+
                 Contato
+
             </h2>
 
-            <p>
-                Entre em contato com a equipe Temp.Roup.
-            </p>
 
             <p>
-                Tecnologia e inovação para o seu dia a dia.
+
+                Entre em contato com a equipe
+                Temp.Roup.
+
+            </p>
+
+
+            <p>
+
+                Tecnologia e inovação
+                para o seu dia a dia.
+
             </p>
 
         </section>
+
 
 
         <!-- =========================
@@ -474,24 +750,36 @@
             id="carrinho-box"
             class="carrinho-box">
 
+
             <div class="topo-carrinho">
 
+
                 <h2>
+
                     Seu Carrinho
+
                 </h2>
+
 
                 <button
                     onclick="fecharCarrinho()">
+
                     X
+
                 </button>
 
             </div>
 
+
             <div id="itens-carrinho"></div>
 
+
             <h3 id="total">
+
                 Total: R$ 0,00
+
             </h3>
+
 
             <button
                 class="finalizar"
@@ -506,16 +794,24 @@
     </section>
 
 
-    <!-- MENSAGEM -->
+
+    <!-- =========================
+         MENSAGEM
+    ========================== -->
 
     <div
         id="mensagem"
         class="mensagem">
+
     </div>
 
+
+
+    <!-- JAVASCRIPT -->
 
     <script src="script.js"></script>
 
 </body>
 
 </html>
+
