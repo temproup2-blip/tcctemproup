@@ -1,13 +1,16 @@
-```javascript
 /* =========================
    TROCA DE TELAS
 ========================= */
 
+
 function mostrarCadastro() {
 
     document.getElementById("inicio").style.display = "none";
+
     document.getElementById("login").style.display = "none";
+
     document.getElementById("site").style.display = "none";
+
     document.getElementById("cadastro").style.display = "flex";
 
 }
@@ -16,8 +19,11 @@ function mostrarCadastro() {
 function mostrarLogin() {
 
     document.getElementById("inicio").style.display = "none";
+
     document.getElementById("cadastro").style.display = "none";
+
     document.getElementById("site").style.display = "none";
+
     document.getElementById("login").style.display = "flex";
 
 }
@@ -26,8 +32,11 @@ function mostrarLogin() {
 function mostrarInicio() {
 
     document.getElementById("cadastro").style.display = "none";
+
     document.getElementById("login").style.display = "none";
+
     document.getElementById("site").style.display = "none";
+
     document.getElementById("inicio").style.display = "flex";
 
 }
@@ -37,25 +46,50 @@ function mostrarInicio() {
    CADASTRO
 ========================= */
 
+
 function cadastrar() {
 
+
     const nome =
-        document.getElementById("nome").value.trim();
+        document.getElementById("cadNome").value.trim();
+
 
     const email =
-        document.getElementById("emailCadastro").value.trim();
+        document.getElementById("cadEmail").value.trim();
+
 
     const senha =
-        document.getElementById("senhaCadastro").value;
+        document.getElementById("cadSenha").value;
+
 
     const confirmar =
         document.getElementById("confirmarSenha").value;
 
 
-    if (!nome || !email || !senha || !confirmar) {
+    const termos =
+        document.getElementById("aceitarTermos").checked;
+
+
+    if (
+        !nome ||
+        !email ||
+        !senha ||
+        !confirmar
+    ) {
 
         mostrarMensagem(
             "Preencha todos os campos.",
+            "red"
+        );
+
+        return;
+    }
+
+
+    if (!termos) {
+
+        mostrarMensagem(
+            "Aceite os termos para continuar.",
             "red"
         );
 
@@ -74,9 +108,22 @@ function cadastrar() {
     }
 
 
-    localStorage.setItem("nome", nome);
-    localStorage.setItem("email", email);
-    localStorage.setItem("senha", senha);
+    localStorage.setItem(
+        "nome",
+        nome
+    );
+
+
+    localStorage.setItem(
+        "email",
+        email
+    );
+
+
+    localStorage.setItem(
+        "senha",
+        senha
+    );
 
 
     mostrarMensagem(
@@ -85,11 +132,14 @@ function cadastrar() {
     );
 
 
-    setTimeout(function () {
+    setTimeout(
+        function () {
 
-        mostrarLogin();
+            mostrarLogin();
 
-    }, 1200);
+        },
+        1200
+    );
 
 }
 
@@ -98,17 +148,21 @@ function cadastrar() {
    LOGIN
 ========================= */
 
+
 function fazerLogin() {
 
+
     const email =
-        document.getElementById("emailLogin").value.trim();
+        document.getElementById("loginEmail").value.trim();
+
 
     const senha =
-        document.getElementById("senhaLogin").value;
+        document.getElementById("loginSenha").value;
 
 
     const emailSalvo =
         localStorage.getItem("email");
+
 
     const senhaSalva =
         localStorage.getItem("senha");
@@ -130,19 +184,35 @@ function fazerLogin() {
         senha === senhaSalva
     ) {
 
-        document.getElementById("login").style.display = "none";
-        document.getElementById("inicio").style.display = "none";
-        document.getElementById("cadastro").style.display = "none";
 
-        document.getElementById("site").style.display = "block";
+        document.getElementById(
+            "inicio"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "cadastro"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "login"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "site"
+        ).style.display = "block";
 
 
         mostrarMensagem(
-            "Login realizado!",
+            "Login realizado com sucesso!",
             "green"
         );
 
+
     } else {
+
 
         mostrarMensagem(
             "E-mail ou senha incorretos.",
@@ -155,16 +225,20 @@ function fazerLogin() {
 
 
 /* =========================
-   MOSTRAR / OCULTAR SENHA
+   MOSTRAR SENHA
 ========================= */
 
+
 function mostrarSenha(id) {
+
 
     const campo =
         document.getElementById(id);
 
 
-    if (campo.type === "password") {
+    if (
+        campo.type === "password"
+    ) {
 
         campo.type = "text";
 
@@ -181,24 +255,133 @@ function mostrarSenha(id) {
    MENSAGEM
 ========================= */
 
-function mostrarMensagem(texto, cor) {
+
+function mostrarMensagem(
+    texto,
+    cor
+) {
+
 
     const mensagem =
-        document.getElementById("mensagem");
+        document.getElementById(
+            "mensagem"
+        );
 
 
-    mensagem.innerText = texto;
-
-    mensagem.style.backgroundColor = cor;
-
-    mensagem.style.display = "block";
+    mensagem.innerText =
+        texto;
 
 
-    setTimeout(function () {
+    mensagem.style.backgroundColor =
+        cor;
 
-        mensagem.style.display = "none";
 
-    }, 2500);
+    mensagem.style.display =
+        "block";
+
+
+    setTimeout(
+        function () {
+
+            mensagem.style.display =
+                "none";
+
+        },
+        2500
+    );
+
+}
+
+
+/* =========================
+   LOGIN SOCIAL
+========================= */
+
+
+function loginGoogle() {
+
+    mostrarMensagem(
+        "Login pelo Google em desenvolvimento.",
+        "#071b72"
+    );
+
+}
+
+
+function loginFacebook() {
+
+    mostrarMensagem(
+        "Login pelo Facebook em desenvolvimento.",
+        "#071b72"
+    );
+
+}
+
+
+function loginApple() {
+
+    mostrarMensagem(
+        "Login pela Apple em desenvolvimento.",
+        "#071b72"
+    );
+
+}
+
+
+/* =========================
+   PRODUTO
+========================= */
+
+
+let tamanhoSelecionado = "";
+
+let corSelecionada = "";
+
+
+function selecionarTamanho(
+    tamanho
+) {
+
+
+    tamanhoSelecionado =
+        tamanho;
+
+
+    document.getElementById(
+        "tamanhoEscolhido"
+    ).innerText =
+        tamanho;
+
+}
+
+
+function selecionarCor(
+    cor
+) {
+
+
+    corSelecionada =
+        cor;
+
+
+    document.getElementById(
+        "corEscolhida"
+    ).innerText =
+        cor;
+
+}
+
+
+function irParaProduto() {
+
+
+    document.getElementById(
+        "produto"
+    ).scrollIntoView({
+
+        behavior: "smooth"
+
+    });
 
 }
 
@@ -207,64 +390,16 @@ function mostrarMensagem(texto, cor) {
    CARRINHO
 ========================= */
 
+
 let carrinho = JSON.parse(
-    localStorage.getItem("carrinho")
+    localStorage.getItem(
+        "carrinho"
+    )
 ) || [];
 
 
-let tamanhoSelecionado = "";
-let corSelecionada = "";
-
-
-/* ABRIR CARRINHO */
-
-function abrirCarrinho() {
-
-    const carrinhoBox =
-        document.getElementById("carrinho-box");
-
-    if (carrinhoBox) {
-        carrinhoBox.classList.add("ativo");
-    }
-
-}
-
-
-/* FECHAR CARRINHO */
-
-function fecharCarrinho() {
-
-    const carrinhoBox =
-        document.getElementById("carrinho-box");
-
-    if (carrinhoBox) {
-        carrinhoBox.classList.remove("ativo");
-    }
-
-}
-
-
-/* SELECIONAR TAMANHO */
-
-function selecionarTamanho(tamanho) {
-
-    tamanhoSelecionado = tamanho;
-
-}
-
-
-/* SELECIONAR COR */
-
-function selecionarCor(cor) {
-
-    corSelecionada = cor;
-
-}
-
-
-/* SALVAR CARRINHO */
-
 function salvarCarrinho() {
+
 
     localStorage.setItem(
         "carrinho",
@@ -274,70 +409,156 @@ function salvarCarrinho() {
 }
 
 
-/* ADICIONAR PRODUTO */
+/* ABRIR */
+
+function abrirCarrinho() {
+
+
+    const carrinhoBox =
+        document.getElementById(
+            "carrinho-box"
+        );
+
+
+    carrinhoBox.classList.add(
+        "ativo"
+    );
+
+}
+
+
+/* FECHAR */
+
+function fecharCarrinho() {
+
+
+    const carrinhoBox =
+        document.getElementById(
+            "carrinho-box"
+        );
+
+
+    carrinhoBox.classList.remove(
+        "ativo"
+    );
+
+}
+
+
+/* =========================
+   ADICIONAR PRODUTO
+========================= */
+
 
 function adicionarCarrinho() {
 
-    if (tamanhoSelecionado === "") {
 
-        alert("Escolha um tamanho.");
+    if (
+        tamanhoSelecionado === ""
+    ) {
+
+        mostrarMensagem(
+            "Escolha um tamanho.",
+            "red"
+        );
 
         return;
+
     }
 
 
-    if (corSelecionada === "") {
+    if (
+        corSelecionada === ""
+    ) {
 
-        alert("Escolha uma cor.");
+        mostrarMensagem(
+            "Escolha uma cor.",
+            "red"
+        );
 
         return;
+
     }
 
 
     const produto = {
 
-        id: Date.now(),
 
-        nome: "Blusa Inteligente Temp.Roup",
+        id:
+            Date.now(),
 
-        tamanho: tamanhoSelecionado,
 
-        cor: corSelecionada,
+        nome:
+            "Blusa Inteligente Temp.Roup",
 
-        preco: 299.90
+
+        tamanho:
+            tamanhoSelecionado,
+
+
+        cor:
+            corSelecionada,
+
+
+        preco:
+            299.90
 
     };
 
 
-    carrinho.push(produto);
+    carrinho.push(
+        produto
+    );
 
 
     salvarCarrinho();
 
+
     atualizarCarrinho();
 
 
-    alert("Produto adicionado ao carrinho!");
+    mostrarMensagem(
+        "Produto adicionado ao carrinho!",
+        "green"
+    );
 
 }
 
 
-/* ATUALIZAR CARRINHO */
+/* =========================
+   ATUALIZAR CARRINHO
+========================= */
+
 
 function atualizarCarrinho() {
 
+
     const area =
-        document.getElementById("itens-carrinho");
+        document.getElementById(
+            "itens-carrinho"
+        );
+
 
     const contador =
-        document.getElementById("contador");
+        document.getElementById(
+            "contador"
+        );
+
 
     const totalElemento =
-        document.getElementById("total");
+        document.getElementById(
+            "total"
+        );
 
 
-    if (!area || !contador || !totalElemento) {
+    if (
+        !area ||
+        !contador ||
+        !totalElemento
+    ) {
+
         return;
+
     }
 
 
@@ -347,43 +568,53 @@ function atualizarCarrinho() {
     let total = 0;
 
 
-    carrinho.forEach(function (produto, index) {
+    carrinho.forEach(
+        function (
+            produto,
+            index
+        ) {
 
-        total += produto.preco;
+
+            total +=
+                produto.preco;
 
 
-        area.innerHTML += `
+            area.innerHTML += `
 
-            <div class="item">
+                <div class="item">
 
-                <h4>
-                    ${produto.nome}
-                </h4>
+                    <h4>
+                        ${produto.nome}
+                    </h4>
 
-                <p>
-                    Tamanho: ${produto.tamanho}
-                </p>
+                    <p>
+                        Tamanho:
+                        ${produto.tamanho}
+                    </p>
 
-                <p>
-                    Cor: ${produto.cor}
-                </p>
+                    <p>
+                        Cor:
+                        ${produto.cor}
+                    </p>
 
-                <p>
-                    R$ ${produto.preco.toFixed(2)}
-                </p>
+                    <p>
+                        R$
+                        ${produto.preco.toFixed(2)}
+                    </p>
 
-                <button
-                    onclick="removerItem(${index})">
+                    <button
+                        onclick="removerItem(${index})">
 
-                    Remover
+                        Remover
 
-                </button>
+                    </button>
 
-            </div>
+                </div>
 
-        `;
+            `;
 
-    });
+        }
+    );
 
 
     contador.innerText =
@@ -391,43 +622,30 @@ function atualizarCarrinho() {
 
 
     totalElemento.innerText =
-        "Total: R$ " + total.toFixed(2);
+        "Total: R$ " +
+        total.toFixed(2);
 
 }
 
 
-/* REMOVER ITEM */
-
-function removerItem(index) {
-
-    carrinho.splice(index, 1);
-
-    salvarCarrinho();
-
-    atualizarCarrinho();
-
-}
+/* =========================
+   REMOVER
+========================= */
 
 
-/* FINALIZAR COMPRA */
-
-function finalizarCompra() {
-
-    if (carrinho.length === 0) {
-
-        alert("Carrinho vazio.");
-
-        return;
-    }
+function removerItem(
+    index
+) {
 
 
-    alert("Compra finalizada!");
-
-
-    carrinho = [];
+    carrinho.splice(
+        index,
+        1
+    );
 
 
     salvarCarrinho();
+
 
     atualizarCarrinho();
 
@@ -435,14 +653,64 @@ function finalizarCompra() {
 
 
 /* =========================
-   SAIR DA CONTA
+   FINALIZAR COMPRA
 ========================= */
+
+
+function finalizarCompra() {
+
+
+    if (
+        carrinho.length === 0
+    ) {
+
+
+        mostrarMensagem(
+            "Carrinho vazio.",
+            "red"
+        );
+
+
+        return;
+
+    }
+
+
+    carrinho = [];
+
+
+    salvarCarrinho();
+
+
+    atualizarCarrinho();
+
+
+    mostrarMensagem(
+        "Compra finalizada com sucesso!",
+        "green"
+    );
+
+}
+
+
+/* =========================
+   SAIR
+========================= */
+
 
 function sair() {
 
-    document.getElementById("site").style.display = "none";
 
-    document.getElementById("inicio").style.display = "flex";
+    document.getElementById(
+        "site"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "inicio"
+    ).style.display =
+        "flex";
 
 }
 
@@ -451,13 +719,9 @@ function sair() {
    INICIALIZAÇÃO
 ========================= */
 
+
 window.onload = function () {
 
     atualizarCarrinho();
 
 };
-```
-
-**Esse código mantém o carrinho que já existe no seu projeto**, mas muda o sistema de login para funcionar com a nova estrutura da tela inicial, cadastro e login.
-
-Agora me manda o link do **`index.html`** e depois o **`style.css`**. Aí eu atualizo os dois para ficarem **com a tela azul inicial do modelo + cadastro/login + sua loja e carrinho**, sem perder o que você já tem.
