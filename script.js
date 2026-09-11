@@ -49,22 +49,17 @@ function mostrarInicio() {
 
 function cadastrar() {
 
-
     const nome =
         document.getElementById("cadNome").value.trim();
-
 
     const email =
         document.getElementById("cadEmail").value.trim();
 
-
     const senha =
         document.getElementById("cadSenha").value;
 
-
     const confirmar =
         document.getElementById("confirmarSenha").value;
-
 
     const termos =
         document.getElementById("aceitarTermos").checked;
@@ -151,10 +146,8 @@ function cadastrar() {
 
 function fazerLogin() {
 
-
     const email =
         document.getElementById("loginEmail").value.trim();
-
 
     const senha =
         document.getElementById("loginSenha").value;
@@ -162,7 +155,6 @@ function fazerLogin() {
 
     const emailSalvo =
         localStorage.getItem("email");
-
 
     const senhaSalva =
         localStorage.getItem("senha");
@@ -183,7 +175,6 @@ function fazerLogin() {
         email === emailSalvo &&
         senha === senhaSalva
     ) {
-
 
         document.getElementById(
             "inicio"
@@ -210,9 +201,7 @@ function fazerLogin() {
             "green"
         );
 
-
     } else {
-
 
         mostrarMensagem(
             "E-mail ou senha incorretos.",
@@ -230,7 +219,6 @@ function fazerLogin() {
 
 
 function mostrarSenha(id) {
-
 
     const campo =
         document.getElementById(id);
@@ -260,7 +248,6 @@ function mostrarMensagem(
     texto,
     cor
 ) {
-
 
     const mensagem =
         document.getElementById(
@@ -342,7 +329,6 @@ function selecionarTamanho(
     tamanho
 ) {
 
-
     tamanhoSelecionado =
         tamanho;
 
@@ -359,7 +345,6 @@ function selecionarCor(
     cor
 ) {
 
-
     corSelecionada =
         cor;
 
@@ -372,8 +357,9 @@ function selecionarCor(
 }
 
 
-function irParaProduto() {
+/* IR PARA PRODUTO */
 
+function irParaProduto() {
 
     document.getElementById(
         "produto"
@@ -398,8 +384,9 @@ let carrinho = JSON.parse(
 ) || [];
 
 
-function salvarCarrinho() {
+/* SALVAR CARRINHO */
 
+function salvarCarrinho() {
 
     localStorage.setItem(
         "carrinho",
@@ -409,38 +396,47 @@ function salvarCarrinho() {
 }
 
 
-/* ABRIR */
+/* ABRIR CARRINHO */
 
 function abrirCarrinho() {
 
-
     const carrinhoBox =
         document.getElementById(
-            "carrinho-box"
+            "carrinho"
         );
 
 
-    carrinhoBox.classList.add(
-        "ativo"
-    );
+    if (carrinhoBox) {
+
+        carrinhoBox.classList.add(
+            "ativo"
+        );
+
+    }
+
+
+    atualizarCarrinho();
 
 }
 
 
-/* FECHAR */
+/* FECHAR CARRINHO */
 
 function fecharCarrinho() {
 
-
     const carrinhoBox =
         document.getElementById(
-            "carrinho-box"
+            "carrinho"
         );
 
 
-    carrinhoBox.classList.remove(
-        "ativo"
-    );
+    if (carrinhoBox) {
+
+        carrinhoBox.classList.remove(
+            "ativo"
+        );
+
+    }
 
 }
 
@@ -483,22 +479,17 @@ function adicionarCarrinho() {
 
     const produto = {
 
-
         id:
             Date.now(),
-
 
         nome:
             "Blusa Inteligente Temp.Roup",
 
-
         tamanho:
             tamanhoSelecionado,
 
-
         cor:
             corSelecionada,
-
 
         preco:
             299.90
@@ -531,7 +522,6 @@ function adicionarCarrinho() {
 
 
 function atualizarCarrinho() {
-
 
     const area =
         document.getElementById(
@@ -568,8 +558,19 @@ function atualizarCarrinho() {
     let total = 0;
 
 
+    if (carrinho.length === 0) {
+
+        area.innerHTML = `
+            <p class="carrinho-vazio">
+                Seu carrinho está vazio.
+            </p>
+        `;
+
+    }
+
+
     carrinho.forEach(
-        function (
+        function(
             produto,
             index
         ) {
@@ -598,8 +599,7 @@ function atualizarCarrinho() {
                     </p>
 
                     <p>
-                        R$
-                        ${produto.preco.toFixed(2)}
+                        R$ ${produto.preco.toFixed(2)}
                     </p>
 
                     <button
@@ -637,7 +637,6 @@ function removerItem(
     index
 ) {
 
-
     carrinho.splice(
         index,
         1
@@ -648,6 +647,12 @@ function removerItem(
 
 
     atualizarCarrinho();
+
+
+    mostrarMensagem(
+        "Produto removido.",
+        "#071b72"
+    );
 
 }
 
@@ -664,12 +669,10 @@ function finalizarCompra() {
         carrinho.length === 0
     ) {
 
-
         mostrarMensagem(
             "Carrinho vazio.",
             "red"
         );
-
 
         return;
 
@@ -685,6 +688,9 @@ function finalizarCompra() {
     atualizarCarrinho();
 
 
+    fecharCarrinho();
+
+
     mostrarMensagem(
         "Compra finalizada com sucesso!",
         "green"
@@ -694,33 +700,11 @@ function finalizarCompra() {
 
 
 /* =========================
-   SAIR
-========================= */
-
-
-function sair() {
-
-
-    document.getElementById(
-        "site"
-    ).style.display =
-        "none";
-
-
-    document.getElementById(
-        "inicio"
-    ).style.display =
-        "flex";
-
-}
-
-
-/* =========================
    INICIALIZAÇÃO
 ========================= */
 
 
-window.onload = function () {
+window.onload = function() {
 
     atualizarCarrinho();
 
