@@ -2,41 +2,29 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Temp.Roup</title>
 
-    <link rel="stylesheet"
-          href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
 
     <!-- =========================
          TELA INICIAL
     ========================== -->
 
-    <section id="inicio"
-             class="tela-inicial">
+    <section id="inicio" class="tela-inicial">
 
         <div class="inicio-conteudo">
 
-            <!-- IMAGEM DO MODELO -->
-
             <img
                 src="tela-inicial.png"
-                alt="Modelo do aplicativo Temp.Roup"
+                alt="Temp.Roup"
                 class="imagem-inicial"
             >
-
-
-            <!-- BOTÕES -->
 
             <div class="botoes-inicial">
 
@@ -44,10 +32,9 @@
                     class="btn-cadastrar"
                     onclick="mostrarCadastro()">
 
-                    CADASTRAR-SE
+                    CADASTRAR - SE
 
                 </button>
-
 
                 <button
                     class="btn-entrar"
@@ -64,16 +51,13 @@
     </section>
 
 
-
     <!-- =========================
-         TELA DE CADASTRO
+         CADASTRO
     ========================== -->
 
-    <section id="cadastro"
-             class="tela-formulario">
+    <section id="cadastro" class="tela-formulario">
 
         <div class="formulario">
-
 
             <div class="logo-form">
 
@@ -82,18 +66,14 @@
 
             </div>
 
-
             <h1>
                 Criar conta
             </h1>
-
 
             <p class="subtitulo">
                 Preencha seus dados para criar sua conta
             </p>
 
-
-            <!-- NOME -->
 
             <div class="campo">
 
@@ -110,8 +90,6 @@
             </div>
 
 
-            <!-- EMAIL -->
-
             <div class="campo">
 
                 <label for="cadEmail">
@@ -127,14 +105,11 @@
             </div>
 
 
-            <!-- SENHA -->
-
             <div class="campo">
 
                 <label for="cadSenha">
                     Senha:
                 </label>
-
 
                 <div class="senha">
 
@@ -143,7 +118,6 @@
                         id="cadSenha"
                         placeholder="Digite sua senha"
                     >
-
 
                     <button
                         type="button"
@@ -158,14 +132,11 @@
             </div>
 
 
-            <!-- CONFIRMAR SENHA -->
-
             <div class="campo">
 
                 <label for="confirmarSenha">
                     Confirmar senha:
                 </label>
-
 
                 <div class="senha">
 
@@ -174,7 +145,6 @@
                         id="confirmarSenha"
                         placeholder="Confirme sua senha"
                     >
-
 
                     <button
                         type="button"
@@ -188,8 +158,6 @@
 
             </div>
 
-
-            <!-- TERMOS -->
 
             <div class="termos">
 
@@ -210,13 +178,11 @@
             </div>
 
 
-            <!-- CADASTRAR -->
-
             <button
                 class="btn-principal"
                 onclick="cadastrar()">
 
-                Cadastrar
+                CADASTRAR
 
             </button>
 
@@ -245,16 +211,13 @@
     </section>
 
 
-
     <!-- =========================
-         TELA DE LOGIN
+         LOGIN
     ========================== -->
 
-    <section id="login"
-             class="tela-formulario">
+    <section id="login" class="tela-formulario">
 
         <div class="formulario">
-
 
             <div class="logo-form">
 
@@ -278,16 +241,11 @@
             </p>
 
 
-            <!-- EMAIL -->
-
             <div class="campo">
 
                 <label for="loginEmail">
-
                     E-mail ou telefone:
-
                 </label>
-
 
                 <input
                     type="text"
@@ -298,16 +256,11 @@
             </div>
 
 
-            <!-- SENHA -->
-
             <div class="campo">
 
                 <label for="loginSenha">
-
                     Senha:
-
                 </label>
-
 
                 <div class="senha">
 
@@ -316,7 +269,6 @@
                         id="loginSenha"
                         placeholder="Digite sua senha"
                     >
-
 
                     <button
                         type="button"
@@ -331,22 +283,16 @@
             </div>
 
 
-            <!-- ESQUECEU SENHA -->
-
             <p class="esqueceu">
-
                 Esqueceu a senha?
-
             </p>
 
-
-            <!-- ENTRAR -->
 
             <button
                 class="btn-principal"
                 onclick="fazerLogin()">
 
-                Entrar
+                ENTRAR
 
             </button>
 
@@ -362,31 +308,18 @@
             </div>
 
 
-            <!-- LOGIN SOCIAL -->
-
             <div class="sociais">
 
-                <button
-                    onclick="loginGoogle()">
-
+                <button onclick="loginGoogle()">
                     G
-
                 </button>
 
-
-                <button
-                    onclick="loginFacebook()">
-
+                <button onclick="loginFacebook()">
                     f
-
                 </button>
 
-
-                <button
-                    onclick="loginApple()">
-
+                <button onclick="loginApple()">
                     
-
                 </button>
 
             </div>
@@ -397,9 +330,7 @@
                 Ainda não tem uma conta?
 
                 <span onclick="mostrarCadastro()">
-
                     Cadastrar
-
                 </span>
 
             </p>
@@ -418,13 +349,11 @@
     </section>
 
 
-
     <!-- =========================
          SITE PRINCIPAL
     ========================== -->
 
-    <section id="site"
-             class="site">
+    <section id="site" class="site">
 
 
         <!-- HEADER -->
@@ -433,11 +362,8 @@
 
             <nav>
 
-
                 <div class="logo">
-
                     TEMP<span>ROUP</span>
-
                 </div>
 
 
@@ -447,14 +373,25 @@
                         Início
                     </a>
 
-
                     <a href="#produto">
                         Produtos
                     </a>
 
-
                     <a href="#contato">
                         Contato
+                    </a>
+
+
+                    <!-- CARRINHO CLICÁVEL -->
+
+                    <a
+                        href="#carrinho"
+                        class="link-carrinho"
+                        onclick="abrirCarrinho(); return false;">
+
+                        🛒 Carrinho
+                        (<span id="contador">0</span>)
+
                     </a>
 
                 </div>
@@ -464,23 +401,6 @@
         </header>
 
 
-
-        <!-- =========================
-             BOTÃO CARRINHO
-        ========================== -->
-
-        <button
-            class="abrir-carrinho"
-            onclick="abrirCarrinho()">
-
-            🛒 Carrinho
-
-            (<span id="contador">0</span>)
-
-        </button>
-
-
-
         <!-- =========================
              HERO
         ========================== -->
@@ -488,7 +408,6 @@
         <section
             class="hero"
             id="inicio-site">
-
 
             <div class="banner">
 
@@ -501,23 +420,18 @@
 
 
             <h1>
-
                 A primeira blusa
                 inteligente do Brasil
-
             </h1>
 
 
             <p>
-
                 Tecnologia, conforto e inovação
                 em uma única roupa.
-
             </p>
 
 
             <div class="buttons">
-
 
                 <button
                     class="azul"
@@ -536,11 +450,9 @@
 
                 </button>
 
-
             </div>
 
         </section>
-
 
 
         <!-- =========================
@@ -551,11 +463,8 @@
             class="produto"
             id="produto">
 
-
             <h2>
-
                 Blusa Inteligente Temp.Roup
-
             </h2>
 
 
@@ -568,99 +477,76 @@
             </p>
 
 
-            <!-- TAMANHO -->
-
             <h3>
-
                 Escolha o tamanho
-
             </h3>
 
 
             <div class="opcoes">
-
 
                 <button
                     onclick="selecionarTamanho('P')">
-
                     P
-
                 </button>
-
 
                 <button
                     onclick="selecionarTamanho('M')">
-
                     M
-
                 </button>
-
 
                 <button
                     onclick="selecionarTamanho('G')">
-
                     G
-
                 </button>
-
 
                 <button
                     onclick="selecionarTamanho('GG')">
-
                     GG
-
                 </button>
-
 
             </div>
 
 
-
-            <!-- COR -->
-
             <h3>
-
                 Escolha a cor
-
             </h3>
 
 
             <div class="opcoes">
 
-
                 <button
-                    onclick="selecionarCor('Azul Claro')">
+                    onclick="selecionarCor('preto')">
 
-                    Azul Claro
+                    Preto
 
                 </button>
 
 
                 <button
-                    onclick="selecionarCor('Laranja')">
+                    onclick="selecionarCor('branco')">
 
-                    Laranja
-
+                    Branco
+               
                 </button>
+              
+<button
+                    onclick="selecionarCor('cinza')">
 
-
+                    Cinza
+               
+                </button>
+              
             </div>
 
 
-
-            <!-- ESCOLHAS -->
-
             <div class="selecionado">
-
 
                 <p>
 
                     Tamanho:
 
                     <strong id="tamanhoEscolhido">
-
                         Nenhum
-
                     </strong>
 
                 </p>
@@ -671,40 +557,28 @@
                     Cor:
 
                     <strong id="corEscolhida">
-
                         Nenhuma
-
                     </strong>
 
                 </p>
 
-
             </div>
 
-
-
-            <!-- PREÇO -->
 
             <div class="preco">
-
                 R$ 299,90
-
             </div>
 
-
-
-            <!-- CARRINHO -->
 
             <button
                 class="carrinho-btn"
                 onclick="adicionarCarrinho()">
 
-                ADICIONAR AO CARRINHO
+                🛒 ADICIONAR AO CARRINHO
 
             </button>
 
         </section>
-
 
 
         <!-- =========================
@@ -715,49 +589,34 @@
             class="contato"
             id="contato">
 
-
             <h2>
-
                 Contato
-
             </h2>
 
-
             <p>
-
-                Entre em contato com a equipe
-                Temp.Roup.
-
+                Entre em contato com a equipe Temp.Roup.
             </p>
 
-
             <p>
-
-                Tecnologia e inovação
-                para o seu dia a dia.
-
+                Tecnologia e inovação para o seu dia a dia.
             </p>
 
         </section>
 
 
-
         <!-- =========================
-             CARRINHO LATERAL
+             CARRINHO
         ========================== -->
 
         <div
-            id="carrinho-box"
+            id="carrinho"
             class="carrinho-box">
 
 
             <div class="topo-carrinho">
 
-
                 <h2>
-
                     Seu Carrinho
-
                 </h2>
 
 
@@ -771,7 +630,9 @@
             </div>
 
 
-            <div id="itens-carrinho"></div>
+            <div id="itens-carrinho">
+
+            </div>
 
 
             <h3 id="total">
@@ -794,24 +655,16 @@
     </section>
 
 
-
-    <!-- =========================
-         MENSAGEM
-    ========================== -->
+    <!-- MENSAGEM -->
 
     <div
         id="mensagem"
         class="mensagem">
-
     </div>
 
-
-
-    <!-- JAVASCRIPT -->
 
     <script src="script.js"></script>
 
 </body>
 
 </html>
-
