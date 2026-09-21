@@ -1,670 +1,679 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Temp.Roup</title>
+    <title>Temp.Roup | Roupa Inteligente</title>
+
+    <meta
+        name="description"
+        content="Temp.Roup - tecnologia, conforto e inovação em roupas inteligentes."
+    >
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- =========================
-         TELA INICIAL
-    ========================== -->
+    <!-- ================= HEADER ================= -->
 
-    <section id="inicio" class="tela-inicial">
+    <header class="header">
 
-        <div class="inicio-conteudo">
-
-            <img
-                src="tela-inicial.png"
-                alt="Temp.Roup"
-                class="imagem-inicial"
-            >
-
-            <div class="botoes-inicial">
-
-                <button
-                    class="btn-cadastrar"
-                    onclick="mostrarCadastro()">
-
-                    CADASTRAR - SE
-
-                </button>
-
-                <button
-                    class="btn-entrar"
-                    onclick="mostrarLogin()">
-
-                    ENTRAR
-
-                </button>
-
-            </div>
-
+        <div class="logo">
+            <span>TEMP</span><strong>.ROUP</strong>
         </div>
 
-    </section>
+        <nav class="menu">
+            <a href="#inicio">Início</a>
+            <a href="#produtos">Produtos</a>
+            <a href="#tecnologia">Tecnologia</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#contato">Contato</a>
 
-
-    <!-- =========================
-         CADASTRO
-    ========================== -->
-
-    <section id="cadastro" class="tela-formulario">
-
-        <div class="formulario">
-
-            <div class="logo-form">
-
-                <span>TEMP</span>
-                <strong>ROUP</strong>
-
-            </div>
-
-            <h1>
-                Criar conta
-            </h1>
-
-            <p class="subtitulo">
-                Preencha seus dados para criar sua conta
-            </p>
-
-
-            <div class="campo">
-
-                <label for="cadNome">
-                    Nome completo:
-                </label>
-
-                <input
-                    type="text"
-                    id="cadNome"
-                    placeholder="Digite seu nome completo"
-                >
-
-            </div>
-
-
-            <div class="campo">
-
-                <label for="cadEmail">
-                    E-mail:
-                </label>
-
-                <input
-                    type="email"
-                    id="cadEmail"
-                    placeholder="Digite seu e-mail"
-                >
-
-            </div>
-
-
-            <div class="campo">
-
-                <label for="cadSenha">
-                    Senha:
-                </label>
-
-                <div class="senha">
-
-                    <input
-                        type="password"
-                        id="cadSenha"
-                        placeholder="Digite sua senha"
-                    >
-
-                    <button
-                        type="button"
-                        onclick="mostrarSenha('cadSenha')">
-
-                        👁
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="campo">
-
-                <label for="confirmarSenha">
-                    Confirmar senha:
-                </label>
-
-                <div class="senha">
-
-                    <input
-                        type="password"
-                        id="confirmarSenha"
-                        placeholder="Confirme sua senha"
-                    >
-
-                    <button
-                        type="button"
-                        onclick="mostrarSenha('confirmarSenha')">
-
-                        👁
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="termos">
-
-                <input
-                    type="checkbox"
-                    id="aceitarTermos"
-                >
-
-                <label for="aceitarTermos">
-
-                    Eu aceito os
-                    <span>Termos de Uso</span>
-                    e a
-                    <span>Política de Privacidade</span>
-
-                </label>
-
-            </div>
-
-
-            <button
-                class="btn-principal"
-                onclick="cadastrar()">
-
-                CADASTRAR
-
+            <button class="cart-button" onclick="abrirCarrinho()">
+                🛒 Carrinho
+                <span id="contador-carrinho">0</span>
             </button>
+        </nav>
 
+        <button class="menu-mobile" onclick="abrirMenu()">
+            ☰
+        </button>
 
-            <p class="troca">
+    </header>
 
-                Já tem uma conta?
 
-                <span onclick="mostrarLogin()">
-                    Entrar
-                </span>
+    <!-- ================= INÍCIO ================= -->
 
-            </p>
+    <main>
 
+        <section id="inicio" class="hero">
 
-            <button
-                class="voltar"
-                onclick="mostrarInicio()">
+            <div class="hero-text">
 
-                ← Voltar
+                <span class="tag">TECNOLOGIA + CONFORTO</span>
 
-            </button>
+                <h1>
+                    A roupa inteligente
+                    <span>do futuro.</span>
+                </h1>
 
-        </div>
+                <p>
+                    Tecnologia, conforto e inovação em uma única roupa.
+                    Conheça a proposta Temp.Roup para monitoramento e
+                    regulação térmica.
+                </p>
 
-    </section>
+                <div class="hero-buttons">
 
-
-    <!-- =========================
-         LOGIN
-    ========================== -->
-
-    <section id="login" class="tela-formulario">
-
-        <div class="formulario">
-
-            <div class="logo-form">
-
-                <span>TEMP</span>
-                <strong>ROUP</strong>
-
-            </div>
-
-
-            <h1>
-                Entrar na sua conta
-            </h1>
-
-
-            <p class="subtitulo">
-
-                Que bom te ver de novo!
-                <br>
-                Faça login para continuar.
-
-            </p>
-
-
-            <div class="campo">
-
-                <label for="loginEmail">
-                    E-mail ou telefone:
-                </label>
-
-                <input
-                    type="text"
-                    id="loginEmail"
-                    placeholder="Digite seu e-mail ou telefone"
-                >
-
-            </div>
-
-
-            <div class="campo">
-
-                <label for="loginSenha">
-                    Senha:
-                </label>
-
-                <div class="senha">
-
-                    <input
-                        type="password"
-                        id="loginSenha"
-                        placeholder="Digite sua senha"
-                    >
-
-                    <button
-                        type="button"
-                        onclick="mostrarSenha('loginSenha')">
-
-                        👁
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <p class="esqueceu">
-                Esqueceu a senha?
-            </p>
-
-
-            <button
-                class="btn-principal"
-                onclick="fazerLogin()">
-
-                ENTRAR
-
-            </button>
-
-
-            <div class="ou">
-
-                <span></span>
-
-                <p>Ou entre com</p>
-
-                <span></span>
-
-            </div>
-
-
-            <div class="sociais">
-
-                <button onclick="loginGoogle()">
-                    G
-                </button>
-
-                <button onclick="loginFacebook()">
-                    f
-                </button>
-
-                <button onclick="loginApple()">
-                    
-                </button>
-
-            </div>
-
-
-            <p class="troca">
-
-                Ainda não tem uma conta?
-
-                <span onclick="mostrarCadastro()">
-                    Cadastrar
-                </span>
-
-            </p>
-
-
-            <button
-                class="voltar"
-                onclick="mostrarInicio()">
-
-                ← Voltar
-
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         SITE PRINCIPAL
-    ========================== -->
-
-    <section id="site" class="site">
-
-
-        <!-- HEADER -->
-
-        <header>
-
-            <nav>
-
-                <div class="logo">
-                    TEMP<span>ROUP</span>
-                </div>
-
-
-                <div class="menu">
-
-                    <a href="#inicio-site">
-                        Início
+                    <a href="#produtos" class="btn btn-blue">
+                        CONHECER PRODUTOS
                     </a>
 
-                    <a href="#produto">
-                        Produtos
-                    </a>
-
-                    <a href="#contato">
-                        Contato
-                    </a>
-
-
-                    <!-- CARRINHO CLICÁVEL -->
-
-                    <a
-                        href="#carrinho"
-                        class="link-carrinho"
-                        onclick="abrirCarrinho(); return false;">
-
-                        🛒 Carrinho
-                        (<span id="contador">0</span>)
-
+                    <a href="#tecnologia" class="btn btn-orange">
+                        COMO FUNCIONA
                     </a>
 
                 </div>
 
-            </nav>
-
-        </header>
+            </div>
 
 
-        <!-- =========================
-             HERO
-        ========================== -->
-
-        <section
-            class="hero"
-            id="inicio-site">
-
-            <div class="banner">
+            <div class="hero-image">
 
                 <img
-                    src="64661.jpg"
-                    alt="Blusa inteligente Temp.Roup"
+                    src="performance-masculina.jpg"
+                    alt="Linha Performance Temp.Roup"
+                >
+
+                <div class="image-badge">
+                    <strong>Temp.Roup</strong>
+                    <span>Smart Performance</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= BENEFÍCIOS ================= -->
+
+        <section class="beneficios">
+
+            <div class="beneficio">
+
+                <div class="icone">🌡️</div>
+
+                <div>
+                    <h3>Controle térmico</h3>
+                    <p>
+                        Monitoramento das condições térmicas
+                        para proporcionar mais conforto.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="beneficio">
+
+                <div class="icone">📱</div>
+
+                <div>
+                    <h3>Conexão Bluetooth</h3>
+                    <p>
+                        Possibilidade de comunicação entre a
+                        roupa inteligente e o aplicativo.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="beneficio">
+
+                <div class="icone">⚡</div>
+
+                <div>
+                    <h3>Tecnologia</h3>
+                    <p>
+                        Sensores e microcontrolador integrados
+                        ao conceito da roupa.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="beneficio">
+
+                <div class="icone">♻️</div>
+
+                <div>
+                    <h3>Sustentabilidade</h3>
+                    <p>
+                        Projeto pensado para utilizar recursos
+                        de forma mais consciente.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PRODUTOS ================= -->
+
+        <section id="produtos" class="section">
+
+            <div class="section-title">
+
+                <span>COLEÇÃO TEMP.ROUP</span>
+
+                <h2>
+                    Conheça nossas linhas
+                </h2>
+
+                <p>
+                    Modelos desenvolvidos para unir
+                    tecnologia, conforto e estilo.
+                </p>
+
+            </div>
+
+
+            <div class="produtos-grid">
+
+
+                <!-- PRODUTO MASCULINO -->
+
+                <article class="card-produto">
+
+                    <div class="produto-imagem">
+
+                        <img
+                            src="performance-masculina.jpg"
+                            alt="Temp.Roup Performance Masculina"
+                        >
+
+                        <span class="produto-tag">
+                            PERFORMANCE
+                        </span>
+
+                    </div>
+
+
+                    <div class="produto-info">
+
+                        <span class="categoria">
+                            LINHA MASCULINA
+                        </span>
+
+                        <h3>
+                            Temp.Roup Performance Masculina
+                        </h3>
+
+                        <p>
+                            Modelo esportivo desenvolvido para
+                            representar a proposta de uma roupa
+                            inteligente voltada ao conforto térmico,
+                            tecnologia e atividades físicas.
+                        </p>
+
+                        <div class="produto-footer">
+
+                            <strong>
+                                R$ 299,90
+                            </strong>
+
+                            <button
+                                onclick="selecionarProduto(
+                                    'Temp.Roup Performance Masculina',
+                                    'performance-masculina.jpg',
+                                    299.90
+                                )"
+                            >
+                                Ver produto
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUTO FEMININO -->
+
+                <article class="card-produto">
+
+                    <div class="produto-imagem">
+
+                        <img
+                            src="performance-feminina.jpg"
+                            alt="Temp.Roup Performance Feminina"
+                        >
+
+                        <span class="produto-tag">
+                            PERFORMANCE
+                        </span>
+
+                    </div>
+
+
+                    <div class="produto-info">
+
+                        <span class="categoria">
+                            LINHA FEMININA
+                        </span>
+
+                        <h3>
+                            Temp.Roup Performance Feminina
+                        </h3>
+
+                        <p>
+                            Modelo esportivo que combina design,
+                            conforto e a proposta de tecnologia
+                            inteligente para acompanhamento
+                            das condições térmicas.
+                        </p>
+
+                        <div class="produto-footer">
+
+                            <strong>
+                                R$ 299,90
+                            </strong>
+
+                            <button
+                                onclick="selecionarProduto(
+                                    'Temp.Roup Performance Feminina',
+                                    'performance-feminina.jpg',
+                                    299.90
+                                )"
+                            >
+                                Ver produto
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TECNOLOGIA ================= -->
+
+        <section id="tecnologia" class="tecnologia">
+
+            <div class="tecnologia-imagem">
+
+                <img
+                    src="performance-feminina.jpg"
+                    alt="Tecnologia Temp.Roup"
                 >
 
             </div>
 
 
-            <h1>
-                A primeira blusa
-                inteligente do Brasil
-            </h1>
+            <div class="tecnologia-texto">
+
+                <span>TECNOLOGIA TEMP.ROUP</span>
+
+                <h2>
+                    Uma roupa pensada
+                    para interagir com você.
+                </h2>
+
+                <p>
+                    A proposta Temp.Roup utiliza sensores de
+                    temperatura e um sistema eletrônico integrado
+                    à roupa para acompanhar as condições térmicas.
+                </p>
+
+                <p>
+                    A roupa pode se comunicar com um aplicativo
+                    por meio de Bluetooth, permitindo visualizar
+                    informações e receber recomendações.
+                </p>
 
 
-            <p>
-                Tecnologia, conforto e inovação
-                em uma única roupa.
-            </p>
+                <div class="tecnologia-lista">
 
+                    <div>
+                        <strong>🌡️ Monitoramento</strong>
+                        <span>
+                            Sensores para acompanhar condições
+                            de temperatura.
+                        </span>
+                    </div>
 
-            <div class="buttons">
+                    <div>
+                        <strong>🔥 Aquecimento</strong>
+                        <span>
+                            Conceito de regulação térmica para
+                            situações de frio.
+                        </span>
+                    </div>
 
-                <button
-                    class="azul"
-                    onclick="irParaProduto()">
+                    <div>
+                        <strong>❄️ Resfriamento</strong>
+                        <span>
+                            Recursos pensados para auxiliar
+                            o conforto em situações de calor.
+                        </span>
+                    </div>
 
-                    LINHA PERFORMANCE
+                    <div>
+                        <strong>📱 Bluetooth</strong>
+                        <span>
+                            Comunicação entre a roupa e o aplicativo.
+                        </span>
+                    </div>
 
-                </button>
-
-
-                <button
-                    class="laranja"
-                    onclick="irParaProduto()">
-
-                    CUIDADO & CONFORTO
-
-                </button>
+                </div>
 
             </div>
 
         </section>
 
 
-        <!-- =========================
-             PRODUTO
-        ========================== -->
+        <!-- ================= SOBRE ================= -->
 
-        <section
-            class="produto"
-            id="produto">
+        <section id="sobre" class="sobre">
 
-            <h2>
-                Blusa Inteligente Temp.Roup
-            </h2>
+            <div class="section-title">
 
+                <span>SOBRE O PROJETO</span>
 
-            <p>
-
-                Uma blusa desenvolvida para
-                proporcionar tecnologia,
-                conforto e praticidade.
-
-            </p>
-
-
-            <h3>
-                Escolha o tamanho
-            </h3>
-
-
-            <div class="opcoes">
-
-                <button
-                    onclick="selecionarTamanho('P')">
-                    P
-                </button>
-
-                <button
-                    onclick="selecionarTamanho('M')">
-                    M
-                </button>
-
-                <button
-                    onclick="selecionarTamanho('G')">
-                    G
-                </button>
-
-                <button
-                    onclick="selecionarTamanho('GG')">
-                    GG
-                </button>
+                <h2>
+                    O que é a Temp.Roup?
+                </h2>
 
             </div>
 
 
-            <h3>
-                Escolha a cor
-            </h3>
+            <div class="sobre-conteudo">
+
+                <div>
+
+                    <h3>
+                        Tecnologia vestível para mais conforto
+                    </h3>
+
+                    <p>
+                        A Temp.Roup é uma proposta de vestuário
+                        inteligente desenvolvida para auxiliar
+                        no monitoramento e na regulação da
+                        temperatura.
+                    </p>
+
+                    <p>
+                        O projeto combina roupa, sensores,
+                        microcontrolador e aplicativo para criar
+                        uma experiência mais personalizada.
+                    </p>
+
+                </div>
 
 
-            <div class="opcoes">
+                <div class="sobre-box">
 
-                <button
-                    onclick="selecionarCor('preto')">
+                    <strong>Temp.Roup</strong>
 
-                    Preto
+                    <span>
+                        Tecnologia
+                    </span>
 
-                </button>
+                    <span>
+                        Conforto
+                    </span>
 
+                    <span>
+                        Inovação
+                    </span>
 
-                <button
-                    onclick="selecionarCor('branco')">
+                    <span>
+                        Sustentabilidade
+                    </span>
 
-                    Branco
-               
-                </button>
-              
-<button
-                    onclick="selecionarCor('cinza')">
+                </div>
 
-                    Cinza
-               
-                </button>
-              
             </div>
 
+        </section>
 
-            <div class="selecionado">
+
+        <!-- ================= CONTATO ================= -->
+
+        <section id="contato" class="contato">
+
+            <div>
+
+                <span>FALE CONOSCO</span>
+
+                <h2>
+                    Tecnologia e inovação
+                    para o seu dia a dia.
+                </h2>
 
                 <p>
-
-                    Tamanho:
-
-                    <strong id="tamanhoEscolhido">
-                        Nenhum
-                    </strong>
-
-                </p>
-
-
-                <p>
-
-                    Cor:
-
-                    <strong id="corEscolhida">
-                        Nenhuma
-                    </strong>
-
+                    Conheça a proposta Temp.Roup e acompanhe
+                    o desenvolvimento do projeto.
                 </p>
 
             </div>
 
 
-            <div class="preco">
-                R$ 299,90
-            </div>
-
-
-            <button
-                class="carrinho-btn"
-                onclick="adicionarCarrinho()">
-
-                🛒 ADICIONAR AO CARRINHO
-
+            <button onclick="mostrarContato()">
+                ENTRAR EM CONTATO
             </button>
 
         </section>
 
-
-        <!-- =========================
-             CONTATO
-        ========================== -->
-
-        <section
-            class="contato"
-            id="contato">
-
-            <h2>
-                Contato
-            </h2>
-
-            <p>
-                Entre em contato com a equipe Temp.Roup.
-            </p>
-
-            <p>
-                Tecnologia e inovação para o seu dia a dia.
-            </p>
-
-        </section>
+    </main>
 
 
-        <!-- =========================
-             CARRINHO
-        ========================== -->
+    <!-- ================= RODAPÉ ================= -->
 
-        <div
-            id="carrinho"
-            class="carrinho-box">
+    <footer>
 
+        <div class="footer-logo">
+            TEMP<span>.ROUP</span>
+        </div>
 
-            <div class="topo-carrinho">
+        <p>
+            © 2026 Temp.Roup — Projeto TCC.
+        </p>
 
-                <h2>
-                    Seu Carrinho
-                </h2>
+        <p>
+            Tecnologia, conforto e inovação.
+        </p>
 
-
-                <button
-                    onclick="fecharCarrinho()">
-
-                    X
-
-                </button>
-
-            </div>
+    </footer>
 
 
-            <div id="itens-carrinho">
+    <!-- ================= MODAL PRODUTO ================= -->
 
-            </div>
+    <div id="modal-produto" class="modal">
 
-
-            <h3 id="total">
-
-                Total: R$ 0,00
-
-            </h3>
-
+        <div class="modal-content">
 
             <button
-                class="finalizar"
-                onclick="finalizarCompra()">
+                class="fechar"
+                onclick="fecharProduto()"
+            >
+                ×
+            </button>
 
+
+            <div class="modal-produto-grid">
+
+                <div class="modal-imagem">
+
+                    <img
+                        id="produto-modal-imagem"
+                        src=""
+                        alt=""
+                    >
+
+                </div>
+
+
+                <div class="modal-info">
+
+                    <span class="categoria">
+                        TEMP.ROUP
+                    </span>
+
+                    <h2 id="produto-modal-nome">
+                        Produto
+                    </h2>
+
+                    <p>
+                        Escolha o tamanho e a cor do produto
+                        antes de adicionar ao carrinho.
+                    </p>
+
+
+                    <h4>
+                        Escolha o tamanho
+                    </h4>
+
+                    <div class="opcoes">
+
+                        <button onclick="selecionarTamanho(this)">
+                            P
+                        </button>
+
+                        <button onclick="selecionarTamanho(this)">
+                            M
+                        </button>
+
+                        <button onclick="selecionarTamanho(this)">
+                            G
+                        </button>
+
+                        <button onclick="selecionarTamanho(this)">
+                            GG
+                        </button>
+
+                    </div>
+
+
+                    <h4>
+                        Escolha a cor
+                    </h4>
+
+                    <div class="opcoes">
+
+                        <button onclick="selecionarCor(this)">
+                            Preto
+                        </button>
+
+                        <button onclick="selecionarCor(this)">
+                            Branco
+                        </button>
+
+                        <button onclick="selecionarCor(this)">
+                            Cinza
+                        </button>
+
+                    </div>
+
+
+                    <div class="resumo-escolha">
+
+                        <span>
+                            Tamanho:
+                            <strong id="tamanho-escolhido">
+                                Nenhum
+                            </strong>
+                        </span>
+
+                        <span>
+                            Cor:
+                            <strong id="cor-escolhida">
+                                Nenhuma
+                            </strong>
+                        </span>
+
+                    </div>
+
+
+                    <div class="modal-preco">
+
+                        <strong>
+                            R$ 299,90
+                        </strong>
+
+                        <button
+                            class="btn-carrinho"
+                            onclick="adicionarAoCarrinho()"
+                        >
+                            🛒 ADICIONAR AO CARRINHO
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= CARRINHO ================= -->
+
+    <div id="modal-carrinho" class="modal">
+
+        <div class="carrinho-box">
+
+            <button
+                class="fechar"
+                onclick="fecharCarrinho()"
+            >
+                ×
+            </button>
+
+            <h2>
+                🛒 Seu carrinho
+            </h2>
+
+            <div id="lista-carrinho"></div>
+
+            <div class="total-carrinho">
+
+                <span>
+                    Total
+                </span>
+
+                <strong id="total-carrinho">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+            <button
+                class="btn-finalizar"
+                onclick="finalizarCompra()"
+            >
                 FINALIZAR COMPRA
-
             </button>
 
         </div>
 
-    </section>
-
-
-    <!-- MENSAGEM -->
-
-    <div
-        id="mensagem"
-        class="mensagem">
     </div>
 
 
     <script src="script.js"></script>
 
 </body>
-
 </html>
