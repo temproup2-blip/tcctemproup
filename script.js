@@ -1,44 +1,38 @@
-/* =====================================================
+/* =====================================
    TEMP.ROUP
-   Sistema de produtos e carrinho
-===================================================== */
-
+   SISTEMA DO SITE
+===================================== */
 
 let carrinho = [];
 
-let produtoAtual = {
-    nome: "",
-    imagem: "",
-    preco: 299.90
-};
+let produtoAtual = null;
 
-let tamanhoSelecionado = "";
-let corSelecionada = "";
+let tamanhoSelecionado = null;
+
+let corSelecionada = null;
 
 
-/* =====================================================
+/* =====================================
    CARREGAR CARRINHO
-===================================================== */
+===================================== */
 
 function carregarCarrinho() {
 
-    const salvo = localStorage.getItem("tempRoupCarrinho");
+    const dados =
+        localStorage.getItem("tempRoupCarrinho");
 
-    if (salvo) {
-        try {
-            carrinho = JSON.parse(salvo);
-        } catch {
-            carrinho = [];
-        }
+    if (dados) {
+        carrinho = JSON.parse(dados);
     }
 
-    atualizarCarrinho();
+    atualizarContador();
+
 }
 
 
-/* =====================================================
+/* =====================================
    SALVAR CARRINHO
-===================================================== */
+===================================== */
 
 function salvarCarrinho() {
 
@@ -50,9 +44,9 @@ function salvarCarrinho() {
 }
 
 
-/* =====================================================
+/* =====================================
    SELECIONAR PRODUTO
-===================================================== */
+===================================== */
 
 function selecionarProduto(nome, imagem, preco) {
 
@@ -62,8 +56,8 @@ function selecionarProduto(nome, imagem, preco) {
         preco: preco
     };
 
-    tamanhoSelecionado = "";
-    corSelecionada = "";
+    tamanhoSelecionado = null;
+    corSelecionada = null;
 
     document.getElementById(
         "produto-modal-nome"
@@ -78,6 +72,10 @@ function selecionarProduto(nome, imagem, preco) {
     ).alt = nome;
 
     document.getElementById(
+        "produto-modal-preco"
+    ).textContent = formatarPreco(preco);
+
+    document.getElementById(
         "tamanho-escolhido"
     ).textContent = "Nenhum";
 
@@ -88,9 +86,9 @@ function selecionarProduto(nome, imagem, preco) {
 
     document.querySelectorAll(
         ".opcoes button"
-    ).forEach(button => {
+    ).forEach(function(botao) {
 
-        button.classList.remove("selecionado");
+        botao.classList.remove("selecionado");
 
     });
 
@@ -102,9 +100,9 @@ function selecionarProduto(nome, imagem, preco) {
 }
 
 
-/* =====================================================
+/* =====================================
    FECHAR PRODUTO
-===================================================== */
+===================================== */
 
 function fecharProduto() {
 
@@ -115,27 +113,33 @@ function fecharProduto() {
 }
 
 
-/* =====================================================
+/* =====================================
    TAMANHO
-===================================================== */
+===================================== */
 
 function selecionarTamanho(botao) {
 
     document.querySelectorAll(
         ".opcoes button"
-    ).forEach(button => {
+    ).forEach(function(item) {
 
-        if (
-            button.parentElement ===
-            botao.parentElement
-        ) {
-            button.classList.remove(
-                "selecionado"
-            );
-        }
+        item.classList.remove("selecionado");
 
     });
 
+    /*
+       Seleciona somente os botões
+       da seção de tamanho.
+    */
+
+    const botoesTamanho =
+        botao.parentElement.querySelectorAll("button");
+
+    botoesTamanho.forEach(function(item) {
+
+        item.classList.remove("selecionado");
+
+    });
 
     botao.classList.add("selecionado");
 
@@ -144,33 +148,25 @@ function selecionarTamanho(botao) {
 
     document.getElementById(
         "tamanho-escolhido"
-    ).textContent =
-        tamanhoSelecionado;
+    ).textContent = tamanhoSelecionado;
 
 }
 
 
-/* =====================================================
+/* =====================================
    COR
-===================================================== */
+===================================== */
 
 function selecionarCor(botao) {
 
-    document.querySelectorAll(
-        ".opcoes button"
-    ).forEach(button => {
+    const botoesCor =
+        botao.parentElement.querySelectorAll("button");
 
-        if (
-            button.parentElement ===
-            botao.parentElement
-        ) {
-            button.classList.remove(
-                "selecionado"
-            );
-        }
+    botoesCor.forEach(function(item) {
+
+        item.classList.remove("selecionado");
 
     });
-
 
     botao.classList.add("selecionado");
 
@@ -179,41 +175,41 @@ function selecionarCor(botao) {
 
     document.getElementById(
         "cor-escolhida"
-    ).textContent =
-        corSelecionada;
+    ).textContent = corSelecionada;
 
 }
 
 
-/* =====================================================
+/* =====================================
    ADICIONAR AO CARRINHO
-===================================================== */
+===================================== */
 
 function adicionarAoCarrinho() {
+
+    if (!produtoAtual) {
+        return;
+    }
 
     if (!tamanhoSelecionado) {
 
         alert(
-            "Escolha um tamanho antes de adicionar ao carrinho."
+            "Escolha um tamanho antes de adicionar o produto."
         );
 
         return;
     }
-
 
     if (!corSelecionada) {
 
         alert(
-            "Escolha uma cor antes de adicionar ao carrinho."
+            "Escolha uma cor antes de adicionar o produto."
         );
 
         return;
     }
 
 
-    const produto = {
-
-        id: Date.now(),
+    const item = {
 
         nome: produtoAtual.nome,
 
@@ -228,11 +224,11 @@ function adicionarAoCarrinho() {
     };
 
 
-    carrinho.push(produto);
+    carrinho.push(item);
 
     salvarCarrinho();
 
-    atualizarCarrinho();
+    atualizarContador();
 
     fecharProduto();
 
@@ -243,49 +239,45 @@ function adicionarAoCarrinho() {
 }
 
 
-/* =====================================================
+/* =====================================
    ATUALIZAR CONTADOR
-===================================================== */
+===================================== */
 
-function atualizarCarrinho() {
+function atualizarContador() {
 
     const contador =
         document.getElementById(
             "contador-carrinho"
         );
 
-
-    if (contador) {
-
-        contador.textContent =
-            carrinho.length;
-
+    if (!contador) {
+        return;
     }
 
-
-    mostrarItensCarrinho();
+    contador.textContent =
+        carrinho.length;
 
 }
 
 
-/* =====================================================
+/* =====================================
    ABRIR CARRINHO
-===================================================== */
+===================================== */
 
 function abrirCarrinho() {
-
-    mostrarItensCarrinho();
 
     document.getElementById(
         "modal-carrinho"
     ).classList.add("ativo");
 
+    mostrarItensCarrinho();
+
 }
 
 
-/* =====================================================
+/* =====================================
    FECHAR CARRINHO
-===================================================== */
+===================================== */
 
 function fecharCarrinho() {
 
@@ -296,9 +288,9 @@ function fecharCarrinho() {
 }
 
 
-/* =====================================================
+/* =====================================
    MOSTRAR ITENS
-===================================================== */
+===================================== */
 
 function mostrarItensCarrinho() {
 
@@ -313,17 +305,10 @@ function mostrarItensCarrinho() {
         );
 
 
-    if (!lista) return;
-
-
     if (carrinho.length === 0) {
 
         lista.innerHTML = `
-            <div style="
-                text-align:center;
-                padding:30px 10px;
-                color:#777;
-            ">
+            <div class="carrinho-vazio">
                 Seu carrinho está vazio.
             </div>
         `;
@@ -337,64 +322,59 @@ function mostrarItensCarrinho() {
 
     let total = 0;
 
-
     lista.innerHTML = "";
 
 
-    carrinho.forEach((produto, index) => {
+    carrinho.forEach(function(item, index) {
 
-        total += Number(produto.preco);
+        total += item.preco;
 
 
-        const item =
+        const div =
             document.createElement("div");
 
-        item.className =
+        div.className =
             "item-carrinho";
 
 
-        item.innerHTML = `
+        div.innerHTML = `
 
             <img
-                src="${produto.imagem}"
-                alt="${produto.nome}"
+                src="${item.imagem}"
+                alt="${item.nome}"
             >
 
             <div class="item-carrinho-info">
 
-                <h4>
-                    ${produto.nome}
-                </h4>
-
-                <p>
-                    Tamanho:
-                    ${produto.tamanho}
-                </p>
-
-                <p>
-                    Cor:
-                    ${produto.cor}
-                </p>
-
                 <strong>
-                    ${formatarPreco(produto.preco)}
+                    ${item.nome}
                 </strong>
 
-                <br>
+                <span>
+                    Tamanho: ${item.tamanho}
+                </span>
 
-                <button
-                    class="remover"
-                    onclick="removerProduto(${index})"
-                >
-                    Remover
-                </button>
+                <span>
+                    Cor: ${item.cor}
+                </span>
+
+                <span>
+                    ${formatarPreco(item.preco)}
+                </span>
 
             </div>
+
+            <button
+                class="remover-item"
+                onclick="removerProduto(${index})"
+            >
+                🗑️
+            </button>
 
         `;
 
 
-        lista.appendChild(item);
+        lista.appendChild(div);
 
     });
 
@@ -405,9 +385,9 @@ function mostrarItensCarrinho() {
 }
 
 
-/* =====================================================
+/* =====================================
    REMOVER PRODUTO
-===================================================== */
+===================================== */
 
 function removerProduto(index) {
 
@@ -415,14 +395,16 @@ function removerProduto(index) {
 
     salvarCarrinho();
 
-    atualizarCarrinho();
+    atualizarContador();
+
+    mostrarItensCarrinho();
 
 }
 
 
-/* =====================================================
+/* =====================================
    FINALIZAR COMPRA
-===================================================== */
+===================================== */
 
 function finalizarCompra() {
 
@@ -437,15 +419,15 @@ function finalizarCompra() {
 
 
     alert(
-        "Pedido preparado! Esta é uma demonstração do projeto Temp.Roup."
+        "Compra demonstrativa da Temp.Roup. O sistema de pagamento será integrado posteriormente."
     );
 
 }
 
 
-/* =====================================================
+/* =====================================
    CONTATO
-===================================================== */
+===================================== */
 
 function mostrarContato() {
 
@@ -456,55 +438,27 @@ function mostrarContato() {
 }
 
 
-/* =====================================================
+/* =====================================
    MENU MOBILE
-===================================================== */
+===================================== */
 
 function abrirMenu() {
 
     const menu =
         document.querySelector(".menu");
 
-
-    if (!menu) return;
-
-
-    if (
-        menu.style.display === "flex"
-    ) {
-
-        menu.style.display = "none";
-
-    } else {
-
-        menu.style.display = "flex";
-
-        menu.style.position = "absolute";
-
-        menu.style.top = "72px";
-
-        menu.style.left = "0";
-
-        menu.style.right = "0";
-
-        menu.style.background = "#071b72";
-
-        menu.style.padding = "20px";
-
-        menu.style.flexDirection = "column";
-
-    }
+    menu.classList.toggle("aberto");
 
 }
 
 
-/* =====================================================
+/* =====================================
    FORMATAR PREÇO
-===================================================== */
+===================================== */
 
 function formatarPreco(valor) {
 
-    return Number(valor).toLocaleString(
+    return valor.toLocaleString(
         "pt-BR",
         {
             style: "currency",
@@ -515,9 +469,9 @@ function formatarPreco(valor) {
 }
 
 
-/* =====================================================
+/* =====================================
    FECHAR MODAL CLICANDO FORA
-===================================================== */
+===================================== */
 
 window.addEventListener(
     "click",
@@ -534,28 +488,26 @@ window.addEventListener(
             );
 
 
-        if (
-            event.target ===
-            modalProduto
-        ) {
+        if (event.target === modalProduto) {
+
             fecharProduto();
+
         }
 
 
-        if (
-            event.target ===
-            modalCarrinho
-        ) {
+        if (event.target === modalCarrinho) {
+
             fecharCarrinho();
+
         }
 
     }
 );
 
 
-/* =====================================================
-   INICIAR
-===================================================== */
+/* =====================================
+   INICIAR SITE
+===================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
