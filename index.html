@@ -14,6 +14,64 @@
 
 <body>
 
+<!-- =====================================================
+     TELA DE CADASTRO / ENTRAR
+===================================================== -->
+
+<div id="tela-login" class="tela-login">
+
+    <div class="login-box">
+
+        <div class="login-logo">
+            TEMP<span>.ROUP</span>
+        </div>
+
+        <h1>Bem-vindo à Temp.Roup</h1>
+
+        <p>
+            Cadastre-se para entrar na loja.
+        </p>
+
+        <form id="form-login">
+
+            <input
+                type="text"
+                id="nome"
+                placeholder="Nome completo"
+                required
+            >
+
+            <input
+                type="email"
+                id="email"
+                placeholder="E-mail"
+                required
+            >
+
+            <input
+                type="password"
+                id="senha"
+                placeholder="Senha"
+                required
+            >
+
+            <button type="submit">
+                CADASTRAR E ENTRAR
+            </button>
+
+        </form>
+
+        <p id="mensagem-login"></p>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CABEÇALHO
+===================================================== -->
+
 <header class="header">
 
     <div class="logo">
@@ -21,32 +79,59 @@
     </div>
 
     <nav class="menu">
+
         <a href="#inicio">Início</a>
+
         <a href="#produtos">Produtos</a>
+
         <a href="#tecnologia">Tecnologia</a>
+
         <a href="#sobre">Sobre</a>
+
         <a href="#contato">Contato</a>
 
-        <button class="cart-button" onclick="abrirCarrinho()">
+        <button
+            class="cart-button"
+            onclick="abrirCarrinho()"
+        >
             🛒 Carrinho
-            <span id="contador-carrinho">0</span>
+
+            <span id="contador-carrinho">
+                0
+            </span>
+
         </button>
+
     </nav>
 
-    <button class="menu-mobile" onclick="abrirMenu()">☰</button>
+    <button
+        class="menu-mobile"
+        onclick="abrirMenu()"
+    >
+        ☰
+    </button>
 
 </header>
 
 
+<!-- =====================================================
+     CONTEÚDO PRINCIPAL
+===================================================== -->
+
 <main>
 
-<!-- INÍCIO -->
+
+<!-- =====================================================
+     INÍCIO
+===================================================== -->
 
 <section id="inicio" class="hero">
 
     <div class="hero-text">
 
-        <span class="tag">TECNOLOGIA + CONFORTO</span>
+        <span class="tag">
+            TECNOLOGIA + CONFORTO
+        </span>
 
         <h1>
             A roupa inteligente
@@ -61,11 +146,17 @@
 
         <div class="hero-buttons">
 
-            <a href="#produtos" class="btn btn-blue">
+            <a
+                href="#produtos"
+                class="btn btn-blue"
+            >
                 CONHECER PRODUTOS
             </a>
 
-            <a href="#tecnologia" class="btn btn-orange">
+            <a
+                href="#tecnologia"
+                class="btn btn-orange"
+            >
                 COMO FUNCIONA
             </a>
 
@@ -82,8 +173,15 @@
         >
 
         <div class="image-badge">
-            <strong>Temp.Roup</strong>
-            <span>Conforto térmico</span>
+
+            <strong>
+                Temp.Roup
+            </strong>
+
+            <span>
+                Conforto térmico
+            </span>
+
         </div>
 
     </div>
@@ -91,21 +189,29 @@
 </section>
 
 
-<!-- BENEFÍCIOS -->
+<!-- =====================================================
+     BENEFÍCIOS
+===================================================== -->
 
 <section class="beneficios">
 
     <div class="beneficio">
 
-        <div class="icone">🌡️</div>
+        <div class="icone">
+            🌡️
+        </div>
 
         <div>
-            <h3>Conforto térmico</h3>
+
+            <h3>
+                Conforto térmico
+            </h3>
 
             <p>
                 Proposta desenvolvida para auxiliar
                 no conforto em diferentes temperaturas.
             </p>
+
         </div>
 
     </div>
@@ -113,15 +219,21 @@
 
     <div class="beneficio">
 
-        <div class="icone">📱</div>
+        <div class="icone">
+            📱
+        </div>
 
         <div>
-            <h3>Conexão Bluetooth</h3>
+
+            <h3>
+                Conexão Bluetooth
+            </h3>
 
             <p>
                 Comunicação entre a roupa inteligente
                 e o aplicativo.
             </p>
+
         </div>
 
     </div>
@@ -129,15 +241,21 @@
 
     <div class="beneficio">
 
-        <div class="icone">⚡</div>
+        <div class="icone">
+            ⚡
+        </div>
 
         <div>
-            <h3>Tecnologia</h3>
+
+            <h3>
+                Tecnologia
+            </h3>
 
             <p>
                 Sensores e microcontrolador fazem parte
                 da proposta tecnológica.
             </p>
+
         </div>
 
     </div>
@@ -145,15 +263,21 @@
 
     <div class="beneficio">
 
-        <div class="icone">♻️</div>
+        <div class="icone">
+            ♻️
+        </div>
 
         <div>
-            <h3>Sustentabilidade</h3>
+
+            <h3>
+                Sustentabilidade
+            </h3>
 
             <p>
                 Busca por materiais e soluções
                 mais conscientes.
             </p>
+
         </div>
 
     </div>
@@ -161,15 +285,24 @@
 </section>
 
 
-<!-- PRODUTOS -->
+<!-- =====================================================
+     PRODUTOS
+===================================================== -->
 
-<section id="produtos" class="section">
+<section
+    id="produtos"
+    class="section"
+>
 
     <div class="section-title">
 
-        <span>COLEÇÃO TEMP.ROUP</span>
+        <span>
+            COLEÇÃO TEMP.ROUP
+        </span>
 
-        <h2>Conheça nossos produtos</h2>
+        <h2>
+            Conheça nossos produtos
+        </h2>
 
         <p>
             Roupas, acessórios e materiais que fazem parte
@@ -182,7 +315,9 @@
     <div class="produtos-grid">
 
 
-        <!-- MASCULINA 1 -->
+        <!-- =================================================
+             MASCULINA 1
+        ================================================== -->
 
         <article class="card-produto">
 
@@ -217,13 +352,17 @@
 
                 <div class="produto-footer">
 
-                    <strong>R$ 299,90</strong>
+                    <strong>
+                        R$ 249,99
+                    </strong>
 
-                    <button onclick="selecionarProduto(
-                        'Temp.Roup Masculina',
-                        'WhatsApp Image 2026-09-21 at 14.11.40.jpeg',
-                        299.90
-                    )">
+                    <button
+                        onclick="selecionarProduto(
+                            'Temp.Roup Masculina',
+                            'WhatsApp Image 2026-09-21 at 14.11.40.jpeg',
+                            249.99
+                        )"
+                    >
                         Ver produto
                     </button>
 
@@ -234,8 +373,9 @@
         </article>
 
 
-
-        <!-- MASCULINA 2 -->
+        <!-- =================================================
+             MASCULINA 2
+        ================================================== -->
 
         <article class="card-produto">
 
@@ -270,13 +410,17 @@
 
                 <div class="produto-footer">
 
-                    <strong>R$ 299,90</strong>
+                    <strong>
+                        R$ 199,99
+                    </strong>
 
-                    <button onclick="selecionarProduto(
-                        'Temp.Roup Masculina Performance',
-                        'fgnnxrjh.jpg',
-                        299.90
-                    )">
+                    <button
+                        onclick="selecionarProduto(
+                            'Temp.Roup Masculina Performance',
+                            'fgnnxrjh.jpg',
+                            199.99
+                        )"
+                    >
                         Ver produto
                     </button>
 
@@ -287,8 +431,9 @@
         </article>
 
 
-
-        <!-- FEMININA 1 -->
+        <!-- =================================================
+             FEMININA 1
+        ================================================== -->
 
         <article class="card-produto">
 
@@ -323,13 +468,17 @@
 
                 <div class="produto-footer">
 
-                    <strong>R$ 299,90</strong>
+                    <strong>
+                        R$ 189,99
+                    </strong>
 
-                    <button onclick="selecionarProduto(
-                        'Temp.Roup Feminina',
-                        'skljvh.jpeg',
-                        299.90
-                    )">
+                    <button
+                        onclick="selecionarProduto(
+                            'Temp.Roup Feminina',
+                            'skljvh.jpeg',
+                            189.99
+                        )"
+                    >
                         Ver produto
                     </button>
 
@@ -340,8 +489,9 @@
         </article>
 
 
-
-        <!-- FEMININA 2 -->
+        <!-- =================================================
+             FEMININA 2
+        ================================================== -->
 
         <article class="card-produto">
 
@@ -375,13 +525,17 @@
 
                 <div class="produto-footer">
 
-                    <strong>R$ 299,90</strong>
+                    <strong>
+                        R$ 149,99
+                    </strong>
 
-                    <button onclick="selecionarProduto(
-                        'Temp.Roup Feminina Performance',
-                        'hgk26-09-21 at 14.11.40 (1).jpeg',
-                        299.90
-                    )">
+                    <button
+                        onclick="selecionarProduto(
+                            'Temp.Roup Feminina Performance',
+                            'hgk26-09-21 at 14.11.40 (1).jpeg',
+                            149.99
+                        )"
+                    >
                         Ver produto
                     </button>
 
@@ -392,8 +546,9 @@
         </article>
 
 
-
-        <!-- FEMININA 3 -->
+        <!-- =================================================
+             FEMININA 3
+        ================================================== -->
 
         <article class="card-produto">
 
@@ -428,13 +583,17 @@
 
                 <div class="produto-footer">
 
-                    <strong>R$ 299,90</strong>
+                    <strong>
+                        R$ 199,99
+                    </strong>
 
-                    <button onclick="selecionarProduto(
-                        'Temp.Roup Feminina Confort',
-                        'fjjkyhjyt.jpg',
-                        299.90
-                    )">
+                    <button
+                        onclick="selecionarProduto(
+                            'Temp.Roup Feminina Confort',
+                            'fjjkyhjyt.jpg',
+                            199.99
+                        )"
+                    >
                         Ver produto
                     </button>
 
@@ -445,8 +604,9 @@
         </article>
 
 
-
-        <!-- TÊNIS -->
+        <!-- =================================================
+             TÊNIS
+        ================================================== -->
 
         <article class="card-produto">
 
@@ -481,13 +641,17 @@
 
                 <div class="produto-footer">
 
-                    <strong>R$ 199,90</strong>
+                    <strong>
+                        R$ 145,00
+                    </strong>
 
-                    <button onclick="selecionarProduto(
-                        'Tênis Temp.Roup',
-                        'dhdghthj.jpeg',
-                        199.90
-                    )">
+                    <button
+                        onclick="selecionarProduto(
+                            'Tênis Temp.Roup',
+                            'dhdghthj.jpeg',
+                            145.00
+                        )"
+                    >
                         Ver produto
                     </button>
 
@@ -498,8 +662,9 @@
         </article>
 
 
-
-        <!-- TECIDO -->
+        <!-- =================================================
+             TECIDO
+        ================================================== -->
 
         <article class="card-produto tecido-card">
 
@@ -535,7 +700,9 @@
 
                 <div class="descricao-tecido">
 
-                    <strong>Sobre o tecido</strong>
+                    <strong>
+                        Sobre o tecido
+                    </strong>
 
                     <span>
                         A escolha do tecido faz parte do
@@ -557,10 +724,14 @@
 </section>
 
 
+<!-- =====================================================
+     TECNOLOGIA
+===================================================== -->
 
-<!-- TECNOLOGIA -->
-
-<section id="tecnologia" class="tecnologia">
+<section
+    id="tecnologia"
+    class="tecnologia"
+>
 
     <div class="tecnologia-imagem">
 
@@ -574,7 +745,9 @@
 
     <div class="tecnologia-texto">
 
-        <span>TECNOLOGIA TEMP.ROUP</span>
+        <span>
+            TECNOLOGIA TEMP.ROUP
+        </span>
 
         <h2>
             Tecnologia pensada
@@ -597,42 +770,58 @@
         <div class="tecnologia-lista">
 
             <div>
-                <strong>🌡️ Monitoramento</strong>
+
+                <strong>
+                    🌡️ Monitoramento
+                </strong>
 
                 <span>
                     Sensores para acompanhar condições
                     de temperatura.
                 </span>
+
             </div>
 
 
             <div>
-                <strong>🔥 Aquecimento</strong>
+
+                <strong>
+                    🔥 Aquecimento
+                </strong>
 
                 <span>
                     Proposta de auxílio ao conforto
                     térmico em situações de frio.
                 </span>
+
             </div>
 
 
             <div>
-                <strong>❄️ Conforto no calor</strong>
+
+                <strong>
+                    ❄️ Conforto no calor
+                </strong>
 
                 <span>
                     A proposta também considera
                     condições de temperaturas elevadas.
                 </span>
+
             </div>
 
 
             <div>
-                <strong>📱 Bluetooth</strong>
+
+                <strong>
+                    📱 Bluetooth
+                </strong>
 
                 <span>
                     Comunicação entre a roupa
                     e o aplicativo.
                 </span>
+
             </div>
 
         </div>
@@ -642,14 +831,20 @@
 </section>
 
 
+<!-- =====================================================
+     SOBRE
+===================================================== -->
 
-<!-- SOBRE -->
-
-<section id="sobre" class="sobre">
+<section
+    id="sobre"
+    class="sobre"
+>
 
     <div class="section-title">
 
-        <span>SOBRE O PROJETO</span>
+        <span>
+            SOBRE O PROJETO
+        </span>
 
         <h2>
             O que é a Temp.Roup?
@@ -684,12 +879,25 @@
 
         <div class="sobre-box">
 
-            <strong>Temp.Roup</strong>
+            <strong>
+                Temp.Roup
+            </strong>
 
-            <span>Conforto térmico</span>
-            <span>Tecnologia</span>
-            <span>Bluetooth</span>
-            <span>Inovação</span>
+            <span>
+                Conforto térmico
+            </span>
+
+            <span>
+                Tecnologia
+            </span>
+
+            <span>
+                Bluetooth
+            </span>
+
+            <span>
+                Inovação
+            </span>
 
         </div>
 
@@ -698,14 +906,20 @@
 </section>
 
 
+<!-- =====================================================
+     CONTATO
+===================================================== -->
 
-<!-- CONTATO -->
-
-<section id="contato" class="contato">
+<section
+    id="contato"
+    class="contato"
+>
 
     <div>
 
-        <span>FALE CONOSCO</span>
+        <span>
+            FALE CONOSCO
+        </span>
 
         <h2>
             Tecnologia e inovação
@@ -729,8 +943,9 @@
 </main>
 
 
-
-<!-- RODAPÉ -->
+<!-- =====================================================
+     RODAPÉ
+===================================================== -->
 
 <footer>
 
@@ -749,14 +964,23 @@
 </footer>
 
 
+<!-- =====================================================
+     MODAL PRODUTO
+===================================================== -->
 
-<!-- MODAL PRODUTO -->
-
-<div id="modal-produto" class="modal">
+<div
+    id="modal-produto"
+    class="modal"
+>
 
     <div class="modal-content">
 
-        <button class="fechar" onclick="fecharProduto()">×</button>
+        <button
+            class="fechar"
+            onclick="fecharProduto()"
+        >
+            ×
+        </button>
 
         <div class="modal-produto-grid">
 
@@ -793,10 +1017,29 @@
 
                 <div class="opcoes">
 
-                    <button onclick="selecionarTamanho(this)">P</button>
-                    <button onclick="selecionarTamanho(this)">M</button>
-                    <button onclick="selecionarTamanho(this)">G</button>
-                    <button onclick="selecionarTamanho(this)">GG</button>
+                    <button
+                        onclick="selecionarTamanho(this)"
+                    >
+                        P
+                    </button>
+
+                    <button
+                        onclick="selecionarTamanho(this)"
+                    >
+                        M
+                    </button>
+
+                    <button
+                        onclick="selecionarTamanho(this)"
+                    >
+                        G
+                    </button>
+
+                    <button
+                        onclick="selecionarTamanho(this)"
+                    >
+                        GG
+                    </button>
 
                 </div>
 
@@ -807,9 +1050,23 @@
 
                 <div class="opcoes">
 
-                    <button onclick="selecionarCor(this)">Preto</button>
-                    <button onclick="selecionarCor(this)">Branco</button>
-                    <button onclick="selecionarCor(this)">Cinza</button>
+                    <button
+                        onclick="selecionarCor(this)"
+                    >
+                        Preto
+                    </button>
+
+                    <button
+                        onclick="selecionarCor(this)"
+                    >
+                        Branco
+                    </button>
+
+                    <button
+                        onclick="selecionarCor(this)"
+                    >
+                        Cinza
+                    </button>
 
                 </div>
 
@@ -818,16 +1075,20 @@
 
                     <span>
                         Tamanho:
+
                         <strong id="tamanho-escolhido">
                             Nenhum
                         </strong>
+
                     </span>
 
                     <span>
                         Cor:
+
                         <strong id="cor-escolhida">
                             Nenhuma
                         </strong>
+
                     </span>
 
                 </div>
@@ -857,14 +1118,23 @@
 </div>
 
 
+<!-- =====================================================
+     CARRINHO
+===================================================== -->
 
-<!-- CARRINHO -->
-
-<div id="modal-carrinho" class="modal">
+<div
+    id="modal-carrinho"
+    class="modal"
+>
 
     <div class="carrinho-box">
 
-        <button class="fechar" onclick="fecharCarrinho()">×</button>
+        <button
+            class="fechar"
+            onclick="fecharCarrinho()"
+        >
+            ×
+        </button>
 
         <h2>
             🛒 Seu carrinho
@@ -874,7 +1144,9 @@
 
         <div class="total-carrinho">
 
-            <span>Total</span>
+            <span>
+                Total
+            </span>
 
             <strong id="total-carrinho">
                 R$ 0,00
@@ -894,6 +1166,9 @@
 </div>
 
 
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
 <script src="script.js"></script>
 
