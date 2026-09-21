@@ -1,54 +1,175 @@
-/* =====================================
-   TEMP.ROUP
-   SISTEMA DO SITE
-===================================== */
-
-let carrinho = [];
-
-let produtoAtual = null;
-
-let tamanhoSelecionado = null;
-
-let corSelecionada = null;
+/* =====================================================
+   TEMP.ROUP - SCRIPT
+===================================================== */
 
 
-/* =====================================
-   CARREGAR CARRINHO
-===================================== */
+/* =====================================================
+   VARIÁVEIS
+===================================================== */
 
-function carregarCarrinho() {
+let carrinho = JSON.parse(
+    localStorage.getItem("tempRoupCarrinho")
+) || [];
 
-    const dados =
-        localStorage.getItem("tempRoupCarrinho");
+let produtoAtual = {
+    nome: "",
+    imagem: "",
+    preco: 0
+};
 
-    if (dados) {
-        carrinho = JSON.parse(dados);
+let tamanhoSelecionado = "";
+let corSelecionada = "";
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    carregarLogin();
+
+    atualizarCarrinho();
+
+    const formLogin = document.getElementById("form-login");
+
+    if (formLogin) {
+
+        formLogin.addEventListener(
+            "submit",
+            realizarCadastro
+        );
+
     }
 
-    atualizarContador();
+});
+
+
+/* =====================================================
+   CADASTRO / ENTRAR
+===================================================== */
+
+function carregarLogin() {
+
+    const telaLogin =
+        document.getElementById("tela-login");
+
+    if (!telaLogin) {
+        return;
+    }
+
+    const usuario =
+        localStorage.getItem("tempRoupUsuario");
+
+    if (usuario) {
+
+        telaLogin.style.display = "none";
+
+    } else {
+
+        telaLogin.style.display = "flex";
+
+    }
 
 }
 
 
-/* =====================================
-   SALVAR CARRINHO
-===================================== */
+function realizarCadastro(event) {
 
-function salvarCarrinho() {
+    event.preventDefault();
+
+    const nome =
+        document.getElementById("nome").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const senha =
+        document.getElementById("senha").value.trim();
+
+    const mensagem =
+        document.getElementById("mensagem-login");
+
+
+    if (!nome || !email || !senha) {
+
+        mensagem.textContent =
+            "Preencha todos os campos.";
+
+        return;
+
+    }
+
+
+    if (senha.length < 4) {
+
+        mensagem.textContent =
+            "A senha deve ter pelo menos 4 caracteres.";
+
+        return;
+
+    }
+
+
+    /*
+       Para este protótipo, não armazenamos a senha.
+       Guardamos somente nome e e-mail.
+    */
+
+    const usuario = {
+        nome: nome,
+        email: email
+    };
+
 
     localStorage.setItem(
-        "tempRoupCarrinho",
-        JSON.stringify(carrinho)
+        "tempRoupUsuario",
+        JSON.stringify(usuario)
     );
+
+
+    mensagem.textContent =
+        "Cadastro realizado! Entrando...";
+
+
+    setTimeout(function () {
+
+        document.getElementById(
+            "tela-login"
+        ).style.display = "none";
+
+    }, 700);
 
 }
 
 
-/* =====================================
-   SELECIONAR PRODUTO
-===================================== */
+/* =====================================================
+   MENU MOBILE
+===================================================== */
 
-function selecionarProduto(nome, imagem, preco) {
+function abrirMenu() {
+
+    const menu =
+        document.querySelector(".menu");
+
+    if (menu) {
+
+        menu.classList.toggle("ativo");
+
+    }
+
+}
+
+
+/* =====================================================
+   PRODUTO
+===================================================== */
+
+function selecionarProduto(
+    nome,
+    imagem,
+    preco
+) {
 
     produtoAtual = {
         nome: nome,
@@ -56,156 +177,178 @@ function selecionarProduto(nome, imagem, preco) {
         preco: preco
     };
 
-    tamanhoSelecionado = null;
-    corSelecionada = null;
 
-    document.getElementById(
-        "produto-modal-nome"
-    ).textContent = nome;
+    tamanhoSelecionado = "";
+    corSelecionada = "";
 
-    document.getElementById(
-        "produto-modal-imagem"
-    ).src = imagem;
 
-    document.getElementById(
-        "produto-modal-imagem"
-    ).alt = nome;
+    const modal =
+        document.getElementById("modal-produto");
 
-    document.getElementById(
-        "produto-modal-preco"
-    ).textContent = formatarPreco(preco);
+
+    const imagemModal =
+        document.getElementById(
+            "produto-modal-imagem"
+        );
+
+    const nomeModal =
+        document.getElementById(
+            "produto-modal-nome"
+        );
+
+    const precoModal =
+        document.getElementById(
+            "produto-modal-preco"
+        );
+
+
+    imagemModal.src = imagem;
+
+    imagemModal.alt = nome;
+
+    nomeModal.textContent = nome;
+
+    precoModal.textContent =
+        formatarPreco(preco);
+
 
     document.getElementById(
         "tamanho-escolhido"
     ).textContent = "Nenhum";
+
 
     document.getElementById(
         "cor-escolhida"
     ).textContent = "Nenhuma";
 
 
-    document.querySelectorAll(
-        ".opcoes button"
-    ).forEach(function(botao) {
+    limparSelecoes();
 
-        botao.classList.remove("selecionado");
+
+    modal.classList.add("ativo");
+
+}
+
+
+function limparSelecoes() {
+
+    const botoes =
+        document.querySelectorAll(
+            "#modal-produto .opcoes button"
+        );
+
+    botoes.forEach(function (botao) {
+
+        botao.classList.remove(
+            "selecionado"
+        );
 
     });
 
-
-    document.getElementById(
-        "modal-produto"
-    ).classList.add("ativo");
-
 }
 
 
-/* =====================================
-   FECHAR PRODUTO
-===================================== */
-
-function fecharProduto() {
-
-    document.getElementById(
-        "modal-produto"
-    ).classList.remove("ativo");
-
-}
-
-
-/* =====================================
+/* =====================================================
    TAMANHO
-===================================== */
+===================================================== */
 
 function selecionarTamanho(botao) {
 
-    document.querySelectorAll(
-        ".opcoes button"
-    ).forEach(function(item) {
+    const botoes =
+        botao.parentElement.querySelectorAll(
+            "button"
+        );
 
-        item.classList.remove("selecionado");
 
-    });
+    botoes.forEach(function (item) {
 
-    /*
-       Seleciona somente os botões
-       da seção de tamanho.
-    */
-
-    const botoesTamanho =
-        botao.parentElement.querySelectorAll("button");
-
-    botoesTamanho.forEach(function(item) {
-
-        item.classList.remove("selecionado");
+        item.classList.remove(
+            "selecionado"
+        );
 
     });
 
-    botao.classList.add("selecionado");
+
+    botao.classList.add(
+        "selecionado"
+    );
+
 
     tamanhoSelecionado =
         botao.textContent.trim();
 
+
     document.getElementById(
         "tamanho-escolhido"
-    ).textContent = tamanhoSelecionado;
+    ).textContent =
+        tamanhoSelecionado;
 
 }
 
 
-/* =====================================
+/* =====================================================
    COR
-===================================== */
+===================================================== */
 
 function selecionarCor(botao) {
 
-    const botoesCor =
-        botao.parentElement.querySelectorAll("button");
+    const botoes =
+        botao.parentElement.querySelectorAll(
+            "button"
+        );
 
-    botoesCor.forEach(function(item) {
 
-        item.classList.remove("selecionado");
+    botoes.forEach(function (item) {
+
+        item.classList.remove(
+            "selecionado"
+        );
 
     });
 
-    botao.classList.add("selecionado");
+
+    botao.classList.add(
+        "selecionado"
+    );
+
 
     corSelecionada =
         botao.textContent.trim();
 
+
     document.getElementById(
         "cor-escolhida"
-    ).textContent = corSelecionada;
+    ).textContent =
+        corSelecionada;
 
 }
 
 
-/* =====================================
+/* =====================================================
    ADICIONAR AO CARRINHO
-===================================== */
+===================================================== */
 
 function adicionarAoCarrinho() {
-
-    if (!produtoAtual) {
-        return;
-    }
 
     if (!tamanhoSelecionado) {
 
         alert(
-            "Escolha um tamanho antes de adicionar o produto."
+            "Escolha um tamanho antes de adicionar ao carrinho."
         );
 
         return;
+
     }
+
 
     if (!corSelecionada) {
 
         alert(
-            "Escolha uma cor antes de adicionar o produto."
+            "Escolha uma cor antes de adicionar ao carrinho."
         );
 
         return;
+
     }
 
 
@@ -226,11 +369,13 @@ function adicionarAoCarrinho() {
 
     carrinho.push(item);
 
+
     salvarCarrinho();
 
-    atualizarContador();
+    atualizarCarrinho();
 
     fecharProduto();
+
 
     alert(
         "Produto adicionado ao carrinho!"
@@ -239,58 +384,48 @@ function adicionarAoCarrinho() {
 }
 
 
-/* =====================================
-   ATUALIZAR CONTADOR
-===================================== */
+/* =====================================================
+   SALVAR CARRINHO
+===================================================== */
 
-function atualizarContador() {
+function salvarCarrinho() {
+
+    localStorage.setItem(
+        "tempRoupCarrinho",
+        JSON.stringify(carrinho)
+    );
+
+}
+
+
+/* =====================================================
+   ATUALIZAR CARRINHO
+===================================================== */
+
+function atualizarCarrinho() {
 
     const contador =
         document.getElementById(
             "contador-carrinho"
         );
 
-    if (!contador) {
-        return;
+
+    if (contador) {
+
+        contador.textContent =
+            carrinho.length;
+
     }
 
-    contador.textContent =
-        carrinho.length;
-
-}
-
-
-/* =====================================
-   ABRIR CARRINHO
-===================================== */
-
-function abrirCarrinho() {
-
-    document.getElementById(
-        "modal-carrinho"
-    ).classList.add("ativo");
 
     mostrarItensCarrinho();
 
 }
 
 
-/* =====================================
-   FECHAR CARRINHO
-===================================== */
-
-function fecharCarrinho() {
-
-    document.getElementById(
-        "modal-carrinho"
-    ).classList.remove("ativo");
-
-}
-
-
-/* =====================================
+/* =====================================================
    MOSTRAR ITENS
-===================================== */
+===================================================== */
 
 function mostrarItensCarrinho() {
 
@@ -299,10 +434,10 @@ function mostrarItensCarrinho() {
             "lista-carrinho"
         );
 
-    const totalElemento =
-        document.getElementById(
-            "total-carrinho"
-        );
+
+    if (!lista) {
+        return;
+    }
 
 
     if (carrinho.length === 0) {
@@ -313,152 +448,134 @@ function mostrarItensCarrinho() {
             </div>
         `;
 
-        totalElemento.textContent =
-            "R$ 0,00";
+        atualizarTotal();
 
         return;
+
     }
 
-
-    let total = 0;
 
     lista.innerHTML = "";
 
 
-    carrinho.forEach(function(item, index) {
+    carrinho.forEach(
+        function (item, indice) {
 
-        total += item.preco;
-
-
-        const div =
-            document.createElement("div");
-
-        div.className =
-            "item-carrinho";
+            const elemento =
+                document.createElement("div");
 
 
-        div.innerHTML = `
-
-            <img
-                src="${item.imagem}"
-                alt="${item.nome}"
-            >
-
-            <div class="item-carrinho-info">
-
-                <strong>
-                    ${item.nome}
-                </strong>
-
-                <span>
-                    Tamanho: ${item.tamanho}
-                </span>
-
-                <span>
-                    Cor: ${item.cor}
-                </span>
-
-                <span>
-                    ${formatarPreco(item.preco)}
-                </span>
-
-            </div>
-
-            <button
-                class="remover-item"
-                onclick="removerProduto(${index})"
-            >
-                🗑️
-            </button>
-
-        `;
+            elemento.className =
+                "item-carrinho";
 
 
-        lista.appendChild(div);
+            elemento.innerHTML = `
 
-    });
+                <img
+                    src="${item.imagem}"
+                    alt="${item.nome}"
+                >
+
+                <div class="item-carrinho-info">
+
+                    <strong>
+                        ${item.nome}
+                    </strong>
+
+                    <span>
+                        Tamanho: ${item.tamanho}
+                    </span>
+
+                    <span>
+                        Cor: ${item.cor}
+                    </span>
+
+                    <span>
+                        ${formatarPreco(item.preco)}
+                    </span>
+
+                </div>
+
+                <button
+                    class="remover-item"
+                    onclick="removerDoCarrinho(${indice})"
+                >
+                    Remover
+                </button>
+
+            `;
 
 
-    totalElemento.textContent =
-        formatarPreco(total);
+            lista.appendChild(elemento);
+
+        }
+    );
+
+
+    atualizarTotal();
 
 }
 
 
-/* =====================================
-   REMOVER PRODUTO
-===================================== */
+/* =====================================================
+   REMOVER DO CARRINHO
+===================================================== */
 
-function removerProduto(index) {
+function removerDoCarrinho(indice) {
 
-    carrinho.splice(index, 1);
+    carrinho.splice(
+        indice,
+        1
+    );
+
 
     salvarCarrinho();
 
-    atualizarContador();
-
-    mostrarItensCarrinho();
+    atualizarCarrinho();
 
 }
 
 
-/* =====================================
-   FINALIZAR COMPRA
-===================================== */
+/* =====================================================
+   TOTAL
+===================================================== */
 
-function finalizarCompra() {
+function atualizarTotal() {
 
-    if (carrinho.length === 0) {
+    const total =
+        carrinho.reduce(
+            function (soma, item) {
 
-        alert(
-            "Seu carrinho está vazio."
+                return soma + Number(item.preco);
+
+            },
+            0
         );
 
-        return;
+
+    const elemento =
+        document.getElementById(
+            "total-carrinho"
+        );
+
+
+    if (elemento) {
+
+        elemento.textContent =
+            formatarPreco(total);
+
     }
 
-
-    alert(
-        "Compra demonstrativa da Temp.Roup. O sistema de pagamento será integrado posteriormente."
-    );
-
 }
 
 
-/* =====================================
-   CONTATO
-===================================== */
-
-function mostrarContato() {
-
-    alert(
-        "Entre em contato com a equipe Temp.Roup para conhecer o projeto."
-    );
-
-}
-
-
-/* =====================================
-   MENU MOBILE
-===================================== */
-
-function abrirMenu() {
-
-    const menu =
-        document.querySelector(".menu");
-
-    menu.classList.toggle("aberto");
-
-}
-
-
-/* =====================================
+/* =====================================================
    FORMATAR PREÇO
-===================================== */
+===================================================== */
 
 function formatarPreco(valor) {
 
-    return valor.toLocaleString(
+    return Number(valor).toLocaleString(
         "pt-BR",
         {
             style: "currency",
@@ -469,13 +586,110 @@ function formatarPreco(valor) {
 }
 
 
-/* =====================================
-   FECHAR MODAL CLICANDO FORA
-===================================== */
+/* =====================================================
+   ABRIR CARRINHO
+===================================================== */
+
+function abrirCarrinho() {
+
+    const modal =
+        document.getElementById(
+            "modal-carrinho"
+        );
+
+
+    mostrarItensCarrinho();
+
+
+    modal.classList.add(
+        "ativo"
+    );
+
+}
+
+
+/* =====================================================
+   FECHAR CARRINHO
+===================================================== */
+
+function fecharCarrinho() {
+
+    const modal =
+        document.getElementById(
+            "modal-carrinho"
+        );
+
+
+    modal.classList.remove(
+        "ativo"
+    );
+
+}
+
+
+/* =====================================================
+   FECHAR PRODUTO
+===================================================== */
+
+function fecharProduto() {
+
+    const modal =
+        document.getElementById(
+            "modal-produto"
+        );
+
+
+    modal.classList.remove(
+        "ativo"
+    );
+
+}
+
+
+/* =====================================================
+   FINALIZAR COMPRA
+===================================================== */
+
+function finalizarCompra() {
+
+    if (carrinho.length === 0) {
+
+        alert(
+            "Seu carrinho está vazio."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "Compra demonstrativa da Temp.Roup. Obrigado!"
+    );
+
+}
+
+
+/* =====================================================
+   CONTATO
+===================================================== */
+
+function mostrarContato() {
+
+    alert(
+        "Entre em contato com a equipe Temp.Roup para conhecer mais sobre o projeto."
+    );
+
+}
+
+
+/* =====================================================
+   FECHAR MODAIS CLICANDO FORA
+===================================================== */
 
 window.addEventListener(
     "click",
-    function(event) {
+    function (event) {
 
         const modalProduto =
             document.getElementById(
@@ -488,32 +702,22 @@ window.addEventListener(
             );
 
 
-        if (event.target === modalProduto) {
+        if (
+            event.target === modalProduto
+        ) {
 
             fecharProduto();
 
         }
 
 
-        if (event.target === modalCarrinho) {
+        if (
+            event.target === modalCarrinho
+        ) {
 
             fecharCarrinho();
 
         }
-
-    }
-);
-
-
-/* =====================================
-   INICIAR SITE
-===================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        carregarCarrinho();
 
     }
 );
