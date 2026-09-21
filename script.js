@@ -1,339 +1,442 @@
 // =====================================================
-// TELA INICIAL / CADASTRO / LOGIN
+// TEMP.ROUP - SCRIPT.JS
 // =====================================================
 
-function esconderTelasLogin() {
+let carrinho =
+    JSON.parse(localStorage.getItem("tempRoupCarrinho")) || [];
 
-    const inicio = document.getElementById("inicio");
-    const cadastro = document.getElementById("cadastro");
-    const login = document.getElementById("login");
+let produtoAtual = {
+    nome: "",
+    imagem: "",
+    preco: 0
+};
 
-    if (inicio) {
-        inicio.style.display = "none";
+let tamanhoSelecionado = "";
+let corSelecionada = "";
+
+
+// =====================================================
+// INICIAR SITE
+// =====================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    carregarLogin();
+
+    atualizarCarrinho();
+
+    const formulario =
+        document.getElementById("form-login");
+
+    if (formulario) {
+        formulario.addEventListener(
+            "submit",
+            realizarCadastro
+        );
     }
 
-    if (cadastro) {
-        cadastro.style.display = "none";
-    }
-
-    if (login) {
-        login.style.display = "none";
-    }
-
-}
+});
 
 
 // =====================================================
-// MOSTRAR INÍCIO
+// CADASTRAR E ENTRAR
 // =====================================================
 
-function mostrarInicio() {
+function realizarCadastro(event) {
 
-    esconderTelasLogin();
+    event.preventDefault();
 
-    const inicio = document.getElementById("inicio");
+    const nome =
+        document.getElementById("nome").value.trim();
 
-    if (inicio) {
-        inicio.style.display = "flex";
-    }
+    const email =
+        document.getElementById("email").value.trim();
 
-}
+    const senha =
+        document.getElementById("senha").value.trim();
 
+    const mensagem =
+        document.getElementById("mensagem-login");
 
-// =====================================================
-// MOSTRAR CADASTRO
-// =====================================================
+    if (!nome || !email || !senha) {
 
-function mostrarCadastro() {
+        mensagem.textContent =
+            "Preencha todos os campos.";
 
-    esconderTelasLogin();
-
-    const cadastro = document.getElementById("cadastro");
-
-    if (cadastro) {
-        cadastro.style.display = "flex";
-    }
-
-}
-
-
-// =====================================================
-// MOSTRAR LOGIN
-// =====================================================
-
-function mostrarLogin() {
-
-    esconderTelasLogin();
-
-    const login = document.getElementById("login");
-
-    if (login) {
-        login.style.display = "flex";
-    }
-
-}
-
-
-// =====================================================
-// MOSTRAR / OCULTAR SENHA
-// =====================================================
-
-function mostrarSenha(id) {
-
-    const campo = document.getElementById(id);
-
-    if (!campo) {
         return;
     }
-
-    if (campo.type === "password") {
-
-        campo.type = "text";
-
-    } else {
-
-        campo.type = "password";
-
-    }
-
-}
-
-
-// =====================================================
-// CADASTRAR
-// =====================================================
-
-function cadastrar() {
-
-    const nome = document.getElementById("cadNome").value.trim();
-    const email = document.getElementById("cadEmail").value.trim();
-    const senha = document.getElementById("cadSenha").value;
-    const confirmarSenha =
-        document.getElementById("confirmarSenha").value;
-
-    const termos =
-        document.getElementById("aceitarTermos").checked;
-
-
-    if (!nome || !email || !senha || !confirmarSenha) {
-
-        alert("Preencha todos os campos.");
-
-        return;
-
-    }
-
 
     if (senha.length < 4) {
 
-        alert(
-            "A senha deve ter pelo menos 4 caracteres."
-        );
+        mensagem.textContent =
+            "A senha deve ter pelo menos 4 caracteres.";
 
         return;
+    }
+
+    localStorage.setItem(
+        "tempRoupUsuario",
+        JSON.stringify({
+            nome: nome,
+            email: email
+        })
+    );
+
+    mensagem.textContent =
+        "Cadastro realizado com sucesso!";
+
+    setTimeout(function () {
+
+        const telaLogin =
+            document.getElementById("tela-login");
+
+        if (telaLogin) {
+            telaLogin.style.display = "none";
+        }
+
+    }, 500);
+
+}
+
+
+// =====================================================
+// VERIFICAR LOGIN
+// =====================================================
+
+function carregarLogin() {
+
+    const telaLogin =
+        document.getElementById("tela-login");
+
+    if (!telaLogin) {
+        return;
+    }
+
+    const usuario =
+        localStorage.getItem("tempRoupUsuario");
+
+    if (usuario) {
+
+        telaLogin.style.display = "none";
+
+    } else {
+
+        telaLogin.style.display = "flex";
 
     }
 
+}
 
-    if (senha !== confirmarSenha) {
 
-        alert("As senhas não são iguais.");
+// =====================================================
+// MENU MOBILE
+// =====================================================
 
-        return;
+function abrirMenu() {
 
+    const menu =
+        document.querySelector(".menu");
+
+    if (menu) {
+        menu.classList.toggle("ativo");
     }
 
-
-    if (!termos) {
-
-        alert(
-            "Você precisa aceitar os Termos de Uso e a Política de Privacidade."
-        );
-
-        return;
-
-    }
+}
 
 
-    const usuario = {
+// =====================================================
+// VER PRODUTO
+// =====================================================
 
+function selecionarProduto(nome, imagem, preco) {
+
+    produtoAtual = {
         nome: nome,
-        email: email,
-        senha: senha
+        imagem: imagem,
+        preco: Number(preco)
+    };
+
+    tamanhoSelecionado = "";
+    corSelecionada = "";
+
+    const modal =
+        document.getElementById("modal-produto");
+
+    if (!modal) {
+        console.error("Modal do produto não encontrado.");
+        return;
+    }
+
+
+    // NOME
+
+    const nomeProduto =
+        document.getElementById("produto-modal-nome");
+
+    if (nomeProduto) {
+        nomeProduto.textContent = nome;
+    }
+
+
+    // IMAGEM
+
+    const imagemProduto =
+        document.getElementById("produto-modal-imagem");
+
+    if (imagemProduto) {
+
+        imagemProduto.src = imagem;
+        imagemProduto.alt = nome;
+
+        imagemProduto.onerror = function () {
+
+            console.error(
+                "Imagem não encontrada:",
+                imagem
+            );
+
+        };
+    }
+
+
+    // PREÇO
+
+    const precoProduto =
+        document.getElementById("produto-modal-preco");
+
+    if (precoProduto) {
+
+        precoProduto.textContent =
+            "R$ " +
+            Number(preco)
+                .toFixed(2)
+                .replace(".", ",");
+
+    }
+
+
+    // LIMPAR TAMANHOS
+
+    document
+        .querySelectorAll("#modal-produto .opcoes button")
+        .forEach(function (botao) {
+
+            botao.classList.remove("selecionado");
+
+        });
+
+
+    // LIMPAR TAMANHO
+
+    const tamanhoTexto =
+        document.getElementById("tamanho-escolhido");
+
+    if (tamanhoTexto) {
+        tamanhoTexto.textContent = "Nenhum";
+    }
+
+
+    // LIMPAR COR
+
+    const corTexto =
+        document.getElementById("cor-escolhida");
+
+    if (corTexto) {
+        corTexto.textContent = "Nenhuma";
+    }
+
+
+    // ABRIR MODAL
+
+    modal.style.display = "flex";
+
+}
+
+
+// =====================================================
+// FECHAR PRODUTO
+// =====================================================
+
+function fecharProduto() {
+
+    const modal =
+        document.getElementById("modal-produto");
+
+    if (modal) {
+        modal.style.display = "none";
+    }
+
+}
+
+
+// =====================================================
+// SELECIONAR TAMANHO
+// =====================================================
+
+function selecionarTamanho(elemento) {
+
+    if (!elemento) {
+        return;
+    }
+
+    tamanhoSelecionado =
+        elemento.textContent.trim();
+
+
+    // Remove seleção somente dos tamanhos
+
+    const botoesTamanho =
+        document.querySelectorAll(
+            "#modal-produto .opcoes:first-of-type button"
+        );
+
+    botoesTamanho.forEach(function (botao) {
+
+        botao.classList.remove("selecionado");
+
+    });
+
+
+    elemento.classList.add("selecionado");
+
+
+    const texto =
+        document.getElementById("tamanho-escolhido");
+
+    if (texto) {
+        texto.textContent =
+            tamanhoSelecionado;
+    }
+
+}
+
+
+// =====================================================
+// SELECIONAR COR
+// =====================================================
+
+function selecionarCor(elemento) {
+
+    if (!elemento) {
+        return;
+    }
+
+    corSelecionada =
+        elemento.textContent.trim();
+
+
+    const botoes =
+        document.querySelectorAll(
+            "#modal-produto .opcoes button"
+        );
+
+    const botoesCor =
+        Array.from(botoes).filter(function (botao) {
+
+            const texto =
+                botao.textContent.trim();
+
+            return (
+                texto === "Preto" ||
+                texto === "Branco" ||
+                texto === "Cinza"
+            );
+
+        });
+
+
+    botoesCor.forEach(function (botao) {
+
+        botao.classList.remove("selecionado");
+
+    });
+
+
+    elemento.classList.add("selecionado");
+
+
+    const texto =
+        document.getElementById("cor-escolhida");
+
+    if (texto) {
+        texto.textContent =
+            corSelecionada;
+    }
+
+}
+
+
+// =====================================================
+// ADICIONAR AO CARRINHO
+// =====================================================
+
+function adicionarAoCarrinho() {
+
+    if (!tamanhoSelecionado) {
+
+        alert("Selecione um tamanho.");
+
+        return;
+    }
+
+    if (!corSelecionada) {
+
+        alert("Selecione uma cor.");
+
+        return;
+    }
+
+
+    const produto = {
+
+        nome: produtoAtual.nome,
+
+        imagem: produtoAtual.imagem,
+
+        preco: produtoAtual.preco,
+
+        tamanho: tamanhoSelecionado,
+
+        cor: corSelecionada
 
     };
 
 
-    localStorage.setItem(
-        "tempRoupUsuario",
-        JSON.stringify(usuario)
-    );
-
-
-    alert(
-        "Cadastro realizado com sucesso!"
-    );
-
-
-    document.getElementById("loginEmail").value = email;
-
-    document.getElementById("loginSenha").value = senha;
-
-    mostrarLogin();
-
-}
-
-
-// =====================================================
-// FAZER LOGIN
-// =====================================================
-
-function fazerLogin() {
-
-    const email =
-        document.getElementById("loginEmail").value.trim();
-
-    const senha =
-        document.getElementById("loginSenha").value;
-
-
-    if (!email || !senha) {
-
-        alert(
-            "Digite seu e-mail e sua senha."
-        );
-
-        return;
-
-    }
-
-
-    const dadosUsuario =
-        localStorage.getItem("tempRoupUsuario");
-
-
-    if (!dadosUsuario) {
-
-        alert(
-            "Nenhuma conta cadastrada. Cadastre-se primeiro."
-        );
-
-        mostrarCadastro();
-
-        return;
-
-    }
-
-
-    const usuario =
-        JSON.parse(dadosUsuario);
-
-
-    if (
-        email !== usuario.email ||
-        senha !== usuario.senha
-    ) {
-
-        alert(
-            "E-mail ou senha incorretos."
-        );
-
-        return;
-
-    }
+    carrinho.push(produto);
 
 
     localStorage.setItem(
-        "tempRoupLogado",
-        "true"
+        "tempRoupCarrinho",
+        JSON.stringify(carrinho)
     );
+
+
+    atualizarCarrinho();
+
+    fecharProduto();
 
 
     alert(
-        "Login realizado com sucesso!"
-    );
-
-
-    mostrarSite();
-
-}
-
-
-// =====================================================
-// MOSTRAR SITE
-// =====================================================
-
-function mostrarSite() {
-
-    const inicio = document.getElementById("inicio");
-    const cadastro = document.getElementById("cadastro");
-    const login = document.getElementById("login");
-
-    if (inicio) {
-        inicio.style.display = "none";
-    }
-
-    if (cadastro) {
-        cadastro.style.display = "none";
-    }
-
-    if (login) {
-        login.style.display = "none";
-    }
-
-}
-
-
-// =====================================================
-// LOGIN GOOGLE
-// =====================================================
-
-function loginGoogle() {
-
-    alert(
-        "Login com Google estará disponível em breve."
+        "Produto adicionado ao carrinho!"
     );
 
 }
 
 
 // =====================================================
-// LOGIN FACEBOOK
+// ATUALIZAR CARRINHO
 // =====================================================
 
-function loginFacebook() {
+function atualizarCarrinho() {
 
-    alert(
-        "Login com Facebook estará disponível em breve."
-    );
-
-}
-
-
-// =====================================================
-// LOGIN APPLE
-// =====================================================
-
-function loginApple() {
-
-    alert(
-        "Login com Apple estará disponível em breve."
-    );
-
-}
-
-
-// =====================================================
-// CONTADOR DO CARRINHO
-// =====================================================
-
-function atualizarContadorCarrinho() {
+    const lista =
+        document.getElementById("lista-carrinho");
 
     const contador =
-        document.getElementById("contador");
-
-    const contadorAntigo =
         document.getElementById("contador-carrinho");
+
+    const total =
+        document.getElementById("total-carrinho");
 
 
     if (contador) {
@@ -344,11 +447,243 @@ function atualizarContadorCarrinho() {
     }
 
 
-    if (contadorAntigo) {
+    if (!lista) {
+        return;
+    }
 
-        contadorAntigo.textContent =
-            carrinho.length;
+
+    lista.innerHTML = "";
+
+    let valorTotal = 0;
+
+
+    if (carrinho.length === 0) {
+
+        lista.innerHTML =
+            "<p>Seu carrinho está vazio.</p>";
+
+    }
+
+
+    carrinho.forEach(function (item, index) {
+
+        valorTotal +=
+            Number(item.preco);
+
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "item-carrinho";
+
+
+        div.innerHTML = `
+
+            <img
+                src="${item.imagem}"
+                alt="${item.nome}"
+            >
+
+            <div>
+
+                <strong>
+                    ${item.nome}
+                </strong>
+
+                <p>
+                    Tamanho:
+                    ${item.tamanho}
+                </p>
+
+                <p>
+                    Cor:
+                    ${item.cor}
+                </p>
+
+                <p>
+                    R$
+                    ${Number(item.preco)
+                        .toFixed(2)
+                        .replace(".", ",")}
+                </p>
+
+            </div>
+
+            <button
+                onclick="removerDoCarrinho(${index})"
+            >
+                Remover
+            </button>
+
+        `;
+
+
+        lista.appendChild(div);
+
+    });
+
+
+    if (total) {
+
+        total.textContent =
+            "R$ " +
+            valorTotal
+                .toFixed(2)
+                .replace(".", ",");
 
     }
 
 }
+
+
+// =====================================================
+// REMOVER DO CARRINHO
+// =====================================================
+
+function removerDoCarrinho(index) {
+
+    carrinho.splice(index, 1);
+
+
+    localStorage.setItem(
+        "tempRoupCarrinho",
+        JSON.stringify(carrinho)
+    );
+
+
+    atualizarCarrinho();
+
+}
+
+
+// =====================================================
+// ABRIR CARRINHO
+// =====================================================
+
+function abrirCarrinho() {
+
+    const modal =
+        document.getElementById("modal-carrinho");
+
+    if (modal) {
+
+        modal.style.display =
+            "flex";
+
+    }
+
+    atualizarCarrinho();
+
+}
+
+
+// =====================================================
+// FECHAR CARRINHO
+// =====================================================
+
+function fecharCarrinho() {
+
+    const modal =
+        document.getElementById("modal-carrinho");
+
+    if (modal) {
+
+        modal.style.display =
+            "none";
+
+    }
+
+}
+
+
+// =====================================================
+// FINALIZAR COMPRA
+// =====================================================
+
+function finalizarCompra() {
+
+    if (carrinho.length === 0) {
+
+        alert(
+            "Seu carrinho está vazio."
+        );
+
+        return;
+    }
+
+
+    alert(
+        "Compra realizada com sucesso!"
+    );
+
+
+    carrinho = [];
+
+
+    localStorage.setItem(
+        "tempRoupCarrinho",
+        JSON.stringify(carrinho)
+    );
+
+
+    atualizarCarrinho();
+
+    fecharCarrinho();
+
+}
+
+
+// =====================================================
+// CONTATO
+// =====================================================
+
+function mostrarContato() {
+
+    alert(
+        "Entre em contato com a Temp.Roup!"
+    );
+
+}
+
+
+// =====================================================
+// FECHAR MODAIS AO CLICAR FORA
+// =====================================================
+
+window.addEventListener(
+    "click",
+    function (event) {
+
+        const modalProduto =
+            document.getElementById(
+                "modal-produto"
+            );
+
+        const modalCarrinho =
+            document.getElementById(
+                "modal-carrinho"
+            );
+
+
+        if (
+            modalProduto &&
+            event.target === modalProduto
+        ) {
+
+            fecharProduto();
+
+        }
+
+
+        if (
+            modalCarrinho &&
+            event.target === modalCarrinho
+        ) {
+
+            fecharCarrinho();
+
+        }
+
+    }
+);
