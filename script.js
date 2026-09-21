@@ -21,50 +21,162 @@ let corSelecionada = "";
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    carregarLogin();
+    verificarSessao();
 
     atualizarCarrinho();
-
-    const formulario =
-        document.getElementById("form-login");
-
-    if (formulario) {
-        formulario.addEventListener(
-            "submit",
-            realizarCadastro
-        );
-    }
 
 });
 
 
 // =====================================================
-// CADASTRAR E ENTRAR
+// VERIFICAR SESSÃO
 // =====================================================
 
-function realizarCadastro(event) {
+function verificarSessao() {
+
+    const logado =
+        localStorage.getItem("tempRoupLogado");
+
+    if (logado === "true") {
+
+        mostrarSite();
+
+    } else {
+
+        mostrarTelaInicial();
+
+    }
+
+}
+
+
+// =====================================================
+// MOSTRAR TELA INICIAL
+// =====================================================
+
+function mostrarTelaInicial() {
+
+    esconderTelasAuth();
+
+    const tela =
+        document.getElementById("tela-inicial");
+
+    if (tela) {
+        tela.style.display = "flex";
+    }
+
+}
+
+
+// =====================================================
+// MOSTRAR CADASTRO
+// =====================================================
+
+function mostrarCadastro() {
+
+    esconderTelasAuth();
+
+    const tela =
+        document.getElementById("cadastro");
+
+    if (tela) {
+        tela.style.display = "flex";
+    }
+
+}
+
+
+// =====================================================
+// MOSTRAR LOGIN
+// =====================================================
+
+function mostrarLogin() {
+
+    esconderTelasAuth();
+
+    const tela =
+        document.getElementById("login");
+
+    if (tela) {
+        tela.style.display = "flex";
+    }
+
+}
+
+
+// =====================================================
+// ESCONDER TELAS DE AUTENTICAÇÃO
+// =====================================================
+
+function esconderTelasAuth() {
+
+    const telas = [
+        "tela-inicial",
+        "cadastro",
+        "login"
+    ];
+
+    telas.forEach(function (id) {
+
+        const tela =
+            document.getElementById(id);
+
+        if (tela) {
+            tela.style.display = "none";
+        }
+
+    });
+
+}
+
+
+// =====================================================
+// MOSTRAR SITE
+// =====================================================
+
+function mostrarSite() {
+
+    esconderTelasAuth();
+
+}
+
+
+// =====================================================
+// CADASTRAR
+// =====================================================
+
+function cadastrar(event) {
 
     event.preventDefault();
 
     const nome =
-        document.getElementById("nome").value.trim();
+        document.getElementById("cadNome").value.trim();
 
     const email =
-        document.getElementById("email").value.trim();
+        document.getElementById("cadEmail").value.trim();
 
     const senha =
-        document.getElementById("senha").value.trim();
+        document.getElementById("cadSenha").value;
+
+    const confirmarSenha =
+        document.getElementById("confirmarSenha").value;
+
+    const termos =
+        document.getElementById("aceitarTermos").checked;
 
     const mensagem =
-        document.getElementById("mensagem-login");
+        document.getElementById("mensagem-cadastro");
 
-    if (!nome || !email || !senha) {
+
+    if (!nome || !email || !senha || !confirmarSenha) {
 
         mensagem.textContent =
             "Preencha todos os campos.";
 
         return;
+
     }
+
 
     if (senha.length < 4) {
 
@@ -72,27 +184,122 @@ function realizarCadastro(event) {
             "A senha deve ter pelo menos 4 caracteres.";
 
         return;
+
     }
+
+
+    if (senha !== confirmarSenha) {
+
+        mensagem.textContent =
+            "As senhas não são iguais.";
+
+        return;
+
+    }
+
+
+    if (!termos) {
+
+        mensagem.textContent =
+            "Aceite os termos de uso.";
+
+        return;
+
+    }
+
+
+    const usuario = {
+
+        nome: nome,
+        email: email,
+        senha: senha
+
+    };
+
 
     localStorage.setItem(
         "tempRoupUsuario",
-        JSON.stringify({
-            nome: nome,
-            email: email
-        })
+        JSON.stringify(usuario)
     );
+
 
     mensagem.textContent =
         "Cadastro realizado com sucesso!";
 
+
     setTimeout(function () {
 
-        const telaLogin =
-            document.getElementById("tela-login");
+        document.getElementById("loginEmail").value =
+            email;
 
-        if (telaLogin) {
-            telaLogin.style.display = "none";
-        }
+        mostrarLogin();
+
+    }, 700);
+
+}
+
+
+// =====================================================
+// FAZER LOGIN
+// =====================================================
+
+function fazerLogin(event) {
+
+    event.preventDefault();
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const senha =
+        document.getElementById("loginSenha").value;
+
+    const mensagem =
+        document.getElementById("mensagem-login");
+
+    const usuarioSalvo =
+        localStorage.getItem("tempRoupUsuario");
+
+
+    if (!usuarioSalvo) {
+
+        mensagem.textContent =
+            "Nenhuma conta cadastrada. Faça seu cadastro.";
+
+        return;
+
+    }
+
+
+    const usuario =
+        JSON.parse(usuarioSalvo);
+
+
+    if (
+        email !== usuario.email ||
+        senha !== usuario.senha
+    ) {
+
+        mensagem.textContent =
+            "E-mail ou senha incorretos.";
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "tempRoupLogado",
+        "true"
+    );
+
+
+    mensagem.textContent =
+        "Login realizado com sucesso!";
+
+
+    setTimeout(function () {
+
+        mostrarSite();
 
     }, 500);
 
@@ -100,30 +307,67 @@ function realizarCadastro(event) {
 
 
 // =====================================================
-// VERIFICAR LOGIN
+// MOSTRAR / OCULTAR SENHA
 // =====================================================
 
-function carregarLogin() {
+function mostrarSenha() {
 
-    const telaLogin =
-        document.getElementById("tela-login");
+    const senha =
+        document.getElementById("loginSenha");
 
-    if (!telaLogin) {
+    if (!senha) {
         return;
     }
 
-    const usuario =
-        localStorage.getItem("tempRoupUsuario");
 
-    if (usuario) {
+    if (senha.type === "password") {
 
-        telaLogin.style.display = "none";
+        senha.type = "text";
 
     } else {
 
-        telaLogin.style.display = "flex";
+        senha.type = "password";
 
     }
+
+}
+
+
+// =====================================================
+// LOGIN GOOGLE
+// =====================================================
+
+function loginGoogle() {
+
+    alert(
+        "Login com Google estará disponível em uma próxima versão."
+    );
+
+}
+
+
+// =====================================================
+// LOGIN FACEBOOK
+// =====================================================
+
+function loginFacebook() {
+
+    alert(
+        "Login com Facebook estará disponível em uma próxima versão."
+    );
+
+}
+
+
+// =====================================================
+// LOGIN APPLE
+// =====================================================
+
+function loginApple() {
+
+    alert(
+        "Login com Apple estará disponível em uma próxima versão."
+    );
 
 }
 
@@ -138,7 +382,9 @@ function abrirMenu() {
         document.querySelector(".menu");
 
     if (menu) {
+
         menu.classList.toggle("ativo");
+
     }
 
 }
@@ -148,61 +394,76 @@ function abrirMenu() {
 // VER PRODUTO
 // =====================================================
 
-function selecionarProduto(nome, imagem, preco) {
+function selecionarProduto(
+    nome,
+    imagem,
+    preco
+) {
 
     produtoAtual = {
+
         nome: nome,
         imagem: imagem,
         preco: Number(preco)
+
     };
+
 
     tamanhoSelecionado = "";
     corSelecionada = "";
 
+
     const modal =
         document.getElementById("modal-produto");
 
+
     if (!modal) {
-        console.error("Modal do produto não encontrado.");
+
+        console.error(
+            "Modal do produto não encontrado."
+        );
+
         return;
+
     }
 
-
-    // NOME
 
     const nomeProduto =
-        document.getElementById("produto-modal-nome");
+        document.getElementById(
+            "produto-modal-nome"
+        );
+
 
     if (nomeProduto) {
-        nomeProduto.textContent = nome;
+
+        nomeProduto.textContent =
+            nome;
+
     }
 
 
-    // IMAGEM
-
     const imagemProduto =
-        document.getElementById("produto-modal-imagem");
+        document.getElementById(
+            "produto-modal-imagem"
+        );
+
 
     if (imagemProduto) {
 
-        imagemProduto.src = imagem;
-        imagemProduto.alt = nome;
+        imagemProduto.src =
+            imagem;
 
-        imagemProduto.onerror = function () {
+        imagemProduto.alt =
+            nome;
 
-            console.error(
-                "Imagem não encontrada:",
-                imagem
-            );
-
-        };
     }
 
 
-    // PREÇO
-
     const precoProduto =
-        document.getElementById("produto-modal-preco");
+        document.getElementById(
+            "produto-modal-preco"
+        );
+
 
     if (precoProduto) {
 
@@ -215,38 +476,46 @@ function selecionarProduto(nome, imagem, preco) {
     }
 
 
-    // LIMPAR TAMANHOS
-
     document
-        .querySelectorAll("#modal-produto .opcoes button")
+        .querySelectorAll(
+            "#modal-produto .opcoes button"
+        )
         .forEach(function (botao) {
 
-            botao.classList.remove("selecionado");
+            botao.classList.remove(
+                "selecionado"
+            );
 
         });
 
 
-    // LIMPAR TAMANHO
-
     const tamanhoTexto =
-        document.getElementById("tamanho-escolhido");
+        document.getElementById(
+            "tamanho-escolhido"
+        );
+
 
     if (tamanhoTexto) {
-        tamanhoTexto.textContent = "Nenhum";
+
+        tamanhoTexto.textContent =
+            "Nenhum";
+
     }
 
-
-    // LIMPAR COR
 
     const corTexto =
-        document.getElementById("cor-escolhida");
+        document.getElementById(
+            "cor-escolhida"
+        );
+
 
     if (corTexto) {
-        corTexto.textContent = "Nenhuma";
+
+        corTexto.textContent =
+            "Nenhuma";
+
     }
 
-
-    // ABRIR MODAL
 
     modal.style.display = "flex";
 
@@ -260,10 +529,14 @@ function selecionarProduto(nome, imagem, preco) {
 function fecharProduto() {
 
     const modal =
-        document.getElementById("modal-produto");
+        document.getElementById(
+            "modal-produto"
+        );
 
     if (modal) {
+
         modal.style.display = "none";
+
     }
 
 }
@@ -279,33 +552,55 @@ function selecionarTamanho(elemento) {
         return;
     }
 
+
     tamanhoSelecionado =
         elemento.textContent.trim();
 
 
-    // Remove seleção somente dos tamanhos
-
-    const botoesTamanho =
+    const botoes =
         document.querySelectorAll(
-            "#modal-produto .opcoes:first-of-type button"
+            "#modal-produto .opcoes button"
         );
 
-    botoesTamanho.forEach(function (botao) {
 
-        botao.classList.remove("selecionado");
+    botoes.forEach(function (botao) {
+
+        const texto =
+            botao.textContent.trim();
+
+
+        if (
+            texto === "P" ||
+            texto === "M" ||
+            texto === "G" ||
+            texto === "GG"
+        ) {
+
+            botao.classList.remove(
+                "selecionado"
+            );
+
+        }
 
     });
 
 
-    elemento.classList.add("selecionado");
+    elemento.classList.add(
+        "selecionado"
+    );
 
 
     const texto =
-        document.getElementById("tamanho-escolhido");
+        document.getElementById(
+            "tamanho-escolhido"
+        );
+
 
     if (texto) {
+
         texto.textContent =
             tamanhoSelecionado;
+
     }
 
 }
@@ -321,6 +616,7 @@ function selecionarCor(elemento) {
         return;
     }
 
+
     corSelecionada =
         elemento.textContent.trim();
 
@@ -330,37 +626,44 @@ function selecionarCor(elemento) {
             "#modal-produto .opcoes button"
         );
 
-    const botoesCor =
-        Array.from(botoes).filter(function (botao) {
 
-            const texto =
-                botao.textContent.trim();
+    botoes.forEach(function (botao) {
 
-            return (
-                texto === "Preto" ||
-                texto === "Branco" ||
-                texto === "Cinza"
+        const texto =
+            botao.textContent.trim();
+
+
+        if (
+            texto === "Preto" ||
+            texto === "Branco" ||
+            texto === "Cinza"
+        ) {
+
+            botao.classList.remove(
+                "selecionado"
             );
 
-        });
-
-
-    botoesCor.forEach(function (botao) {
-
-        botao.classList.remove("selecionado");
+        }
 
     });
 
 
-    elemento.classList.add("selecionado");
+    elemento.classList.add(
+        "selecionado"
+    );
 
 
     const texto =
-        document.getElementById("cor-escolhida");
+        document.getElementById(
+            "cor-escolhida"
+        );
+
 
     if (texto) {
+
         texto.textContent =
             corSelecionada;
+
     }
 
 }
@@ -374,29 +677,32 @@ function adicionarAoCarrinho() {
 
     if (!tamanhoSelecionado) {
 
-        alert("Selecione um tamanho.");
+        alert(
+            "Selecione um tamanho."
+        );
 
         return;
+
     }
+
 
     if (!corSelecionada) {
 
-        alert("Selecione uma cor.");
+        alert(
+            "Selecione uma cor."
+        );
 
         return;
+
     }
 
 
     const produto = {
 
         nome: produtoAtual.nome,
-
         imagem: produtoAtual.imagem,
-
         preco: produtoAtual.preco,
-
         tamanho: tamanhoSelecionado,
-
         cor: corSelecionada
 
     };
@@ -430,18 +736,40 @@ function adicionarAoCarrinho() {
 function atualizarCarrinho() {
 
     const lista =
-        document.getElementById("lista-carrinho");
+        document.getElementById(
+            "lista-carrinho"
+        );
+
 
     const contador =
-        document.getElementById("contador-carrinho");
+        document.getElementById(
+            "contador"
+        );
+
+
+    const contadorAntigo =
+        document.getElementById(
+            "contador-carrinho"
+        );
+
 
     const total =
-        document.getElementById("total-carrinho");
+        document.getElementById(
+            "total-carrinho"
+        );
 
 
     if (contador) {
 
         contador.textContent =
+            carrinho.length;
+
+    }
+
+
+    if (contadorAntigo) {
+
+        contadorAntigo.textContent =
             carrinho.length;
 
     }
@@ -454,18 +782,22 @@ function atualizarCarrinho() {
 
     lista.innerHTML = "";
 
+
     let valorTotal = 0;
 
 
     if (carrinho.length === 0) {
 
         lista.innerHTML =
-            "<p>Seu carrinho está vazio.</p>";
+            '<p class="carrinho-vazio">Seu carrinho está vazio.</p>';
 
     }
 
 
-    carrinho.forEach(function (item, index) {
+    carrinho.forEach(function (
+        item,
+        index
+    ) {
 
         valorTotal +=
             Number(item.preco);
@@ -473,6 +805,7 @@ function atualizarCarrinho() {
 
         const div =
             document.createElement("div");
+
 
         div.className =
             "item-carrinho";
@@ -485,32 +818,30 @@ function atualizarCarrinho() {
                 alt="${item.nome}"
             >
 
-            <div>
+            <div class="item-carrinho-info">
 
                 <strong>
                     ${item.nome}
                 </strong>
 
-                <p>
-                    Tamanho:
-                    ${item.tamanho}
-                </p>
+                <span>
+                    Tamanho: ${item.tamanho}
+                </span>
 
-                <p>
-                    Cor:
-                    ${item.cor}
-                </p>
+                <span>
+                    Cor: ${item.cor}
+                </span>
 
-                <p>
-                    R$
-                    ${Number(item.preco)
+                <span>
+                    R$ ${Number(item.preco)
                         .toFixed(2)
                         .replace(".", ",")}
-                </p>
+                </span>
 
             </div>
 
             <button
+                class="remover-item"
                 onclick="removerDoCarrinho(${index})"
             >
                 Remover
@@ -543,7 +874,10 @@ function atualizarCarrinho() {
 
 function removerDoCarrinho(index) {
 
-    carrinho.splice(index, 1);
+    carrinho.splice(
+        index,
+        1
+    );
 
 
     localStorage.setItem(
@@ -564,7 +898,10 @@ function removerDoCarrinho(index) {
 function abrirCarrinho() {
 
     const modal =
-        document.getElementById("modal-carrinho");
+        document.getElementById(
+            "modal-carrinho"
+        );
+
 
     if (modal) {
 
@@ -572,6 +909,7 @@ function abrirCarrinho() {
             "flex";
 
     }
+
 
     atualizarCarrinho();
 
@@ -585,7 +923,10 @@ function abrirCarrinho() {
 function fecharCarrinho() {
 
     const modal =
-        document.getElementById("modal-carrinho");
+        document.getElementById(
+            "modal-carrinho"
+        );
+
 
     if (modal) {
 
@@ -610,6 +951,7 @@ function finalizarCompra() {
         );
 
         return;
+
     }
 
 
@@ -659,6 +1001,7 @@ window.addEventListener(
             document.getElementById(
                 "modal-produto"
             );
+
 
         const modalCarrinho =
             document.getElementById(
