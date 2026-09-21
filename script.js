@@ -2,17 +2,100 @@
 // TEMP.ROUP - SCRIPT.JS
 // =====================================================
 
-let carrinho =
-    JSON.parse(localStorage.getItem("tempRoupCarrinho")) || [];
+// ---------- CONFIGURAÇÕES ----------
+// Troque pelo número real (código do país + DDD + número, só dígitos)
+const CONTATO_WHATSAPP = "5511999999999";
+const CONTATO_MENSAGEM = "Olá! Gostaria de saber mais sobre a Temp.Roup.";
 
-let produtoAtual = {
-    nome: "",
-    imagem: "",
-    preco: 0
+const CHAVE_CARRINHO = "tempRoupCarrinho";
+const CHAVE_USUARIO = "tempRoupUsuario";
+
+const TAMANHOS = {
+    roupa: ["P", "M", "G", "GG"],
+    calcado: ["38", "39", "40", "41", "42", "43"]
 };
 
+// ---------- ESTADO ----------
+let carrinho = carregarCarrinho();
+
+let produtoAtual = { nome: "", imagem: "", preco: 0, tipo: "roupa" };
 let tamanhoSelecionado = "";
 let corSelecionada = "";
+let toastTimer = null;
+
+
+// =====================================================
+// UTILITÁRIOS
+// =====================================================
+
+function formatarPreco(valor) {
+    return "R$ " + Number(valor).toFixed(2).replace(".", ",");
+}
+
+// Evita que texto vindo do localStorage quebre o HTML
+function escaparHTML(texto) {
+    const div = document.createElement("div");
+    div.textContent = String(texto);
+    return div.innerHTML;
+}
+
+function lerJSON(chave, padrao) {
+    try {
+        const valor = JSON.parse(localStorage.getItem(chave));
+        return valor === null ? padrao : valor;
+    } catch (erro) {
+        return padrao;
+    }
+}
+
+function salvarJSON(chave, valor) {
+    try {
+        localStorage.setItem(chave, JSON.stringify(valor));
+    } catch (erro) {
+        console.error("Não foi possível salvar em", chave, erro);
+    }
+}
+
+function carregarCarrinho() {
+    const dados = lerJSON(CHAVE_CARRINHO, []);
+
+    if (!Array.isArray(dados)) {
+        return [];
+    }
+
+    // Garante que itens antigos (sem quantidade) continuem funcionando
+    return dados.map(function (item) {
+        return Object.assign({}, item, {
+            quantidade: Number(item.quantidade) > 0 ? Number(item.quantidade) : 1
+        });
+    });
+}
+
+function salvarCarrinho() {
+    salvarJSON(CHAVE_CARRINHO, carrinho);
+}
+
+function mostrarAviso(texto) {
+    const toast = document.getElementById("toast");
+
+    if (!toast) {
+        return;
+    }
+
+    toast.textContent = texto;
+    toast.classList.add("visivel");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(function () {
+        toast.classList.remove("visivel");
+    }, 2500);
+}
+
+function atualizarScroll() {
+    const algumAberto = document.querySelector(".modal.ativo");
+    document.body.classList.toggle("sem-scroll", Boolean(algumAberto));
+}
 
 
 // =====================================================
@@ -21,353 +104,112 @@ let corSelecionada = "";
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    verificarSessao();
-
+    carregarLogin();
     atualizarCarrinho();
+
+    // Formulário de cadastro
+    const formulario = document.getElementById("form-login");
+
+    if (formulario) {
+        formulario.addEventListener("submit", realizarCadastro);
+    }
+
+    // Botões "Ver produto" (usa data-attributes, sem parâmetros no onclick)
+    document.querySelectorAll(".btn-ver").forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            selecionarProduto({
+                nome: botao.dataset.nome,
+                imagem: botao.dataset.imagem,
+                preco: botao.dataset.preco,
+                tipo: botao.dataset.tipo
+            });
+        });
+    });
+
+    // Botões de cor
+    document.querySelectorAll("#opcoes-cor button").forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            selecionarCor(botao);
+        });
+    });
+
+    // Fecha o menu mobile ao clicar em um link
+    document.querySelectorAll("#menu a").forEach(function (link) {
+        link.addEventListener("click", fecharMenu);
+    });
 
 });
 
 
 // =====================================================
-// VERIFICAR SESSÃO
+// CADASTRO / LOGIN
+// (Demonstração: os dados ficam só no navegador.
+//  A senha NÃO é armazenada. Um sistema real precisa de back-end.)
 // =====================================================
 
-function verificarSessao() {
-
-    const logado =
-        localStorage.getItem("tempRoupLogado");
-
-    if (logado === "true") {
-
-        mostrarSite();
-
-    } else {
-
-        mostrarTelaInicial();
-
-    }
-
-}
-
-
-// =====================================================
-// MOSTRAR TELA INICIAL
-// =====================================================
-
-function mostrarTelaInicial() {
-
-    esconderTelasAuth();
-
-    const tela =
-        document.getElementById("tela-inicial");
-
-    if (tela) {
-        tela.style.display = "flex";
-    }
-
-}
-
-
-// =====================================================
-// MOSTRAR CADASTRO
-// =====================================================
-
-function mostrarCadastro() {
-
-    esconderTelasAuth();
-
-    const tela =
-        document.getElementById("cadastro");
-
-    if (tela) {
-        tela.style.display = "flex";
-    }
-
-}
-
-
-// =====================================================
-// MOSTRAR LOGIN
-// =====================================================
-
-function mostrarLogin() {
-
-    esconderTelasAuth();
-
-    const tela =
-        document.getElementById("login");
-
-    if (tela) {
-        tela.style.display = "flex";
-    }
-
-}
-
-
-// =====================================================
-// ESCONDER TELAS DE AUTENTICAÇÃO
-// =====================================================
-
-function esconderTelasAuth() {
-
-    const telas = [
-        "tela-inicial",
-        "cadastro",
-        "login"
-    ];
-
-    telas.forEach(function (id) {
-
-        const tela =
-            document.getElementById(id);
-
-        if (tela) {
-            tela.style.display = "none";
-        }
-
-    });
-
-}
-
-
-// =====================================================
-// MOSTRAR SITE
-// =====================================================
-
-function mostrarSite() {
-
-    esconderTelasAuth();
-
-}
-
-
-// =====================================================
-// CADASTRAR
-// =====================================================
-
-function cadastrar(event) {
+function realizarCadastro(event) {
 
     event.preventDefault();
 
-    const nome =
-        document.getElementById("cadNome").value.trim();
+    const nome = document.getElementById("nome").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value.trim();
+    const mensagem = document.getElementById("mensagem-login");
 
-    const email =
-        document.getElementById("cadEmail").value.trim();
-
-    const senha =
-        document.getElementById("cadSenha").value;
-
-    const confirmarSenha =
-        document.getElementById("confirmarSenha").value;
-
-    const termos =
-        document.getElementById("aceitarTermos").checked;
-
-    const mensagem =
-        document.getElementById("mensagem-cadastro");
-
-
-    if (!nome || !email || !senha || !confirmarSenha) {
-
-        mensagem.textContent =
-            "Preencha todos os campos.";
-
+    if (!nome || !email || !senha) {
+        mensagem.textContent = "Preencha todos os campos.";
         return;
-
     }
-
 
     if (senha.length < 4) {
-
-        mensagem.textContent =
-            "A senha deve ter pelo menos 4 caracteres.";
-
+        mensagem.textContent = "A senha deve ter pelo menos 4 caracteres.";
         return;
-
     }
 
+    salvarJSON(CHAVE_USUARIO, { nome: nome, email: email });
 
-    if (senha !== confirmarSenha) {
-
-        mensagem.textContent =
-            "As senhas não são iguais.";
-
-        return;
-
-    }
-
-
-    if (!termos) {
-
-        mensagem.textContent =
-            "Aceite os termos de uso.";
-
-        return;
-
-    }
-
-
-    const usuario = {
-
-        nome: nome,
-        email: email,
-        senha: senha
-
-    };
-
-
-    localStorage.setItem(
-        "tempRoupUsuario",
-        JSON.stringify(usuario)
-    );
-
-
-    mensagem.textContent =
-        "Cadastro realizado com sucesso!";
-
+    mensagem.textContent = "Cadastro realizado com sucesso!";
 
     setTimeout(function () {
+        const telaLogin = document.getElementById("tela-login");
 
-        document.getElementById("loginEmail").value =
-            email;
+        if (telaLogin) {
+            telaLogin.style.display = "none";
+        }
 
-        mostrarLogin();
+        document.getElementById("form-login").reset();
+        mensagem.textContent = "";
 
-    }, 700);
-
-}
-
-
-// =====================================================
-// FAZER LOGIN
-// =====================================================
-
-function fazerLogin(event) {
-
-    event.preventDefault();
-
-    const email =
-        document.getElementById("loginEmail").value.trim();
-
-    const senha =
-        document.getElementById("loginSenha").value;
-
-    const mensagem =
-        document.getElementById("mensagem-login");
-
-    const usuarioSalvo =
-        localStorage.getItem("tempRoupUsuario");
-
-
-    if (!usuarioSalvo) {
-
-        mensagem.textContent =
-            "Nenhuma conta cadastrada. Faça seu cadastro.";
-
-        return;
-
-    }
-
-
-    const usuario =
-        JSON.parse(usuarioSalvo);
-
-
-    if (
-        email !== usuario.email ||
-        senha !== usuario.senha
-    ) {
-
-        mensagem.textContent =
-            "E-mail ou senha incorretos.";
-
-        return;
-
-    }
-
-
-    localStorage.setItem(
-        "tempRoupLogado",
-        "true"
-    );
-
-
-    mensagem.textContent =
-        "Login realizado com sucesso!";
-
-
-    setTimeout(function () {
-
-        mostrarSite();
-
+        mostrarAviso("Bem-vindo(a), " + nome.split(" ")[0] + "!");
     }, 500);
 
 }
 
+function carregarLogin() {
 
-// =====================================================
-// MOSTRAR / OCULTAR SENHA
-// =====================================================
+    const telaLogin = document.getElementById("tela-login");
+    const botaoSair = document.getElementById("btn-sair");
 
-function mostrarSenha() {
-
-    const senha =
-        document.getElementById("loginSenha");
-
-    if (!senha) {
+    if (!telaLogin) {
         return;
     }
 
+    const usuario = lerJSON(CHAVE_USUARIO, null);
 
-    if (senha.type === "password") {
+    telaLogin.style.display = usuario ? "none" : "flex";
 
-        senha.type = "text";
-
-    } else {
-
-        senha.type = "password";
-
+    if (botaoSair) {
+        botaoSair.style.display = usuario ? "" : "none";
     }
 
 }
 
+function sair() {
 
-// =====================================================
-// LOGIN GOOGLE
-// =====================================================
+    localStorage.removeItem(CHAVE_USUARIO);
 
-function loginGoogle() {
-
-    alert(
-        "Login com Google estará disponível em uma próxima versão."
-    );
-
-}
-
-
-// =====================================================
-// LOGIN FACEBOOK
-// =====================================================
-
-function loginFacebook() {
-
-    alert(
-        "Login com Facebook estará disponível em uma próxima versão."
-    );
-
-}
-
-
-// =====================================================
-// LOGIN APPLE
-// =====================================================
-
-function loginApple() {
-
-    alert(
-        "Login com Apple estará disponível em uma próxima versão."
-    );
+    fecharMenu();
+    carregarLogin();
 
 }
 
@@ -377,601 +219,304 @@ function loginApple() {
 // =====================================================
 
 function abrirMenu() {
-
-    const menu =
-        document.querySelector(".menu");
+    const menu = document.getElementById("menu");
 
     if (menu) {
-
         menu.classList.toggle("ativo");
-
     }
+}
 
+function fecharMenu() {
+    const menu = document.getElementById("menu");
+
+    if (menu) {
+        menu.classList.remove("ativo");
+    }
 }
 
 
 // =====================================================
-// VER PRODUTO
+// MODAL DO PRODUTO
 // =====================================================
 
-function selecionarProduto(
-    nome,
-    imagem,
-    preco
-) {
+function selecionarProduto(produto) {
 
     produtoAtual = {
-
-        nome: nome,
-        imagem: imagem,
-        preco: Number(preco)
-
+        nome: produto.nome,
+        imagem: produto.imagem,
+        preco: Number(produto.preco),
+        tipo: produto.tipo === "calcado" ? "calcado" : "roupa"
     };
-
 
     tamanhoSelecionado = "";
     corSelecionada = "";
 
-
-    const modal =
-        document.getElementById("modal-produto");
-
+    const modal = document.getElementById("modal-produto");
 
     if (!modal) {
-
-        console.error(
-            "Modal do produto não encontrado."
-        );
-
+        console.error("Modal do produto não encontrado.");
         return;
-
     }
 
+    // Nome, imagem e preço
+    document.getElementById("produto-modal-nome").textContent = produtoAtual.nome;
 
-    const nomeProduto =
-        document.getElementById(
-            "produto-modal-nome"
-        );
+    const imagem = document.getElementById("produto-modal-imagem");
+    imagem.src = produtoAtual.imagem;
+    imagem.alt = produtoAtual.nome;
+    imagem.onerror = function () {
+        console.error("Imagem não encontrada:", produtoAtual.imagem);
+    };
 
+    document.getElementById("produto-modal-preco").textContent =
+        formatarPreco(produtoAtual.preco);
 
-    if (nomeProduto) {
+    // Cria os botões de tamanho conforme o tipo do produto
+    const areaTamanhos = document.getElementById("opcoes-tamanho");
+    areaTamanhos.innerHTML = "";
 
-        nomeProduto.textContent =
-            nome;
-
-    }
-
-
-    const imagemProduto =
-        document.getElementById(
-            "produto-modal-imagem"
-        );
-
-
-    if (imagemProduto) {
-
-        imagemProduto.src =
-            imagem;
-
-        imagemProduto.alt =
-            nome;
-
-    }
-
-
-    const precoProduto =
-        document.getElementById(
-            "produto-modal-preco"
-        );
-
-
-    if (precoProduto) {
-
-        precoProduto.textContent =
-            "R$ " +
-            Number(preco)
-                .toFixed(2)
-                .replace(".", ",");
-
-    }
-
-
-    document
-        .querySelectorAll(
-            "#modal-produto .opcoes button"
-        )
-        .forEach(function (botao) {
-
-            botao.classList.remove(
-                "selecionado"
-            );
-
+    TAMANHOS[produtoAtual.tipo].forEach(function (tamanho) {
+        const botao = document.createElement("button");
+        botao.type = "button";
+        botao.textContent = tamanho;
+        botao.addEventListener("click", function () {
+            selecionarTamanho(botao);
         });
+        areaTamanhos.appendChild(botao);
+    });
 
+    // Limpa seleções anteriores de cor
+    document.querySelectorAll("#opcoes-cor button").forEach(function (botao) {
+        botao.classList.remove("selecionado");
+    });
 
-    const tamanhoTexto =
-        document.getElementById(
-            "tamanho-escolhido"
-        );
+    document.getElementById("tamanho-escolhido").textContent = "Nenhum";
+    document.getElementById("cor-escolhida").textContent = "Nenhuma";
 
-
-    if (tamanhoTexto) {
-
-        tamanhoTexto.textContent =
-            "Nenhum";
-
-    }
-
-
-    const corTexto =
-        document.getElementById(
-            "cor-escolhida"
-        );
-
-
-    if (corTexto) {
-
-        corTexto.textContent =
-            "Nenhuma";
-
-    }
-
-
-    modal.style.display = "flex";
+    modal.classList.add("ativo");
+    atualizarScroll();
 
 }
-
-
-// =====================================================
-// FECHAR PRODUTO
-// =====================================================
 
 function fecharProduto() {
 
-    const modal =
-        document.getElementById(
-            "modal-produto"
-        );
+    const modal = document.getElementById("modal-produto");
 
     if (modal) {
-
-        modal.style.display = "none";
-
+        modal.classList.remove("ativo");
     }
 
+    atualizarScroll();
+
 }
-
-
-// =====================================================
-// SELECIONAR TAMANHO
-// =====================================================
 
 function selecionarTamanho(elemento) {
 
-    if (!elemento) {
-        return;
-    }
+    tamanhoSelecionado = elemento.textContent.trim();
 
-
-    tamanhoSelecionado =
-        elemento.textContent.trim();
-
-
-    const botoes =
-        document.querySelectorAll(
-            "#modal-produto .opcoes button"
-        );
-
-
-    botoes.forEach(function (botao) {
-
-        const texto =
-            botao.textContent.trim();
-
-
-        if (
-            texto === "P" ||
-            texto === "M" ||
-            texto === "G" ||
-            texto === "GG"
-        ) {
-
-            botao.classList.remove(
-                "selecionado"
-            );
-
-        }
-
+    document.querySelectorAll("#opcoes-tamanho button").forEach(function (botao) {
+        botao.classList.remove("selecionado");
     });
 
+    elemento.classList.add("selecionado");
 
-    elemento.classList.add(
-        "selecionado"
-    );
-
-
-    const texto =
-        document.getElementById(
-            "tamanho-escolhido"
-        );
-
-
-    if (texto) {
-
-        texto.textContent =
-            tamanhoSelecionado;
-
-    }
+    document.getElementById("tamanho-escolhido").textContent = tamanhoSelecionado;
 
 }
-
-
-// =====================================================
-// SELECIONAR COR
-// =====================================================
 
 function selecionarCor(elemento) {
 
-    if (!elemento) {
-        return;
-    }
+    corSelecionada = elemento.dataset.cor || elemento.textContent.trim();
 
-
-    corSelecionada =
-        elemento.textContent.trim();
-
-
-    const botoes =
-        document.querySelectorAll(
-            "#modal-produto .opcoes button"
-        );
-
-
-    botoes.forEach(function (botao) {
-
-        const texto =
-            botao.textContent.trim();
-
-
-        if (
-            texto === "Preto" ||
-            texto === "Branco" ||
-            texto === "Cinza"
-        ) {
-
-            botao.classList.remove(
-                "selecionado"
-            );
-
-        }
-
+    document.querySelectorAll("#opcoes-cor button").forEach(function (botao) {
+        botao.classList.remove("selecionado");
     });
 
+    elemento.classList.add("selecionado");
 
-    elemento.classList.add(
-        "selecionado"
-    );
-
-
-    const texto =
-        document.getElementById(
-            "cor-escolhida"
-        );
-
-
-    if (texto) {
-
-        texto.textContent =
-            corSelecionada;
-
-    }
+    document.getElementById("cor-escolhida").textContent = corSelecionada;
 
 }
 
 
 // =====================================================
-// ADICIONAR AO CARRINHO
+// CARRINHO
 // =====================================================
 
 function adicionarAoCarrinho() {
 
     if (!tamanhoSelecionado) {
-
-        alert(
-            "Selecione um tamanho."
-        );
-
+        mostrarAviso("Selecione um tamanho.");
         return;
-
     }
-
 
     if (!corSelecionada) {
-
-        alert(
-            "Selecione uma cor."
-        );
-
+        mostrarAviso("Selecione uma cor.");
         return;
-
     }
 
+    // Se o mesmo item (nome + tamanho + cor) já existe, soma a quantidade
+    const existente = carrinho.find(function (item) {
+        return item.nome === produtoAtual.nome &&
+               item.tamanho === tamanhoSelecionado &&
+               item.cor === corSelecionada;
+    });
 
-    const produto = {
+    if (existente) {
+        existente.quantidade += 1;
+    } else {
+        carrinho.push({
+            nome: produtoAtual.nome,
+            imagem: produtoAtual.imagem,
+            preco: produtoAtual.preco,
+            tamanho: tamanhoSelecionado,
+            cor: corSelecionada,
+            quantidade: 1
+        });
+    }
 
-        nome: produtoAtual.nome,
-        imagem: produtoAtual.imagem,
-        preco: produtoAtual.preco,
-        tamanho: tamanhoSelecionado,
-        cor: corSelecionada
-
-    };
-
-
-    carrinho.push(produto);
-
-
-    localStorage.setItem(
-        "tempRoupCarrinho",
-        JSON.stringify(carrinho)
-    );
-
-
+    salvarCarrinho();
     atualizarCarrinho();
-
     fecharProduto();
 
-
-    alert(
-        "Produto adicionado ao carrinho!"
-    );
+    mostrarAviso("Produto adicionado ao carrinho!");
 
 }
 
-
-// =====================================================
-// ATUALIZAR CARRINHO
-// =====================================================
-
 function atualizarCarrinho() {
 
-    const lista =
-        document.getElementById(
-            "lista-carrinho"
-        );
+    const lista = document.getElementById("lista-carrinho");
+    const contador = document.getElementById("contador-carrinho");
+    const total = document.getElementById("total-carrinho");
 
+    let valorTotal = 0;
+    let quantidadeTotal = 0;
 
-    const contador =
-        document.getElementById(
-            "contador"
-        );
-
-
-    const contadorAntigo =
-        document.getElementById(
-            "contador-carrinho"
-        );
-
-
-    const total =
-        document.getElementById(
-            "total-carrinho"
-        );
-
+    carrinho.forEach(function (item) {
+        valorTotal += Number(item.preco) * item.quantidade;
+        quantidadeTotal += item.quantidade;
+    });
 
     if (contador) {
-
-        contador.textContent =
-            carrinho.length;
-
+        contador.textContent = quantidadeTotal;
     }
 
-
-    if (contadorAntigo) {
-
-        contadorAntigo.textContent =
-            carrinho.length;
-
+    if (total) {
+        total.textContent = formatarPreco(valorTotal);
     }
-
 
     if (!lista) {
         return;
     }
 
-
     lista.innerHTML = "";
 
-
-    let valorTotal = 0;
-
-
     if (carrinho.length === 0) {
-
-        lista.innerHTML =
-            '<p class="carrinho-vazio">Seu carrinho está vazio.</p>';
-
+        lista.innerHTML = '<p class="carrinho-vazio">Seu carrinho está vazio.</p>';
+        return;
     }
 
+    carrinho.forEach(function (item, index) {
 
-    carrinho.forEach(function (
-        item,
-        index
-    ) {
-
-        valorTotal +=
-            Number(item.preco);
-
-
-        const div =
-            document.createElement("div");
-
-
-        div.className =
-            "item-carrinho";
-
+        const div = document.createElement("div");
+        div.className = "item-carrinho";
 
         div.innerHTML = `
-
-            <img
-                src="${item.imagem}"
-                alt="${item.nome}"
-            >
+            <img src="${escaparHTML(item.imagem)}" alt="${escaparHTML(item.nome)}">
 
             <div class="item-carrinho-info">
+                <strong>${escaparHTML(item.nome)}</strong>
+                <span>Tamanho: ${escaparHTML(item.tamanho)}</span>
+                <span>Cor: ${escaparHTML(item.cor)}</span>
+                <span>${formatarPreco(item.preco)}</span>
 
-                <strong>
-                    ${item.nome}
-                </strong>
-
-                <span>
-                    Tamanho: ${item.tamanho}
-                </span>
-
-                <span>
-                    Cor: ${item.cor}
-                </span>
-
-                <span>
-                    R$ ${Number(item.preco)
-                        .toFixed(2)
-                        .replace(".", ",")}
-                </span>
-
+                <div class="qtd-controles">
+                    <button type="button" onclick="alterarQuantidade(${index}, -1)" aria-label="Diminuir">−</button>
+                    <span>${item.quantidade}</span>
+                    <button type="button" onclick="alterarQuantidade(${index}, 1)" aria-label="Aumentar">+</button>
+                </div>
             </div>
 
-            <button
-                class="remover-item"
-                onclick="removerDoCarrinho(${index})"
-            >
+            <button type="button" class="remover-item" onclick="removerDoCarrinho(${index})">
                 Remover
             </button>
-
         `;
-
 
         lista.appendChild(div);
 
     });
 
-
-    if (total) {
-
-        total.textContent =
-            "R$ " +
-            valorTotal
-                .toFixed(2)
-                .replace(".", ",");
-
-    }
-
 }
 
+function alterarQuantidade(index, variacao) {
 
-// =====================================================
-// REMOVER DO CARRINHO
-// =====================================================
+    const item = carrinho[index];
+
+    if (!item) {
+        return;
+    }
+
+    item.quantidade += variacao;
+
+    if (item.quantidade <= 0) {
+        carrinho.splice(index, 1);
+    }
+
+    salvarCarrinho();
+    atualizarCarrinho();
+
+}
 
 function removerDoCarrinho(index) {
 
-    carrinho.splice(
-        index,
-        1
-    );
+    carrinho.splice(index, 1);
 
-
-    localStorage.setItem(
-        "tempRoupCarrinho",
-        JSON.stringify(carrinho)
-    );
-
-
+    salvarCarrinho();
     atualizarCarrinho();
 
 }
-
-
-// =====================================================
-// ABRIR CARRINHO
-// =====================================================
 
 function abrirCarrinho() {
 
-    const modal =
-        document.getElementById(
-            "modal-carrinho"
-        );
-
-
-    if (modal) {
-
-        modal.style.display =
-            "flex";
-
-    }
-
+    const modal = document.getElementById("modal-carrinho");
 
     atualizarCarrinho();
 
+    if (modal) {
+        modal.classList.add("ativo");
+    }
+
+    fecharMenu();
+    atualizarScroll();
+
 }
-
-
-// =====================================================
-// FECHAR CARRINHO
-// =====================================================
 
 function fecharCarrinho() {
 
-    const modal =
-        document.getElementById(
-            "modal-carrinho"
-        );
-
+    const modal = document.getElementById("modal-carrinho");
 
     if (modal) {
-
-        modal.style.display =
-            "none";
-
+        modal.classList.remove("ativo");
     }
 
+    atualizarScroll();
+
 }
-
-
-// =====================================================
-// FINALIZAR COMPRA
-// =====================================================
 
 function finalizarCompra() {
 
     if (carrinho.length === 0) {
-
-        alert(
-            "Seu carrinho está vazio."
-        );
-
+        mostrarAviso("Seu carrinho está vazio.");
         return;
-
     }
-
-
-    alert(
-        "Compra realizada com sucesso!"
-    );
-
 
     carrinho = [];
 
-
-    localStorage.setItem(
-        "tempRoupCarrinho",
-        JSON.stringify(carrinho)
-    );
-
-
+    salvarCarrinho();
     atualizarCarrinho();
-
     fecharCarrinho();
+
+    mostrarAviso("Compra realizada com sucesso!");
 
 }
 
@@ -982,51 +527,37 @@ function finalizarCompra() {
 
 function mostrarContato() {
 
-    alert(
-        "Entre em contato com a Temp.Roup!"
-    );
+    const url =
+        "https://wa.me/" + CONTATO_WHATSAPP +
+        "?text=" + encodeURIComponent(CONTATO_MENSAGEM);
+
+    window.open(url, "_blank", "noopener");
 
 }
 
 
 // =====================================================
-// FECHAR MODAIS AO CLICAR FORA
+// FECHAR MODAIS (clique fora e tecla Esc)
 // =====================================================
 
-window.addEventListener(
-    "click",
-    function (event) {
+window.addEventListener("click", function (event) {
 
-        const modalProduto =
-            document.getElementById(
-                "modal-produto"
-            );
-
-
-        const modalCarrinho =
-            document.getElementById(
-                "modal-carrinho"
-            );
-
-
-        if (
-            modalProduto &&
-            event.target === modalProduto
-        ) {
-
-            fecharProduto();
-
-        }
-
-
-        if (
-            modalCarrinho &&
-            event.target === modalCarrinho
-        ) {
-
-            fecharCarrinho();
-
-        }
-
+    if (event.target === document.getElementById("modal-produto")) {
+        fecharProduto();
     }
-);
+
+    if (event.target === document.getElementById("modal-carrinho")) {
+        fecharCarrinho();
+    }
+
+});
+
+document.addEventListener("keydown", function (event) {
+
+    if (event.key === "Escape") {
+        fecharProduto();
+        fecharCarrinho();
+        fecharMenu();
+    }
+
+});
