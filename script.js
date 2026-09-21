@@ -1,15 +1,4 @@
-/* =====================================================
-   TEMP.ROUP - SCRIPT
-===================================================== */
-
-
-/* =====================================================
-   VARIÁVEIS
-===================================================== */
-
-let carrinho = JSON.parse(
-    localStorage.getItem("tempRoupCarrinho")
-) || [];
+let carrinho = JSON.parse(localStorage.getItem("tempRoupCarrinho")) || [];
 
 let produtoAtual = {
     nome: "",
@@ -20,704 +9,331 @@ let produtoAtual = {
 let tamanhoSelecionado = "";
 let corSelecionada = "";
 
-
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
-
 document.addEventListener("DOMContentLoaded", function () {
 
-    carregarLogin();
+    // Verifica se já existe usuário cadastrado
+    const usuario = localStorage.getItem("tempRoupUsuario");
+    const telaLogin = document.getElementById("tela-login");
 
-    atualizarCarrinho();
-
-    const formLogin = document.getElementById("form-login");
-
-    if (formLogin) {
-
-        formLogin.addEventListener(
-            "submit",
-            realizarCadastro
-        );
-
+    if (usuario) {
+        telaLogin.style.display = "none";
+    } else {
+        telaLogin.style.display = "flex";
     }
 
+    // CADASTRAR E ENTRAR
+    const formulario = document.getElementById("form-login");
+
+    if (formulario) {
+        formulario.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const nome = document.getElementById("nome").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const senha = document.getElementById("senha").value.trim();
+            const mensagem = document.getElementById("mensagem-login");
+
+            if (nome === "" || email === "" || senha === "") {
+                mensagem.textContent = "Preencha todos os campos.";
+                return;
+            }
+
+            if (senha.length < 4) {
+                mensagem.textContent = "A senha deve ter pelo menos 4 caracteres.";
+                return;
+            }
+
+            // Salva somente nome e e-mail
+            localStorage.setItem(
+                "tempRoupUsuario",
+                JSON.stringify({
+                    nome: nome,
+                    email: email
+                })
+            );
+
+            mensagem.textContent = "Cadastro realizado!";
+
+            // Fecha a tela de cadastro
+            setTimeout(function () {
+                telaLogin.style.display = "none";
+            }, 500);
+        });
+    }
+
+    atualizarCarrinho();
 });
 
 
-/* =====================================================
-   CADASTRO / ENTRAR
-===================================================== */
+// ===============================
+// MENU
+// ===============================
 
-function carregarLogin() {
-
-    const telaLogin =
-        document.getElementById("tela-login");
-
-    if (!telaLogin) {
-        return;
-    }
-
-    const usuario =
-        localStorage.getItem("tempRoupUsuario");
-
-    if (usuario) {
-
-        telaLogin.style.display = "none";
-
-    } else {
-
-        telaLogin.style.display = "flex";
-
-    }
-
-}
-
-
-function realizarCadastro(event) {
-
-    event.preventDefault();
-
-    const nome =
-        document.getElementById("nome").value.trim();
-
-    const email =
-        document.getElementById("email").value.trim();
-
-    const senha =
-        document.getElementById("senha").value.trim();
-
-    const mensagem =
-        document.getElementById("mensagem-login");
-
-
-    if (!nome || !email || !senha) {
-
-        mensagem.textContent =
-            "Preencha todos os campos.";
-
-        return;
-
-    }
-
-
-    if (senha.length < 4) {
-
-        mensagem.textContent =
-            "A senha deve ter pelo menos 4 caracteres.";
-
-        return;
-
-    }
-
-
-    /*
-       Para este protótipo, não armazenamos a senha.
-       Guardamos somente nome e e-mail.
-    */
-
-    const usuario = {
-        nome: nome,
-        email: email
-    };
-
-
-    localStorage.setItem(
-        "tempRoupUsuario",
-        JSON.stringify(usuario)
-    );
-
-
-    mensagem.textContent =
-        "Cadastro realizado! Entrando...";
-
-
-    setTimeout(function () {
-
-        document.getElementById(
-            "tela-login"
-        ).style.display = "none";
-
-    }, 700);
-
-}
-
-
-/* =====================================================
-   MENU MOBILE
-===================================================== */
-
-function abrirMenu() {
-
-    const menu =
-        document.querySelector(".menu");
+function toggleMenu() {
+    const menu = document.querySelector(".nav-links");
 
     if (menu) {
-
         menu.classList.toggle("ativo");
-
     }
-
 }
 
 
-/* =====================================================
-   PRODUTO
-===================================================== */
+// ===============================
+// PRODUTO
+// ===============================
 
-function selecionarProduto(
-    nome,
-    imagem,
-    preco
-) {
+function selecionarProduto(nome, imagem, preco) {
 
-    produtoAtual = {
-        nome: nome,
-        imagem: imagem,
-        preco: preco
-    };
-
+    produtoAtual.nome = nome;
+    produtoAtual.imagem = imagem;
+    produtoAtual.preco = preco;
 
     tamanhoSelecionado = "";
     corSelecionada = "";
 
+    const modal = document.getElementById("modal-produto");
 
-    const modal =
-        document.getElementById("modal-produto");
+    if (!modal) return;
 
+    document.getElementById("modal-nome").textContent = nome;
+    document.getElementById("modal-imagem").src = imagem;
+    document.getElementById("modal-preco").textContent =
+        "R$ " + preco.toFixed(2).replace(".", ",");
 
-    const imagemModal =
-        document.getElementById(
-            "produto-modal-imagem"
-        );
-
-    const nomeModal =
-        document.getElementById(
-            "produto-modal-nome"
-        );
-
-    const precoModal =
-        document.getElementById(
-            "produto-modal-preco"
-        );
-
-
-    imagemModal.src = imagem;
-
-    imagemModal.alt = nome;
-
-    nomeModal.textContent = nome;
-
-    precoModal.textContent =
-        formatarPreco(preco);
-
-
-    document.getElementById(
-        "tamanho-escolhido"
-    ).textContent = "Nenhum";
-
-
-    document.getElementById(
-        "cor-escolhida"
-    ).textContent = "Nenhuma";
-
-
-    limparSelecoes();
-
-
-    modal.classList.add("ativo");
-
-}
-
-
-function limparSelecoes() {
-
-    const botoes =
-        document.querySelectorAll(
-            "#modal-produto .opcoes button"
-        );
-
-    botoes.forEach(function (botao) {
-
-        botao.classList.remove(
-            "selecionado"
-        );
-
+    document.querySelectorAll(".tamanho").forEach(function (botao) {
+        botao.classList.remove("selecionado");
     });
 
-}
-
-
-/* =====================================================
-   TAMANHO
-===================================================== */
-
-function selecionarTamanho(botao) {
-
-    const botoes =
-        botao.parentElement.querySelectorAll(
-            "button"
-        );
-
-
-    botoes.forEach(function (item) {
-
-        item.classList.remove(
-            "selecionado"
-        );
-
+    document.querySelectorAll(".cor").forEach(function (botao) {
+        botao.classList.remove("selecionado");
     });
 
-
-    botao.classList.add(
-        "selecionado"
-    );
-
-
-    tamanhoSelecionado =
-        botao.textContent.trim();
-
-
-    document.getElementById(
-        "tamanho-escolhido"
-    ).textContent =
-        tamanhoSelecionado;
-
+    modal.style.display = "flex";
 }
 
 
-/* =====================================================
-   COR
-===================================================== */
+function selecionarTamanho(tamanho, elemento) {
 
-function selecionarCor(botao) {
+    tamanhoSelecionado = tamanho;
 
-    const botoes =
-        botao.parentElement.querySelectorAll(
-            "button"
-        );
-
-
-    botoes.forEach(function (item) {
-
-        item.classList.remove(
-            "selecionado"
-        );
-
+    document.querySelectorAll(".tamanho").forEach(function (botao) {
+        botao.classList.remove("selecionado");
     });
 
-
-    botao.classList.add(
-        "selecionado"
-    );
-
-
-    corSelecionada =
-        botao.textContent.trim();
-
-
-    document.getElementById(
-        "cor-escolhida"
-    ).textContent =
-        corSelecionada;
-
+    elemento.classList.add("selecionado");
 }
 
 
-/* =====================================================
-   ADICIONAR AO CARRINHO
-===================================================== */
+function selecionarCor(cor, elemento) {
+
+    corSelecionada = cor;
+
+    document.querySelectorAll(".cor").forEach(function (botao) {
+        botao.classList.remove("selecionado");
+    });
+
+    elemento.classList.add("selecionado");
+}
+
+
+// ===============================
+// FECHAR MODAL
+// ===============================
+
+function fecharModal() {
+
+    const modal = document.getElementById("modal-produto");
+
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+
+// ===============================
+// CARRINHO
+// ===============================
 
 function adicionarAoCarrinho() {
 
     if (!tamanhoSelecionado) {
-
-        alert(
-            "Escolha um tamanho antes de adicionar ao carrinho."
-        );
-
+        alert("Selecione um tamanho.");
         return;
-
     }
-
 
     if (!corSelecionada) {
-
-        alert(
-            "Escolha uma cor antes de adicionar ao carrinho."
-        );
-
+        alert("Selecione uma cor.");
         return;
-
     }
 
-
     const item = {
-
         nome: produtoAtual.nome,
-
         imagem: produtoAtual.imagem,
-
         preco: produtoAtual.preco,
-
         tamanho: tamanhoSelecionado,
-
         cor: corSelecionada
-
     };
 
-
     carrinho.push(item);
-
-
-    salvarCarrinho();
-
-    atualizarCarrinho();
-
-    fecharProduto();
-
-
-    alert(
-        "Produto adicionado ao carrinho!"
-    );
-
-}
-
-
-/* =====================================================
-   SALVAR CARRINHO
-===================================================== */
-
-function salvarCarrinho() {
 
     localStorage.setItem(
         "tempRoupCarrinho",
         JSON.stringify(carrinho)
     );
 
+    atualizarCarrinho();
+
+    fecharModal();
+
+    alert("Produto adicionado ao carrinho!");
 }
 
 
-/* =====================================================
-   ATUALIZAR CARRINHO
-===================================================== */
+// ===============================
+// ATUALIZAR CARRINHO
+// ===============================
 
 function atualizarCarrinho() {
 
-    const contador =
-        document.getElementById(
-            "contador-carrinho"
-        );
+    const lista = document.getElementById("lista-carrinho");
+    const contador = document.getElementById("contador-carrinho");
+    const total = document.getElementById("total-carrinho");
 
-
-    if (contador) {
-
-        contador.textContent =
-            carrinho.length;
-
-    }
-
-
-    mostrarItensCarrinho();
-
-}
-
-
-/* =====================================================
-   MOSTRAR ITENS
-===================================================== */
-
-function mostrarItensCarrinho() {
-
-    const lista =
-        document.getElementById(
-            "lista-carrinho"
-        );
-
-
-    if (!lista) {
-        return;
-    }
-
-
-    if (carrinho.length === 0) {
-
-        lista.innerHTML = `
-            <div class="carrinho-vazio">
-                Seu carrinho está vazio.
-            </div>
-        `;
-
-        atualizarTotal();
-
-        return;
-
-    }
-
+    if (!lista) return;
 
     lista.innerHTML = "";
 
+    let valorTotal = 0;
 
-    carrinho.forEach(
-        function (item, indice) {
+    carrinho.forEach(function (item, index) {
 
-            const elemento =
-                document.createElement("div");
+        valorTotal += item.preco;
 
+        const div = document.createElement("div");
 
-            elemento.className =
-                "item-carrinho";
+        div.className = "item-carrinho";
 
+        div.innerHTML = `
+            <img src="${item.imagem}">
+            <div>
+                <strong>${item.nome}</strong>
+                <p>Tamanho: ${item.tamanho}</p>
+                <p>Cor: ${item.cor}</p>
+                <p>R$ ${item.preco.toFixed(2).replace(".", ",")}</p>
+            </div>
+            <button onclick="removerDoCarrinho(${index})">
+                Remover
+            </button>
+        `;
 
-            elemento.innerHTML = `
+        lista.appendChild(div);
+    });
 
-                <img
-                    src="${item.imagem}"
-                    alt="${item.nome}"
-                >
-
-                <div class="item-carrinho-info">
-
-                    <strong>
-                        ${item.nome}
-                    </strong>
-
-                    <span>
-                        Tamanho: ${item.tamanho}
-                    </span>
-
-                    <span>
-                        Cor: ${item.cor}
-                    </span>
-
-                    <span>
-                        ${formatarPreco(item.preco)}
-                    </span>
-
-                </div>
-
-                <button
-                    class="remover-item"
-                    onclick="removerDoCarrinho(${indice})"
-                >
-                    Remover
-                </button>
-
-            `;
-
-
-            lista.appendChild(elemento);
-
-        }
-    );
-
-
-    atualizarTotal();
-
-}
-
-
-/* =====================================================
-   REMOVER DO CARRINHO
-===================================================== */
-
-function removerDoCarrinho(indice) {
-
-    carrinho.splice(
-        indice,
-        1
-    );
-
-
-    salvarCarrinho();
-
-    atualizarCarrinho();
-
-}
-
-
-/* =====================================================
-   TOTAL
-===================================================== */
-
-function atualizarTotal() {
-
-    const total =
-        carrinho.reduce(
-            function (soma, item) {
-
-                return soma + Number(item.preco);
-
-            },
-            0
-        );
-
-
-    const elemento =
-        document.getElementById(
-            "total-carrinho"
-        );
-
-
-    if (elemento) {
-
-        elemento.textContent =
-            formatarPreco(total);
-
+    if (contador) {
+        contador.textContent = carrinho.length;
     }
 
+    if (total) {
+        total.textContent =
+            "R$ " + valorTotal.toFixed(2).replace(".", ",");
+    }
 }
 
 
-/* =====================================================
-   FORMATAR PREÇO
-===================================================== */
+// ===============================
+// REMOVER CARRINHO
+// ===============================
 
-function formatarPreco(valor) {
+function removerDoCarrinho(index) {
 
-    return Number(valor).toLocaleString(
-        "pt-BR",
-        {
-            style: "currency",
-            currency: "BRL"
-        }
+    carrinho.splice(index, 1);
+
+    localStorage.setItem(
+        "tempRoupCarrinho",
+        JSON.stringify(carrinho)
     );
 
+    atualizarCarrinho();
 }
 
 
-/* =====================================================
-   ABRIR CARRINHO
-===================================================== */
+// ===============================
+// ABRIR CARRINHO
+// ===============================
 
 function abrirCarrinho() {
 
-    const modal =
-        document.getElementById(
-            "modal-carrinho"
-        );
+    const carrinhoModal =
+        document.getElementById("modal-carrinho");
 
+    if (carrinhoModal) {
+        carrinhoModal.style.display = "flex";
+    }
 
-    mostrarItensCarrinho();
-
-
-    modal.classList.add(
-        "ativo"
-    );
-
+    atualizarCarrinho();
 }
 
-
-/* =====================================================
-   FECHAR CARRINHO
-===================================================== */
 
 function fecharCarrinho() {
 
-    const modal =
-        document.getElementById(
-            "modal-carrinho"
-        );
+    const carrinhoModal =
+        document.getElementById("modal-carrinho");
 
-
-    modal.classList.remove(
-        "ativo"
-    );
-
+    if (carrinhoModal) {
+        carrinhoModal.style.display = "none";
+    }
 }
 
 
-/* =====================================================
-   FECHAR PRODUTO
-===================================================== */
-
-function fecharProduto() {
-
-    const modal =
-        document.getElementById(
-            "modal-produto"
-        );
-
-
-    modal.classList.remove(
-        "ativo"
-    );
-
-}
-
-
-/* =====================================================
-   FINALIZAR COMPRA
-===================================================== */
+// ===============================
+// FINALIZAR COMPRA
+// ===============================
 
 function finalizarCompra() {
 
     if (carrinho.length === 0) {
-
-        alert(
-            "Seu carrinho está vazio."
-        );
-
+        alert("Seu carrinho está vazio.");
         return;
-
     }
 
-
     alert(
-        "Compra demonstrativa da Temp.Roup. Obrigado!"
+        "Compra realizada com sucesso!\n\n" +
+        "Obrigado por comprar na Temp.Roup."
     );
-
 }
 
 
-/* =====================================================
-   CONTATO
-===================================================== */
+// ===============================
+// CONTATO
+// ===============================
 
 function mostrarContato() {
 
     alert(
-        "Entre em contato com a equipe Temp.Roup para conhecer mais sobre o projeto."
+        "Entre em contato com a Temp.Roup:\n\n" +
+        "E-mail: contato@temproup.com"
     );
-
 }
 
 
-/* =====================================================
-   FECHAR MODAIS CLICANDO FORA
-===================================================== */
+// ===============================
+// FECHAR MODAIS AO CLICAR FORA
+// ===============================
 
-window.addEventListener(
-    "click",
-    function (event) {
+window.addEventListener("click", function (event) {
 
-        const modalProduto =
-            document.getElementById(
-                "modal-produto"
-            );
+    const modalProduto =
+        document.getElementById("modal-produto");
 
-        const modalCarrinho =
-            document.getElementById(
-                "modal-carrinho"
-            );
+    const modalCarrinho =
+        document.getElementById("modal-carrinho");
 
-
-        if (
-            event.target === modalProduto
-        ) {
-
-            fecharProduto();
-
-        }
-
-
-        if (
-            event.target === modalCarrinho
-        ) {
-
-            fecharCarrinho();
-
-        }
-
+    if (event.target === modalProduto) {
+        modalProduto.style.display = "none";
     }
-);
+
+    if (event.target === modalCarrinho) {
+        modalCarrinho.style.display = "none";
+    }
+
+});
